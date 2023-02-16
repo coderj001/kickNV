@@ -28,7 +28,26 @@ require('packer').startup(function(use)
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lua',
+      'ray-x/cmp-treesitter',
+      'lukas-reineke/cmp-rg',
+      'quangnguyen30192/cmp-nvim-tags',
+      'andersevenrud/cmp-tmux',
+      'hrsh7th/cmp-cmdline',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp',
+      {
+        "L3MON4D3/LuaSnip",
+        wants = { "friendly-snippets", "vim-snippets" },
+      },
+      "rafamadriz/friendly-snippets",
+      "honza/vim-snippets",
+    },
   }
 
   use { -- Highlight, edit, and navigate code
@@ -43,12 +62,28 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  use({ "p00f/nvim-ts-rainbow" }) -- Additional Color to Brackets
+  use({ "windwp/nvim-ts-autotag" }) -- Additional Auto open tags
+
+  -- Window Split Manager
+  use {
+    "mrjones2014/smart-splits.nvim",
+  }
+  use {
+    "kwkarlwang/bufresize.nvim",
+    config = function()
+      require("bufresize").setup()
+    end
+  }
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
+  use 'nyoom-engineering/oxocarbon.nvim'
+  use 'folke/tokyonight.nvim'
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -59,6 +94,18 @@ require('packer').startup(function(use)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+  use({ "windwp/nvim-autopairs" }) -- auto-pairs
+  use { "max397574/better-escape.nvim", -- better excepe experience
+    config = function()
+      require("better_escape").setup {
+        mapping = { "jk" }, -- a table with mappings to use
+      }
+    end }
+  -- Neovim File Manage
+  use {
+  'nvim-tree/nvim-tree.lua',
+  tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -120,7 +167,9 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.opt.background = "dark"
+require("tokyonight").setup({ style = "night", transparent = true, dim_inactive = true, lualine_bold = true })
+vim.cmd [[colorscheme tokyonight]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -156,7 +205,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'tokyonight',
     component_separators = '|',
     section_separators = '',
   },
@@ -188,6 +237,26 @@ require('gitsigns').setup {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    vimgrep_arguments = {
+      "rg", "--color=never", "--no-heading", "--with-filename",
+      "--line-number", "--column", "--smart-case", "--hidden",
+      "--glob=!.git/", "--glob=!node_modules/", "--glob=!.venv/"
+    },
+    prompt_prefix = " ",
+    selection_caret = " ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    path_display = { "truncate" },
+    winblend = 0,
+    border = {},
+    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -221,10 +290,13 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim' },
+  ensure_installed = { "cpp", "python", "javascript", "html", "json", "tsx", "go", "gomod",
+    "typescript", "bash", "lua", "dockerfile", "comment", "markdown",
+    "glimmer", "regex", "tsx", "vim", "yaml", "toml" },
 
-  highlight = { enable = true },
-  indent = { enable = true, disable = { 'python' } },
+  highlight = { enable = true, additional_vim_regex_highlighting = false, disable = { "cpp", "latex" } },
+  indent = { enable = { "javascriptreact" }, disable = { 'python' } },
+  autotag = { enable = true },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -315,7 +387,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -341,12 +413,217 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+  jsonls = {
+    settings = {
+      json = {
+        schemas = {
+          {
+            description = "TypeScript compiler configuration file",
+            fileMatch = {
+              "tsconfig.json",
+              "tsconfig.*.json",
+            },
+            url = "https://json.schemastore.org/tsconfig.json",
+          },
+          {
+            description = "Lerna config",
+            fileMatch = { "lerna.json" },
+            url = "https://json.schemastore.org/lerna.json",
+          },
+          {
+            description = "Babel configuration",
+            fileMatch = {
+              ".babelrc.json",
+              ".babelrc",
+              "babel.config.json",
+            },
+            url = "https://json.schemastore.org/babelrc.json",
+          },
+          {
+            description = "ESLint config",
+            fileMatch = {
+              ".eslintrc.json",
+              ".eslintrc",
+            },
+            url = "https://json.schemastore.org/eslintrc.json",
+          },
+          {
+            description = "Bucklescript config",
+            fileMatch = { "bsconfig.json" },
+            url = "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/8.2.0/docs/docson/build-schema.json",
+          },
+          {
+            description = "Prettier config",
+            fileMatch = {
+              ".prettierrc",
+              ".prettierrc.json",
+              "prettier.config.json",
+            },
+            url = "https://json.schemastore.org/prettierrc",
+          },
+          {
+            description = "Vercel Now config",
+            fileMatch = { "now.json" },
+            url = "https://json.schemastore.org/now",
+          },
+          {
+            description = "Stylelint config",
+            fileMatch = {
+              ".stylelintrc",
+              ".stylelintrc.json",
+              "stylelint.config.json",
+            },
+            url = "https://json.schemastore.org/stylelintrc",
+          },
+          {
+            description = "A JSON schema for the ASP.NET LaunchSettings.json files",
+            fileMatch = { "launchsettings.json" },
+            url = "https://json.schemastore.org/launchsettings.json",
+          },
+          {
+            description = "Schema for CMake Presets",
+            fileMatch = {
+              "CMakePresets.json",
+              "CMakeUserPresets.json",
+            },
+            url = "https://raw.githubusercontent.com/Kitware/CMake/master/Help/manual/presets/schema.json",
+          },
+          {
+            description = "Configuration file as an alternative for configuring your repository in the settings page.",
+            fileMatch = {
+              ".codeclimate.json",
+            },
+            url = "https://json.schemastore.org/codeclimate.json",
+          },
+          {
+            description = "LLVM compilation database",
+            fileMatch = {
+              "compile_commands.json",
+            },
+            url = "https://json.schemastore.org/compile-commands.json",
+          },
+          {
+            description = "Config file for Command Task Runner",
+            fileMatch = {
+              "commands.json",
+            },
+            url = "https://json.schemastore.org/commands.json",
+          },
+          {
+            description = "AWS CloudFormation provides a common language for you to describe and provision all the infrastructure resources in your cloud environment.",
+            fileMatch = {
+              "*.cf.json",
+              "cloudformation.json",
+            },
+            url = "https://raw.githubusercontent.com/awslabs/goformation/v5.2.9/schema/cloudformation.schema.json",
+          },
+          {
+            description = "The AWS Serverless Application Model (AWS SAM, previously known as Project Flourish) extends AWS CloudFormation to provide a simplified way of defining the Amazon API Gateway APIs, AWS Lambda functions, and Amazon DynamoDB tables needed by your serverless application.",
+            fileMatch = {
+              "serverless.template",
+              "*.sam.json",
+              "sam.json",
+            },
+            url = "https://raw.githubusercontent.com/awslabs/goformation/v5.2.9/schema/sam.schema.json",
+          },
+          {
+            description = "Json schema for properties json file for a GitHub Workflow template",
+            fileMatch = {
+              ".github/workflow-templates/**.properties.json",
+            },
+            url = "https://json.schemastore.org/github-workflow-template-properties.json",
+          },
+          {
+            description = "golangci-lint configuration file",
+            fileMatch = {
+              ".golangci.toml",
+              ".golangci.json",
+            },
+            url = "https://json.schemastore.org/golangci-lint.json",
+          },
+          {
+            description = "JSON schema for the JSON Feed format",
+            fileMatch = {
+              "feed.json",
+            },
+            url = "https://json.schemastore.org/feed.json",
+            versions = {
+              ["1"] = "https://json.schemastore.org/feed-1.json",
+              ["1.1"] = "https://json.schemastore.og/feed.json",
+            },
+          },
+          {
+            description = "Packer template JSON configuration",
+            fileMatch = {
+              "packer.json",
+            },
+            url = "https://json.schemastore.org/packer.json",
+          },
+          {
+            description = "NPM configuration file",
+            fileMatch = {
+              "package.json",
+            },
+            url = "https://json.schemastore.org/package.json",
+          },
+          {
+            description = "JSON schema for Visual Studio component configuration files",
+            fileMatch = {
+              "*.vsconfig",
+            },
+            url = "https://json.schemastore.org/vsconfig.json",
+          },
+          {
+            description = "Resume json",
+            fileMatch = { "resume.json" },
+            url = "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+          },
+        },
+      },
+    },
+    setup = {
+      commands = {
+        Format = {
+          function()
+            vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
+          end,
+        },
+      },
+    },
+  },
+  tsserver = {
+    on_attach = function(client)
+      -- Disable formatting since it is handled by Prettier
+      client.resolved_capabilities.document_formatting = false
 
-  sumneko_lua = {
+      -- Use Prettier for formatting
+      local ts_utils = require("nvim-lsp-ts-utils")
+      ts_utils.setup {
+        eslint_enable_diagnostics = true,
+        enable_formatting = true,
+        formatter = "prettier",
+        formatter_opts = {
+          args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
+          stdin = true,
+        },
+      }
+      ts_utils.setup_client(client)
+    end,
+    settings = {
+      -- You can configure TypeScript-specific settings here
+    },
+  },
+  lua_ls = {
     Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      library = {
+        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+        [vim.fn.stdpath("config") .. "/lua"] = true,
+      },
     },
   },
 }
@@ -392,7 +669,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -411,8 +688,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
@@ -421,8 +698,90 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'tags' },
+    { name = 'treesitter' },
+    { name = 'path' },
+    { name = 'cmdline' },
+    { name = 'tmux' },
   },
 }
+
+-- Extra snippets
+-- Load snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_snipmate").lazy_load()
+
+-- Load custom javascript
+require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets/typescript" } }
+
+-- Smart Split Config
+require("smart-splits").setup {
+  ignored_filetypes = { 'nofile', 'quickfix', 'prompt' },
+  ignored_buftypes = { 'NvimTree' },
+  resize_mode = {
+    silent = true,
+    hooks = {
+      on_leave = require("bufresize").register
+    }
+  }
+}
+
+-- Move to the split above the current one
+vim.api.nvim_set_keymap("n", "<C-j>", ":lua require('smart-splits').move_cursor_down()<cr>",
+  { noremap = true, silent = true })
+
+-- Move to the split below the current one
+vim.api.nvim_set_keymap("n", "<C-k>", ":lua require('smart-splits').move_cursor_up()<cr>",
+  { noremap = true, silent = true })
+
+-- Move to the split to the left of the current one
+vim.api.nvim_set_keymap("n", "<C-h>", ":lua require('smart-splits').move_cursor_left()<cr>",
+  { noremap = true, silent = true })
+
+-- Move to the split to the right of the current one
+vim.api.nvim_set_keymap("n", "<C-l>", ":lua require('smart-splits').move_cursor_right()<cr>",
+  { noremap = true, silent = true })
+
+-- Disable lualine in nvim-tree
+vim.g.nvim_tree_disable_netrw = 0
+vim.g.nvim_tree_hijack_netrw = 0
+vim.g.nvim_tree_hide_dotfiles = 1
+-- Load nvim-tree plugin
+require('nvim-tree').setup{
+  -- Set options for nvim-tree
+  disable_netrw       = true, -- Disable netrw
+  hijack_netrw        = true, -- Hijack netrw window on startup
+  open_on_setup       = true, -- Open the tree when running this setup function
+  ignore_ft_on_setup  = {'node_modules', 'venv', '%.git', 'DS_Store', '._*'}, -- Don't open tree when these filetypes are opened
+  auto_close          = true, -- Auto close tree when leaving last file
+  update_focused_file = {
+    enable      = true, -- Update the focused file in the tree when you change files
+    update_cwd  = true, -- Update the current working directory of the tree
+  },
+  view = {
+    width = 30, -- Set the width of the tree view
+    side = 'right', -- Put the tree view on the left side of the editor
+    auto_resize = true, -- Auto resize the tree view when the window is resized
+    mappings = {
+      custom_only = false,
+      list = {
+        { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = require'nvim-tree'.on_node_open },
+        { key = {"<2-RightMouse>", "<C-]>"},    cb = require'nvim-tree'.on_node_middle_click },
+        { key = {"<C-v>"},                      cb = require'nvim-tree'.on_vsplit },
+        { key = {"<C-x>"},                      cb = require'nvim-tree'.on_split },
+        { key = {"<C-t>"},                      cb = require'nvim-tree'.on_tabnew },
+        { key = {"<"},                           cb = require'nvim-tree'.on_keypress },
+        { key = {">"},                           cb = require'nvim-tree'.on_keypress },
+      },
+    },
+  }
+}
+-- Keybindings for nvim-tree
+vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>r', ':NvimTreeRefresh<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>n.', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

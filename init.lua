@@ -103,8 +103,8 @@ require('packer').startup(function(use)
     end }
   -- Neovim File Manage
   use {
-  'nvim-tree/nvim-tree.lua',
-  tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    'nvim-tree/nvim-tree.lua',
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
@@ -591,28 +591,7 @@ local servers = {
       },
     },
   },
-  tsserver = {
-    on_attach = function(client)
-      -- Disable formatting since it is handled by Prettier
-      client.resolved_capabilities.document_formatting = false
-
-      -- Use Prettier for formatting
-      local ts_utils = require("nvim-lsp-ts-utils")
-      ts_utils.setup {
-        eslint_enable_diagnostics = true,
-        enable_formatting = true,
-        formatter = "prettier",
-        formatter_opts = {
-          args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
-          stdin = true,
-        },
-      }
-      ts_utils.setup_client(client)
-    end,
-    settings = {
-      -- You can configure TypeScript-specific settings here
-    },
-  },
+  tsserver = {},
   lua_ls = {
     Lua = {
       diagnostics = {
@@ -743,45 +722,100 @@ vim.api.nvim_set_keymap("n", "<C-h>", ":lua require('smart-splits').move_cursor_
 vim.api.nvim_set_keymap("n", "<C-l>", ":lua require('smart-splits').move_cursor_right()<cr>",
   { noremap = true, silent = true })
 
--- Disable lualine in nvim-tree
-vim.g.nvim_tree_disable_netrw = 0
-vim.g.nvim_tree_hijack_netrw = 0
-vim.g.nvim_tree_hide_dotfiles = 1
 -- Load nvim-tree plugin
-require('nvim-tree').setup{
+require('nvim-tree').setup {
   -- Set options for nvim-tree
   disable_netrw       = true, -- Disable netrw
   hijack_netrw        = true, -- Hijack netrw window on startup
-  open_on_setup       = true, -- Open the tree when running this setup function
-  ignore_ft_on_setup  = {'node_modules', 'venv', '%.git', 'DS_Store', '._*'}, -- Don't open tree when these filetypes are opened
-  auto_close          = true, -- Auto close tree when leaving last file
   update_focused_file = {
-    enable      = true, -- Update the focused file in the tree when you change files
-    update_cwd  = true, -- Update the current working directory of the tree
+    enable     = true, -- Update the focused file in the tree when you change files
+    update_cwd = true, -- Update the current working directory of the tree
   },
-  view = {
+  view                = {
+    cursorline = true,
     width = 30, -- Set the width of the tree view
     side = 'right', -- Put the tree view on the left side of the editor
-    auto_resize = true, -- Auto resize the tree view when the window is resized
     mappings = {
       custom_only = false,
       list = {
-        { key = {"<CR>", "o", "<2-LeftMouse>"}, cb = require'nvim-tree'.on_node_open },
-        { key = {"<2-RightMouse>", "<C-]>"},    cb = require'nvim-tree'.on_node_middle_click },
-        { key = {"<C-v>"},                      cb = require'nvim-tree'.on_vsplit },
-        { key = {"<C-x>"},                      cb = require'nvim-tree'.on_split },
-        { key = {"<C-t>"},                      cb = require'nvim-tree'.on_tabnew },
-        { key = {"<"},                           cb = require'nvim-tree'.on_keypress },
-        { key = {">"},                           cb = require'nvim-tree'.on_keypress },
+        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = require 'nvim-tree'.on_node_open },
+        { key = { "<2-RightMouse>", "<C-]>" },    cb = require 'nvim-tree'.on_node_middle_click },
+        { key = { "<C-v>" },                      cb = require 'nvim-tree'.on_vsplit },
+        { key = { "<C-x>" },                      cb = require 'nvim-tree'.on_split },
+        { key = { "<C-t>" },                      cb = require 'nvim-tree'.on_tabnew },
+        { key = { "<" },                          cb = require 'nvim-tree'.on_keypress },
+        { key = { ">" },                          cb = require 'nvim-tree'.on_keypress },
       },
     },
-  }
+  },
+  actions             = {
+    open_file = {
+      resize_window = true,
+    }
+  },
+  renderer            = {
+    add_trailing   = true,
+    group_empty    = true,
+    highlight_git  = true,
+    indent_width   = 1,
+    indent_markers = {
+      enable = true,
+    },
+    icons          = {
+      git_placement = "after",
+      show = {
+        file = false,
+      },
+      glyphs = { default = " ", },
+    },
+    diagnostics    = {
+      enable = true,
+      show_on_dirs = true,
+    },
+    filters        = {
+      dotfiles = true,
+      git_clean = true,
+      no_buffer = true,
+      custom = {},
+      exclude = {},
+    },
+    modified       = {
+      enable = true,
+    },
+  },
+  log                 = {
+    enable = true,
+    truncate = true,
+    types = {
+      all = true,
+      config = true,
+      copy_paste = true,
+      dev = true,
+      diagnostics = true,
+      git = true,
+      profile = true,
+      watcher = true,
+    },
+  },
 }
 -- Keybindings for nvim-tree
-vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>r', ':NvimTreeRefresh<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>n.', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
+-- Added NvimTree open on startup functionality
+local function open_nvim_tree(data)
+  local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+  local directory = vim.fn.isdirectory(data.file) == 1
+  if not no_name and not directory then
+    return
+  end
+  if directory then
+    vim.cmd.cd(data.file)
+  end
+  require("nvim-tree.api").tree.open()
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

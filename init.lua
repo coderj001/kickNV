@@ -738,13 +738,29 @@ require('nvim-tree').setup {
     mappings = {
       custom_only = false,
       list = {
-        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = require 'nvim-tree'.on_node_open },
-        { key = { "<2-RightMouse>", "<C-]>" },    cb = require 'nvim-tree'.on_node_middle_click },
-        { key = { "<C-v>" },                      cb = require 'nvim-tree'.on_vsplit },
-        { key = { "<C-x>" },                      cb = require 'nvim-tree'.on_split },
-        { key = { "<C-t>" },                      cb = require 'nvim-tree'.on_tabnew },
-        { key = { "<" },                          cb = require 'nvim-tree'.on_keypress },
-        { key = { ">" },                          cb = require 'nvim-tree'.on_keypress },
+        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = require 'nvim-tree.config'.nvim_tree_callback("edit") },
+        { key = { "<2-RightMouse>", "<C-]>" },    cb = require 'nvim-tree.config'.nvim_tree_callback("cd") },
+        { key = "<C-v>",                          cb = require 'nvim-tree.config'.nvim_tree_callback("vsplit") },
+        { key = "<C-x>",                          cb = require 'nvim-tree.config'.nvim_tree_callback("split") },
+        { key = "<C-t>",                          cb = require 'nvim-tree.config'.nvim_tree_callback("tabnew") },
+        { key = "<",                              cb = require 'nvim-tree.config'.nvim_tree_callback("prev_sibling") },
+        { key = ">",                              cb = require 'nvim-tree.config'.nvim_tree_callback("next_sibling") },
+        { key = "P",                              cb = require 'nvim-tree.config'.nvim_tree_callback("parent_node") },
+        { key = "<BS>",                           cb = require 'nvim-tree.config'.nvim_tree_callback("close_node") },
+        { key = "<S-CR>",                         cb = require 'nvim-tree.config'.nvim_tree_callback("close_node") },
+        { key = "<Tab>",                          cb = require 'nvim-tree.config'.nvim_tree_callback("preview") },
+        { key = "K",                              cb = require 'nvim-tree.config'.nvim_tree_callback("first_sibling") },
+        { key = "J",                              cb = require 'nvim-tree.config'.nvim_tree_callback("last_sibling") },
+        { key = "I",                              cb = require 'nvim-tree.config'.nvim_tree_callback("toggle_ignored") },
+        { key = "H",                              cb = require 'nvim-tree.config'.nvim_tree_callback("toggle_dotfiles") },
+        { key = "R",                              cb = require 'nvim-tree.config'.nvim_tree_callback("refresh") },
+        { key = "a",                              cb = require 'nvim-tree.config'.nvim_tree_callback("create") },
+        { key = "d",                              cb = require 'nvim-tree.config'.nvim_tree_callback("remove") },
+        { key = "r",                              cb = require 'nvim-tree.config'.nvim_tree_callback("rename") },
+        { key = "<C-r>",                          cb = require 'nvim-tree.config'.nvim_tree_callback("full_rename") },
+        { key = "x",                              cb = require 'nvim-tree.config'.nvim_tree_callback("cut") },
+        { key = "c",                              cb = require 'nvim-tree.config'.nvim_tree_callback("copy") },
+        { key = "p",                              cb = require 'nvim-tree.config'.nvim_tree_callback("paste") },
       },
     },
   },
@@ -752,6 +768,10 @@ require('nvim-tree').setup {
     open_file = {
       resize_window = true,
     }
+  },
+  filters             = {
+    dotfiles = true,
+    exclude = { 'node_modules', '.venv', 'env', '.env' },
   },
   renderer            = {
     add_trailing   = true,
@@ -767,20 +787,6 @@ require('nvim-tree').setup {
         file = false,
       },
       glyphs = { default = " ", },
-    },
-    diagnostics    = {
-      enable = true,
-      show_on_dirs = true,
-    },
-    filters        = {
-      dotfiles = true,
-      git_clean = true,
-      no_buffer = true,
-      custom = {},
-      exclude = {},
-    },
-    modified       = {
-      enable = true,
     },
   },
   log                 = {
@@ -814,6 +820,22 @@ local function open_nvim_tree(data)
   end
   require("nvim-tree.api").tree.open()
 end
+
+vim.cmd([[
+augroup NvimTreeTransparency
+  autocmd!
+  autocmd ColorScheme tokyonight :highlight! NvimTreeNormal guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeVertSplit guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeEndOfBuffer guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeRootFolder guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeGitDirty guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeGitNew guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeImageFile guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeSymlink guibg=NONE
+  autocmd ColorScheme tokyonight :highlight! NvimTreeFolderName guibg=NONE
+augroup END
+]])
+
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 

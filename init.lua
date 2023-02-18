@@ -84,7 +84,68 @@ require('packer').startup(function(use)
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nyoom-engineering/oxocarbon.nvim'
   use 'folke/tokyonight.nvim'
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+
+  -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use {
+    'yamatsum/nvim-nonicons',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      require('nvim-nonicons').setup {}
+    end
+  }
+  -- StatusLine For Neovim
+  use {
+    'coderj001/vacuumline.nvim',
+    branch = 'next',
+    requires = {
+      'glepnir/galaxyline.nvim',
+      branch = 'main',
+    },
+    config = function()
+      require('vacuumline').setup({
+        theme = require('vacuumline.theme.tokoynight_storm'),
+        mode_colors = {
+          n = '#81A1C1',
+          i = '#8FBCBB',
+          v = '#BF616A',
+          [''] = '#D08770',
+          V = '#EBCB8B',
+          c = '#A3BE8C',
+          no = '#B48EAD',
+          s = '#88C0D0',
+          S = '#81A1C1',
+          ic = '#D8DEE9',
+          R = '#E5E9F0',
+          Rv = '#EBCB8B',
+          cv = '#D08770',
+          ce = '#D08770',
+          r = '#A3BE8C',
+          rm = '#A3BE8C',
+          ['r?'] = '#A3BE8C',
+          ['!'] = '#BF616A',
+          t = '#EBCB8B',
+        },
+        sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {
+            {
+              'filename',
+              file_status = true,
+              path = 1,
+            },
+          },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+        section_separator = '',
+        component_separators = '',
+      })
+    end,
+  }
+
+
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
@@ -106,6 +167,47 @@ require('packer').startup(function(use)
     'nvim-tree/nvim-tree.lua',
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
+  use({
+    -- Hop plugin for movement
+    "phaazon/hop.nvim",
+    branch = "v2",
+    config = function() require("hop").setup() end
+  })
+  -- bufferline
+  use { 'akinsho/bufferline.nvim', tag = "v3.*" }
+
+  use({
+    -- to put cursor into lastplace visited in file
+    "ethanholz/nvim-lastplace",
+    event = "BufRead",
+    config = function()
+      require("nvim-lastplace").setup({
+        lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+        lastplace_ignore_filetype = {
+          "gitcommit", "gitrebase", "svn", "hgcommit"
+        },
+        lastplace_open_folds = true
+      })
+    end
+  })
+
+  use({
+    "mvllow/modes.nvim",
+    config = function()
+      require("modes").setup({
+        colors = {
+          normal = "#c792ea",
+          insert = "#89ddff",
+          delete = "#ff5370",
+          copy = "#f78c6c",
+          visual = "#82aaff"
+        },
+        line_opacity = 0.25,
+        set_cursor = true,
+        ignore_filetypes = { "NvimTree", "TelescopePrompt" }
+      })
+    end
+  })
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -202,14 +304,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'tokyonight',
-    component_separators = '|',
-    section_separators = '',
-  },
-}
+-- require('lualine').setup {
+--   options = {
+--     icons_enabled = false,
+--     theme = 'tokyonight',
+--     component_separators = '|',
+--     section_separators = '',
+--     disabled_filetypes = { 'packer', 'NVimTree' }
+--   },
+-- }
+
 
 -- Enable Comment.nvim
 require('Comment').setup()
@@ -306,6 +410,7 @@ require('nvim-treesitter.configs').setup {
       node_decremental = '<c-backspace>',
     },
   },
+  rainbow = { enable = true, extendend_mode = true, max_file_lines = 1000 },
   textobjects = {
     select = {
       enable = true,
@@ -641,6 +746,15 @@ require('fidget').setup()
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
+local lsp_symbol = ""
+local luasnip_symbol = "﬌"
+local treesitter_symbol = ""
+local buffer_symbol = "﬘"
+local tags_symbol = ""
+local path_symbol = ""
+local cmdline_symbol = "גּ"
+local tmux_symbol = ""
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -675,15 +789,66 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'tags' },
-    { name = 'treesitter' },
-    { name = 'path' },
-    { name = 'cmdline' },
-    { name = 'tmux' },
+    { name = 'nvim_lsp',   icon = lsp_symbol },
+    { name = 'luasnip',    icon = luasnip_symbol },
+    { name = 'treesitter', icon = treesitter_symbol },
+    { name = 'buffer',     icon = buffer_symbol },
+    { name = 'tags',       icon = tags_symbol },
+    { name = 'path',       icon = path_symbol },
+    { name = 'cmdline',    icon = cmdline_symbol },
+    { name = 'tmux',       icon = tmux_symbol },
   },
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      local kind_icons = {
+        Text = "",
+        Method = "m",
+        Function = "",
+        Constructor = "",
+        Field = "",
+        Variable = "",
+        Class = "",
+        Interface = "",
+        Module = "",
+        Property = "",
+        Unit = "",
+        Value = "",
+        Enum = "",
+        Keyword = "",
+        Snippet = "",
+        Color = "",
+        File = "",
+        Reference = "",
+        Folder = "",
+        EnumMember = "",
+        Constant = "",
+        Struct = "",
+        Event = "",
+        Operator = "",
+        TypeParameter = ""
+      }
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+      vim_item.menu = ({
+            nvim_lsp = "[LSP]",
+            luasnip = "[LuaSnip]",
+            treesitter = "[Treesitter]",
+            buffer = "[Buffer]",
+            tags = "[Tags]",
+            path = "[Path]",
+            cmdline = "[Cmdline]",
+            tmux = "[Tmux]",
+          })[entry.source.name]
+      return vim_item
+    end,
+  },
+  max_limit = 9,
+  window = {
+    documentation = {
+      border = "rounded",
+    },
+    experimental = { ghost_text = false, native_menu = false }
+  }
 }
 
 -- Extra snippets
@@ -784,7 +949,7 @@ require('nvim-tree').setup {
     icons          = {
       git_placement = "after",
       show = {
-        file = false,
+        file = true,
       },
       glyphs = { default = " ", },
     },
@@ -836,8 +1001,66 @@ augroup NvimTreeTransparency
 augroup END
 ]])
 
-
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+local function load_extra_options()
+  local function bind_extra_cmd(options)
+    for optionCount = 1, #options do vim.cmd(options[optionCount]) end
+  end
+  local options = {
+    "filetype plugin on", "filetype indent on", "cabbr Q q", "cabbr Q! q!",
+    "cabbr W! w!", "cabbr W w", "cabbr WA wa", "cabbr Wa wa", "cabbr Wq wq",
+    "cabbr WQ wq", "cabbr Qa qa", "cabbr QA qa"
+  }
+  bind_extra_cmd(options)
+end
+
+load_extra_options()
+
+-- Hop Config
+-- place this in one of your configuration file(s)
+local hop = require('hop')
+hop.setup { term_seq_bias = 0.5, keys = 'etovxqpdygfblzhckisuran' }
+local directions = require('hop.hint').HintDirection
+vim.keymap.set({ 'n', 'v' }, 'f',
+  function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true }) end, { remap = true })
+vim.keymap.set({ 'n', 'v' }, 'F',
+  function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true }) end, { remap = true })
+vim.keymap.set({ 'n', 'v' }, 't',
+  function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 }) end,
+  { remap = true })
+vim.keymap.set({ 'n', 'v' }, 'T',
+  function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }) end,
+  { remap = true })
+vim.keymap.set({ 'n', 'v' }, '<leader>w', function() hop.hint_words() end, {})
+vim.keymap.set({ 'n', 'v' }, '<leader>j', function() hop.hint_lines() end, {})
+vim.keymap.set('n', '<leader>c', function() hop.hint_char1() end, {})
+vim.keymap.set('n', '<leader>C', function() hop.hint_char2() end, {})
+vim.keymap.set('n', '<leader>m', function() hop.hint_patterns() end, {})
+
+-- Config Bufferline
+require("bufferline").setup {
+  options = {
+    number_style = "",
+    diagnostics = "nvim_lsp",
+    offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
+    show_buffer_close_icons = true,
+    show_close_icon = false,
+    separator_style = "any", -- | "thick" | "thin" | { 'any', 'any' },
+    insert_at_end = false,
+    insert_at_start = true,
+    icon_separator_active = '▎',
+    icon_separator_inactive = '▎',
+    icon_close_tab = '',
+    icon_close_tab_modified = '●',
+    icon_pinned = '車',
+    semantic_letters = true,
+    animation = false
+  }
+}
+vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

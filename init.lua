@@ -38,7 +38,6 @@ require('packer').startup(function(use)
       'lukas-reineke/cmp-rg',
       'quangnguyen30192/cmp-nvim-tags',
       'andersevenrud/cmp-tmux',
-      'hrsh7th/cmp-cmdline',
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       {
@@ -86,26 +85,35 @@ require('packer').startup(function(use)
   use 'folke/tokyonight.nvim'
 
   -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
-  use {
-    'yamatsum/nvim-nonicons',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-      require('nvim-nonicons').setup {}
-    end
-  }
+  use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
   use {
-    'coderj001/vacuumline.nvim',
-    branch = 'next',
-    requires = {
-      'glepnir/galaxyline.nvim',
-      branch = 'main',
-    },
+    'leath-dub/stat.nvim',
     config = function()
-      require('vacuumline').setup({
-        theme = require('vacuumline.theme.tokoynight_storm')
+      local Stat = require('stat')
+      local ___ = Stat.___
+      Stat.setup({
+        winbar = {},
+        statusline = {
+          ___,
+          Stat.mod.mode,
+          Stat.mod.filetype,
+          Stat.mod.git_diff,
+        },
+        theme = {
+          ["N"] = { fg = "#2d353b", bg = "#83c092" },
+          ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
+          ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
+          ["C"] = { fg = "#2d353b", bg = "#d699b6" },
+          ["T"] = { fg = "#2d353b", bg = "#a7c080" },
+          ["S"] = { fg = "#2d353b", bg = "#e67e80" },
+          ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
+          ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
+          ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
+          ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
+        }
       })
-    end,
+    end
   }
 
 
@@ -174,14 +182,15 @@ require('packer').startup(function(use)
 
   use({
     "gen740/SmoothCursor.nvim",
-    config = function() require("smoothcursor").setup({
-      cursor = "",
+    config = function()
+      require("smoothcursor").setup({
+        cursor = "",
         fancy = {
-            enable = true,
-            head = {cursor = "", texthl = "SmoothCursor", linehl = nil}
+          enable = true,
+          head = { cursor = "", texthl = "SmoothCursor", linehl = nil }
         }
-    })
-  end
+      })
+    end
   })
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
@@ -245,7 +254,7 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark"
-require("tokyonight").setup({ style = "night", transparent = true, dim_inactive = true, lualine_bold = true })
+require("tokyonight").setup({ style = "night", transparent = true, dim_inactive = true })
 vim.cmd [[colorscheme tokyonight]]
 
 -- Set completeopt to have a better completion experience
@@ -608,7 +617,6 @@ cmp.setup {
     { name = 'buffer',     icon = buffer_symbol },
     { name = 'tags',       icon = tags_symbol },
     { name = 'path',       icon = path_symbol },
-    { name = 'cmdline',    icon = cmdline_symbol },
     { name = 'tmux',       icon = tmux_symbol },
   },
   formatting = {
@@ -649,7 +657,6 @@ cmp.setup {
             buffer = "[Buffer]",
             tags = "[Tags]",
             path = "[Path]",
-            cmdline = "[Cmdline]",
             tmux = "[Tmux]",
           })[entry.source.name]
       return vim_item
@@ -873,7 +880,6 @@ require("bufferline").setup {
 }
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -278,6 +278,18 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- better indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+
+
+-- Resize window using <ctrl> arrow keys
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>")
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>")
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>")
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>")
+
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -879,7 +891,7 @@ vim.keymap.set({ 'n', 'v' }, 'T',
   function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }) end,
   { remap = true })
 vim.keymap.set({ 'n', 'v' }, '<leader>w', function() hop.hint_words() end, {})
-vim.keymap.set({ 'n', 'v' }, '<leader>j', function() hop.hint_lines() end, {})
+vim.keymap.set({ 'n', 'v' }, '<leader>k', function() hop.hint_lines() end, {})
 vim.keymap.set('n', '<leader>c', function() hop.hint_char1() end, {})
 vim.keymap.set('n', '<leader>C', function() hop.hint_char2() end, {})
 vim.keymap.set('n', '<leader>m', function() hop.hint_patterns() end, {})
@@ -898,12 +910,13 @@ require("bufferline").setup {
     icon_separator_active = '▎',
     icon_separator_inactive = '▎',
     icon_close_tab = '',
-    icon_close_tab_modified = '●',
+    icon_close_tab_modified = '',
     icon_pinned = '車',
     semantic_letters = true,
     animation = false
   }
 }
+
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 

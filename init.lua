@@ -61,7 +61,7 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
-  use({ "p00f/nvim-ts-rainbow" }) -- Additional Color to Brackets
+  use({ "p00f/nvim-ts-rainbow" })   -- Additional Color to Brackets
   use({ "windwp/nvim-ts-autotag" }) -- Additional Auto open tags
 
   -- Window Split Manager
@@ -82,43 +82,17 @@ require('packer').startup(function(use)
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'folke/tokyonight.nvim'
+  use { 'askfiy/visual_studio_code', priority = 100 }
 
   -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
-  use {
-    'leath-dub/stat.nvim',
-    config = function()
-      local Stat = require('stat')
-      local ___ = Stat.___
-      Stat.setup({
-        winbar = {},
-        statusline = {
-          ___,
-          Stat.mod.mode,
-          Stat.mod.filetype,
-          Stat.mod.git_diff,
-        },
-        theme = {
-          ["N"] = { fg = "#2d353b", bg = "#83c092" },
-          ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
-          ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
-          ["C"] = { fg = "#2d353b", bg = "#d699b6" },
-          ["T"] = { fg = "#2d353b", bg = "#a7c080" },
-          ["S"] = { fg = "#2d353b", bg = "#e67e80" },
-          ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
-          ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
-          ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
-          ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
-        }
-      })
-    end
-  }
+  use { 'nvim-lualine/lualine.nvim' }
 
 
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -128,7 +102,7 @@ require('packer').startup(function(use)
   use { "debugloop/telescope-undo.nvim" }
   use { 'nvim-telescope/telescope-ui-select.nvim' }
 
-  use({ "windwp/nvim-autopairs" }) -- auto-pairs
+  use({ "windwp/nvim-autopairs" })      -- auto-pairs
   use { "max397574/better-escape.nvim", -- better excepe experience
     config = function()
       require("better_escape").setup {
@@ -160,24 +134,6 @@ require('packer').startup(function(use)
           "gitcommit", "gitrebase", "svn", "hgcommit"
         },
         lastplace_open_folds = true
-      })
-    end
-  })
-
-  use({
-    "mvllow/modes.nvim",
-    config = function()
-      require("modes").setup({
-        colors = {
-          normal = "#c792ea",
-          insert = "#89ddff",
-          delete = "#ff5370",
-          copy = "#f78c6c",
-          visual = "#82aaff"
-        },
-        line_opacity = 0.25,
-        set_cursor = true,
-        ignore_filetypes = { "NvimTree", "TelescopePrompt" }
       })
     end
   })
@@ -256,8 +212,45 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark"
-require("tokyonight").setup({ style = "night", transparent = true, dim_inactive = true })
-vim.cmd [[colorscheme tokyonight]]
+require("visual_studio_code").setup({ mode = "dark", transparent = true })
+vim.cmd [[colorscheme visual_studio_code_dark]]
+
+require("lualine").setup({
+  options = {
+    theme = "auto",
+    icons_enabled = true,
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
+    disabled_filetypes = {},
+    globalstatus = true,
+    refresh = {
+      statusline = 100,
+    },
+  },
+  sections = require("visual_studio_code").get_lualine_sections(),
+})
+
+-- Config Bufferline
+require("bufferline").setup {
+  options = {
+    themable = true,
+    number_style = "",
+    diagnostics = "nvim_lsp",
+    offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
+    show_buffer_close_icons = true,
+    show_close_icon = false,
+    separator_style = "any",
+    insert_at_end = false,
+    insert_at_start = true,
+    icon_close_tab = '',
+    icon_pinned = '車',
+    semantic_letters = true,
+    animation = true,
+    custom_areas = {
+      right = require("visual_studio_code").get_bufferline_right(),
+    },
+  }
+}
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -299,18 +292,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- Set lualine as statusline
--- See `:help lualine.txt`
--- require('lualine').setup {
---   options = {
---     icons_enabled = false,
---     theme = 'tokyonight',
---     component_separators = '|',
---     section_separators = '',
---     disabled_filetypes = { 'packer', 'NVimTree' }
---   },
--- }
 
 
 -- Enable Comment.nvim
@@ -621,7 +602,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -640,8 +621,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -688,14 +669,14 @@ cmp.setup {
       }
       vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
       vim_item.menu = ({
-            nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
-            treesitter = "[Treesitter]",
-            buffer = "[Buffer]",
-            tags = "[Tags]",
-            path = "[Path]",
-            tmux = "[Tmux]",
-          })[entry.source.name]
+        nvim_lsp = "[LSP]",
+        luasnip = "[LuaSnip]",
+        treesitter = "[Treesitter]",
+        buffer = "[Buffer]",
+        tags = "[Tags]",
+        path = "[Path]",
+        tmux = "[Tmux]",
+      })[entry.source.name]
       return vim_item
     end,
   },
@@ -750,12 +731,12 @@ require('nvim-tree').setup {
   disable_netrw       = true, -- Disable netrw
   hijack_netrw        = true, -- Hijack netrw window on startup
   update_focused_file = {
-    enable     = true, -- Update the focused file in the tree when you change files
-    update_cwd = true, -- Update the current working directory of the tree
+    enable     = true,        -- Update the focused file in the tree when you change files
+    update_cwd = true,        -- Update the current working directory of the tree
   },
   view                = {
     cursorline = true,
-    width = 30, -- Set the width of the tree view
+    width = 30,     -- Set the width of the tree view
     side = 'right', -- Put the tree view on the left side of the editor
     mappings = {
       custom_only = false,
@@ -846,15 +827,15 @@ end
 vim.cmd([[
 augroup NvimTreeTransparency
   autocmd!
-  autocmd ColorScheme tokyonight :highlight! NvimTreeNormal guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeVertSplit guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeEndOfBuffer guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeRootFolder guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeGitDirty guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeGitNew guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeImageFile guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeSymlink guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeFolderName guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeNormal guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeVertSplit guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeEndOfBuffer guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeRootFolder guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeGitDirty guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeGitNew guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeImageFile guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeSymlink guibg=NONE
+  autocmd ColorScheme visual_studio_code :highlight! NvimTreeFolderName guibg=NONE
 augroup END
 ]])
 
@@ -895,26 +876,6 @@ vim.keymap.set('n', '<leader>c', function() hop.hint_char1() end, {})
 vim.keymap.set('n', '<leader>C', function() hop.hint_char2() end, {})
 vim.keymap.set('n', '<leader>m', function() hop.hint_patterns() end, {})
 
--- Config Bufferline
-require("bufferline").setup {
-  options = {
-    number_style = "",
-    diagnostics = "nvim_lsp",
-    offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
-    show_buffer_close_icons = true,
-    show_close_icon = false,
-    separator_style = "any", -- | "thick" | "thin" | { 'any', 'any' },
-    insert_at_end = false,
-    insert_at_start = true,
-    icon_separator_active = '▎',
-    icon_separator_inactive = '▎',
-    icon_close_tab = '',
-    icon_close_tab_modified = '',
-    icon_pinned = '車',
-    semantic_letters = true,
-    animation = false
-  }
-}
 
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })

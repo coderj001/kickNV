@@ -81,7 +81,6 @@ require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim'
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use 'nyoom-engineering/oxocarbon.nvim'
   use 'folke/tokyonight.nvim'
 
   -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline

@@ -61,7 +61,7 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
-  use({ "p00f/nvim-ts-rainbow" }) -- Additional Color to Brackets
+  use({ "p00f/nvim-ts-rainbow" })   -- Additional Color to Brackets
   use({ "windwp/nvim-ts-autotag" }) -- Additional Auto open tags
 
   -- Window Split Manager
@@ -80,24 +80,23 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
+  -- colorscheme
   use 'folke/tokyonight.nvim'
 
-  -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
   use {
-    'leath-dub/stat.nvim',
+    'coderj001/stat.nvim',
     config = function()
       local Stat = require('stat')
       local ___ = Stat.___
       Stat.setup({
         winbar = {},
         statusline = {
-          ___,
           Stat.mod.mode,
           Stat.mod.filetype,
           Stat.mod.git_diff,
+          ___,
         },
         theme = {
           ["N"] = { fg = "#2d353b", bg = "#83c092" },
@@ -117,8 +116,8 @@ require('packer').startup(function(use)
 
 
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -128,7 +127,7 @@ require('packer').startup(function(use)
   use { "debugloop/telescope-undo.nvim" }
   use { 'nvim-telescope/telescope-ui-select.nvim' }
 
-  use({ "windwp/nvim-autopairs" }) -- auto-pairs
+  use({ "windwp/nvim-autopairs" })      -- auto-pairs
   use { "max397574/better-escape.nvim", -- better excepe experience
     config = function()
       require("better_escape").setup {
@@ -535,10 +534,10 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
+  clangd = {},
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
   jsonls = {
     settings = {
       json = {
@@ -610,8 +609,8 @@ local luasnip_symbol = "﬌"
 local treesitter_symbol = ""
 local buffer_symbol = "﬘"
 local tags_symbol = ""
+local rg_symbol = ""
 local path_symbol = ""
-local cmdline_symbol = "גּ"
 local tmux_symbol = ""
 
 cmp.setup {
@@ -621,7 +620,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -640,8 +639,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -652,6 +651,7 @@ cmp.setup {
     { name = 'luasnip',    icon = luasnip_symbol },
     { name = 'treesitter', icon = treesitter_symbol },
     { name = 'buffer',     icon = buffer_symbol },
+    { name = 'rg',         icon = rg_symbol },
     { name = 'tags',       icon = tags_symbol },
     { name = 'path',       icon = path_symbol },
     { name = 'tmux',       icon = tmux_symbol },
@@ -688,14 +688,15 @@ cmp.setup {
       }
       vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
       vim_item.menu = ({
-            nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
-            treesitter = "[Treesitter]",
-            buffer = "[Buffer]",
-            tags = "[Tags]",
-            path = "[Path]",
-            tmux = "[Tmux]",
-          })[entry.source.name]
+        nvim_lsp = "[LSP]",
+        luasnip = "[LuaSnip]",
+        treesitter = "[Treesitter]",
+        buffer = "[Buffer]",
+        rg = "[Rg]",
+        tags = "[Tags]",
+        path = "[Path]",
+        tmux = "[Tmux]",
+      })[entry.source.name]
       return vim_item
     end,
   },
@@ -750,12 +751,12 @@ require('nvim-tree').setup {
   disable_netrw       = true, -- Disable netrw
   hijack_netrw        = true, -- Hijack netrw window on startup
   update_focused_file = {
-    enable     = true, -- Update the focused file in the tree when you change files
-    update_cwd = true, -- Update the current working directory of the tree
+    enable     = true,        -- Update the focused file in the tree when you change files
+    update_cwd = true,        -- Update the current working directory of the tree
   },
   view                = {
     cursorline = true,
-    width = 30, -- Set the width of the tree view
+    width = 30,     -- Set the width of the tree view
     side = 'right', -- Put the tree view on the left side of the editor
     mappings = {
       custom_only = false,

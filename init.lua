@@ -35,7 +35,6 @@ require('packer').startup(function(use)
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-nvim-lua',
       'ray-x/cmp-treesitter',
-      'lukas-reineke/cmp-rg',
       'quangnguyen30192/cmp-nvim-tags',
       'andersevenrud/cmp-tmux',
       'saadparwaiz1/cmp_luasnip',
@@ -80,14 +79,11 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use 'folke/tokyonight.nvim'
-  use { 'askfiy/visual_studio_code', priority = 100 }
+  use { 'askfiy/visual_studio_code', priority = 100 } -- Theme
 
-  -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
-  use { 'nvim-lualine/lualine.nvim' }
+  use { 'nvim-lualine/lualine.nvim' } -- Fancier statusline
 
 
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
@@ -215,6 +211,18 @@ vim.opt.background = "dark"
 require("visual_studio_code").setup({ mode = "dark", transparent = true })
 vim.cmd [[colorscheme visual_studio_code_dark]]
 
+local colors = {
+  black = '#000000',
+  white = '#ffffff',
+  red = '#ff0000',
+  green = '#00ff00',
+  blue = '#0000ff',
+  yellow = '#ffff00',
+  magenta = '#ff00ff',
+  cyan = '#00ffff',
+}
+
+
 require("lualine").setup({
   options = {
     theme = "auto",
@@ -227,7 +235,119 @@ require("lualine").setup({
       statusline = 100,
     },
   },
-  sections = require("visual_studio_code").get_lualine_sections(),
+  sections = {
+    lualine_a = {
+      {
+        "headers",
+        fmt = function(content, context)
+          return "  "
+        end,
+      },
+    },
+    lualine_b = {
+      { "branch", icon = "" },
+      {
+        "mode",
+        fmt = function(content, context)
+          local mode_colors = {
+            n = colors.green,
+            i = colors.blue,
+            v = colors.magenta,
+            [""] = colors.magenta,
+            V = colors.magenta,
+            c = colors.red,
+            no = colors.green,
+            s = colors.orange,
+            S = colors.orange,
+            [""] = colors.orange,
+            ic = colors.yellow,
+            R = colors.red,
+            Rv = colors.red,
+            cv = colors.red,
+            ce = colors.red,
+            r = colors.green,
+            rm = colors.green,
+            ["r?"] = colors.green,
+            ["!"] = colors.green,
+            t = colors.blue,
+          }
+          local mode_color = mode_colors[vim.fn.mode()]
+          if mode_color == nil then
+            mode_color = colors.white
+          end
+          return " " .. content .. " ",
+              { fg = mode_color, bg = colors.gray }
+        end,
+      },
+
+    },
+    lualine_c = {
+      {
+        "filename",
+        symbols = {
+          modified = "",
+          readonly = "",
+          unnamed = "",
+          newfile = "",
+        },
+      },
+    },
+    lualine_x = {
+      {
+        "space_style",
+        fmt = function(content, context)
+          local expand = vim.opt_local.expandtab:get()
+          local widht = vim.opt_local.shiftwidth:get()
+          local style = expand and "Spaces" or "Tab Size"
+          return ("%s: %s"):format(style, widht)
+        end,
+      },
+      "encoding",
+      {
+        "fileformat",
+        fmt = function(content, context)
+          local symbols = {
+            unix = '', -- e712
+            dos = '', -- e70f
+            mac = '', -- e711
+          }
+          return symbols[content]
+        end,
+      },
+    },
+    lualine_y = {
+      { "location", padding = { left = 0, right = 1 } },
+      { "progress" },
+    },
+    lualine_z = {
+      {
+        "filetype",
+        icons_enabled = false,
+      },
+      {
+        "diagnostics",
+        sources = { "nvim_lsp" },
+        sections = { "error", "warn", "info" },
+        symbols = { error = " ", warn = " ", info = " " },
+        color_error = colors.red,
+        color_warn = colors.yellow,
+        color_info = colors.blue,
+        on_click = function(_, _, group)
+          vim.lsp.diagnostic.goto_next { severity = group }
+        end,
+        fmt = function(content, context)
+          local lsp_client_id = vim.lsp.get_active_clients()
+          local lsp_disconnected = lsp_client_id and #lsp_client_id > 0
+          if lsp_disconnected then
+            return " LSP"
+          else
+            return ""
+          end
+        end,
+      },
+
+    },
+  },
 })
 
 -- Config Bufferline
@@ -238,17 +358,13 @@ require("bufferline").setup {
     diagnostics = "nvim_lsp",
     offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
     show_buffer_close_icons = true,
-    show_close_icon = false,
     separator_style = "any",
     insert_at_end = false,
     insert_at_start = true,
     icon_close_tab = '',
     icon_pinned = '車',
     semantic_letters = true,
-    animation = true,
-    custom_areas = {
-      right = require("visual_studio_code").get_bufferline_right(),
-    },
+    animation = true
   }
 }
 
@@ -592,7 +708,6 @@ local treesitter_symbol = ""
 local buffer_symbol = "﬘"
 local tags_symbol = ""
 local path_symbol = ""
-local cmdline_symbol = "גּ"
 local tmux_symbol = ""
 
 cmp.setup {
@@ -824,20 +939,6 @@ local function open_nvim_tree(data)
   require("nvim-tree.api").tree.open()
 end
 
-vim.cmd([[
-augroup NvimTreeTransparency
-  autocmd!
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeNormal guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeVertSplit guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeEndOfBuffer guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeRootFolder guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeGitDirty guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeGitNew guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeImageFile guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeSymlink guibg=NONE
-  autocmd ColorScheme visual_studio_code :highlight! NvimTreeFolderName guibg=NONE
-augroup END
-]])
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 

@@ -81,35 +81,38 @@ require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim'
 
   -- colorscheme
-  use 'folke/tokyonight.nvim'
+  use "Alexis12119/nightly.nvim"
 
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
   use {
-    'coderj001/stat.nvim',
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      local Stat = require('stat')
-      local ___ = Stat.___
-      Stat.setup({
-        winbar = {},
-        statusline = {
-          Stat.mod.mode,
-          Stat.mod.filetype,
-          Stat.mod.git_diff,
-          ___,
+      local function get_words()
+        if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
+          if vim.fn.wordcount().visual_words == 1 then
+            return tostring(vim.fn.wordcount().visual_words) .. " word"
+          elseif not (vim.fn.wordcount().visual_words == nil) then
+            return tostring(vim.fn.wordcount().visual_words) .. " words"
+          else
+            return tostring(vim.fn.wordcount().words) .. " words"
+          end
+        else
+          return ""
+        end
+      end
+
+      require("lualine").setup({
+        sections = {
+          lualine_a = {},
+          lualine_x = { "filetype" },
+          lualine_z = { get_words },
         },
-        theme = {
-          ["N"] = { fg = "#2d353b", bg = "#83c092" },
-          ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
-          ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
-          ["C"] = { fg = "#2d353b", bg = "#d699b6" },
-          ["T"] = { fg = "#2d353b", bg = "#a7c080" },
-          ["S"] = { fg = "#2d353b", bg = "#e67e80" },
-          ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
-          ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
-          ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
-          ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
-        }
+        extensions = { "nvim-tree" },
+        options = {
+          theme = "nightly",
+        },
       })
     end
   }
@@ -255,8 +258,18 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark"
-require("tokyonight").setup({ style = "night", transparent = true, dim_inactive = true })
-vim.cmd [[colorscheme tokyonight]]
+require("nightly").setup({
+  color = "black",
+  transparent = true,
+  styles = {
+    comments = { italic = true },
+    functions = { italic = true },
+    keywords = { italic = true },
+    variables = { italic = true },
+  },
+  highlights = {},
+})
+vim.cmd [[colorscheme nightly]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -298,18 +311,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- Set lualine as statusline
--- See `:help lualine.txt`
--- require('lualine').setup {
---   options = {
---     icons_enabled = false,
---     theme = 'tokyonight',
---     component_separators = '|',
---     section_separators = '',
---     disabled_filetypes = { 'packer', 'NVimTree' }
---   },
--- }
 
 
 -- Enable Comment.nvim

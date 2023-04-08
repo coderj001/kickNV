@@ -87,7 +87,7 @@ require('packer').startup(function(use)
   -- StatusLine For Neovim
   use {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    requires = { "nvim-web-devicons" },
     config = function()
       local function get_words()
         if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
@@ -103,18 +103,40 @@ require('packer').startup(function(use)
         end
       end
 
+      local function filename()
+        local file = vim.fn.expand("%:p")
+        local homedir = vim.loop.os_homedir()
+        local base_dir = homedir .. "/projects"
+        local _, index = string.find(file, base_dir, 1, true)
+        if index then
+          return vim.fn.fnamemodify(file, ":~:.")
+        else
+          return vim.fn.expand("%:t")
+        end
+      end
+
       require("lualine").setup({
-        sections = {
-          lualine_a = {},
-          lualine_x = { "filetype" },
-          lualine_z = { get_words },
-        },
-        extensions = { "nvim-tree" },
         options = {
-          theme = "nightly",
+          theme = "nightfly",
+          section_separators = "",
+          component_separators = "",
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch" },
+          lualine_c = { { "filename", file_status = true, path = 1, formatter = filename } },
+          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_y = { "progress" },
+          lualine_z = { "location", get_words, { "diagnostics", sources = { "nvim_lsp" } } },
+        },
+        extensions = {
+          "fzf",
+          "fugitive",
+          "quickfix",
+          "nvim-tree",
         },
       })
-    end
+    end,
   }
 
 
@@ -410,6 +432,8 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>gb', require('gitsigns').blame_line, { desc = '[G]it [B]lame' })
+vim.keymap.set('n', '<leader>gd', require('gitsigns').diffthis, { desc = '[G]it [D]iff' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -920,6 +944,8 @@ require("bufferline").setup {
 
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

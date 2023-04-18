@@ -219,6 +219,42 @@ require('packer').startup(function(use)
     end
   })
 
+  use({
+    "NTBBloodbath/rest.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("rest-nvim").setup({
+        result_split_horizontal = false,
+        highlight = { enabled = true, timeout = 150 },
+        result = {
+          show_url = true,
+          show_http_info = true,
+          show_headers = true,
+          formatters = {
+            json = "jq",
+            html = function(body)
+              return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
+            end
+          }
+        },
+        jump_to_request = true,
+      })
+      local rest_nvim = require('rest-nvim')
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "http",
+        callback = function()
+          local buff = tonumber(vim.fn.expand("<abuf>"), 10)
+          vim.keymap.set("n", "<leader>rn", rest_nvim.run,
+            { noremap = true, buffer = buff })
+          vim.keymap.set("n", "<leader>rl", rest_nvim.last,
+            { noremap = true, buffer = buff })
+          vim.keymap.set("n", "<leader>rp", function() rest_nvim.run(true) end,
+            { noremap = true, buffer = buff })
+        end
+      })
+    end
+  })
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -927,7 +963,6 @@ require("bufferline").setup {
     number_style = "",
     diagnostics = "nvim_lsp",
     offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
-    show_buffer_close_icons = true,
     show_close_icon = false,
     separator_style = "any", -- | "thick" | "thin" | { 'any', 'any' },
     insert_at_end = false,
@@ -938,12 +973,21 @@ require("bufferline").setup {
     icon_close_tab_modified = '',
     icon_pinned = '車',
     semantic_letters = true,
-    animation = false
+    hover = {
+      enabled = true,
+      delay = 100,
+      reveal = { 'close' }
+    },
+    indicator = { style = "none" },
+    show_buffer_close_icons = false,
+    show_tab_indicators = false,
+    always_show_bufferline = true,
   }
 }
 
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+
 
 
 

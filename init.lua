@@ -71,8 +71,24 @@ require('packer').startup(function(use)
   use {
     "kwkarlwang/bufresize.nvim",
     config = function()
-      require("bufresize").setup()
-    end
+      local opts = { noremap = true, silent = true }
+      require("bufresize").setup({
+        register = {
+          keys = {
+            { "n", "<leader><",        "<C-w><",             opts },
+            { "n", "<leader>>",        "<C-w>>",             opts },
+            { "n", "<leader>=",        "<C-w>=",             opts },
+            { "n", "<leader>|",        "<C-w>|",             opts },
+          },
+          trigger_events = { "BufWinEnter", "WinEnter" },
+        },
+        resize = {
+          keys = {},
+          trigger_events = { "VimResized" },
+          increment = false,
+        },
+      })
+    end,
   }
 
   -- Git related plugins
@@ -252,6 +268,18 @@ require('packer').startup(function(use)
             { noremap = true, buffer = buff })
         end
       })
+    end
+  })
+
+  use({
+    'declancm/cinnamon.nvim',
+    config = function()
+      require('cinnamon').setup {
+        extra_keymaps = true,
+        override_keymaps = true,
+        max_length = 500,
+        scroll_limit = -7,
+      }
     end
   })
 
@@ -567,7 +595,7 @@ local on_attach = function(_, bufnr)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>D', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -905,20 +933,6 @@ local function open_nvim_tree(data)
   require("nvim-tree.api").tree.open()
 end
 
-vim.cmd([[
-augroup NvimTreeTransparency
-  autocmd!
-  autocmd ColorScheme tokyonight :highlight! NvimTreeNormal guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeVertSplit guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeEndOfBuffer guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeRootFolder guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeGitDirty guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeGitNew guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeImageFile guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeSymlink guibg=NONE
-  autocmd ColorScheme tokyonight :highlight! NvimTreeFolderName guibg=NONE
-augroup END
-]])
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
@@ -987,9 +1001,6 @@ require("bufferline").setup {
 
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
-
-
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

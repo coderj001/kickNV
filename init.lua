@@ -75,10 +75,10 @@ require('packer').startup(function(use)
       require("bufresize").setup({
         register = {
           keys = {
-            { "n", "<leader><",        "<C-w><",             opts },
-            { "n", "<leader>>",        "<C-w>>",             opts },
-            { "n", "<leader>=",        "<C-w>=",             opts },
-            { "n", "<leader>|",        "<C-w>|",             opts },
+            { "n", "<leader><", "<C-w><", opts },
+            { "n", "<leader>>", "<C-w>>", opts },
+            { "n", "<leader>=", "<C-w>=", opts },
+            { "n", "<leader>|", "<C-w>|", opts },
           },
           trigger_events = { "BufWinEnter", "WinEnter" },
         },
@@ -98,6 +98,7 @@ require('packer').startup(function(use)
 
   -- colorscheme
   use "Alexis12119/nightly.nvim"
+  use "rebelot/kanagawa.nvim"
 
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
@@ -133,7 +134,7 @@ require('packer').startup(function(use)
 
       require("lualine").setup({
         options = {
-          theme = "nightfly",
+          theme = "kanagawa",
           section_separators = "",
           component_separators = "",
         },
@@ -278,7 +279,7 @@ require('packer').startup(function(use)
         extra_keymaps = true,
         override_keymaps = true,
         max_length = 500,
-        scroll_limit = -2,
+        scroll_limit = -1,
       }
     end
   })
@@ -344,18 +345,44 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark"
-require("nightly").setup({
-  color = "black",
+
+require('kanagawa').setup({
+  compile = true,
+  commentStyle = { italic = true },
+  functionStyle = { italic = true },
+  keywordStyle = { italic = true },
+  statementStyle = { bold = true },
+  typeStyle = {},
   transparent = true,
-  styles = {
-    comments = { italic = true },
-    functions = { italic = true },
-    keywords = { italic = true },
-    variables = { italic = true },
+  terminalColors = true,
+  colors = {
+    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
   },
-  highlights = {},
+  theme = "dragon",
+  overrides = function(colors)
+    local theme = colors.theme
+    return {
+      TelescopeTitle = { fg = theme.ui.special, bold = true },
+      TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+      TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = "none" },
+      TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = "none" },
+      TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = "none" },
+      TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+      TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+      NormalFloat = { bg = "none" },
+      FloatBorder = { bg = "none" },
+      FloatTitle = { bg = "none" },
+      LineNr = { bg = "none" },
+    }
+  end,
+  background = {
+    dark = "wave",
+    light = "lotus"
+  },
 })
-vim.cmd [[colorscheme nightly]]
+
+
+vim.cmd [[colorscheme kanagawa]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -419,7 +446,46 @@ require('gitsigns').setup {
     topdelete = { text = '‾' },
     changedelete = { text = '~' },
   },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- navigation
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<ignore>'
+    end, { expr = true })
+
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<ignore>'
+    end, { expr = true })
+
+    -- actions
+    map('n', '<leader>hs', gs.stage_hunk)
+    map('n', '<leader>hr', gs.reset_hunk)
+    map('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end)
+    map('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line("."), vim.fn.line("v") } end)
+    map('n', '<leader>hs', gs.stage_buffer)
+    map('n', '<leader>hu', gs.undo_stage_hunk)
+    map('n', '<leader>hr', gs.reset_buffer)
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+    map('n', '<leader>tb', gs.toggle_current_line_blame)
+    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hd', function() gs.diffthis('~') end)
+    map('n', '<leader>td', gs.toggle_deleted)
+    map({ 'o', 'x' }, 'ih', ':<c-u>gitsigns select_hunk<cr>')
+  end
 }
+
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -430,7 +496,7 @@ require('telescope').setup {
       "--line-number", "--column", "--smart-case", "--hidden",
       "--glob=!.git/", "--glob=!node_modules/", "--glob=!.venv/"
     },
-    prompt_prefix = " ",
+    prompt_prefix = '🔍 ',
     selection_caret = " ",
     layout_strategy = "horizontal",
     layout_config = {
@@ -469,7 +535,31 @@ require('telescope').setup {
         preview_height = 0.8,
       },
     },
+    fzf = {
+      fuzzy = true,                   -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
+    },
   },
+  pickers = {
+    buffers = {
+      prompt_title = '✨ Search Buffers ✨',
+      mappings = {
+        n = {
+          ['d'] = require('telescope.actions').delete_buffer,
+          ['<tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_next,
+          ['<s-tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_previous,
+          ['v'] = require('telescope.actions').file_vsplit,
+          ['s'] = require('telescope.actions').file_split,
+          ['<cr>'] = require('telescope.actions').file_edit,
+        },
+      },
+      sort_mru = true,
+      preview_title = false,
+      initial_mode = "normal"
+    },
+  }
 }
 
 -- Enable telescope fzf native, if installed
@@ -482,8 +572,9 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { d
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
+    winblend = 15,
     previewer = false,
+    prompt_title = '✨ Search Current Buffers ✨',
   })
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
@@ -492,8 +583,6 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>gb', require('gitsigns').blame_line, { desc = '[G]it [B]lame' })
-vim.keymap.set('n', '<leader>gd', require('gitsigns').diffthis, { desc = '[G]it [D]iff' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`

@@ -39,7 +39,6 @@ require('packer').startup(function(use)
       'quangnguyen30192/cmp-nvim-tags',
       'andersevenrud/cmp-tmux',
       'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp',
       {
         "L3MON4D3/LuaSnip",
         wants = { "friendly-snippets", "vim-snippets" },
@@ -75,8 +74,6 @@ require('packer').startup(function(use)
       require("bufresize").setup({
         register = {
           keys = {
-            { "n", "<leader><", "<C-w><", opts },
-            { "n", "<leader>>", "<C-w>>", opts },
             { "n", "<leader>=", "<C-w>=", opts },
             { "n", "<leader>|", "<C-w>|", opts },
           },
@@ -132,6 +129,15 @@ require('packer').startup(function(use)
         end
       end
 
+      local function lsp_status()
+        local lsp = vim.lsp.util.get_diagnostics_count(0, [[Error]])
+        local icon = ''
+        if lsp > 0 then
+          icon = ' '
+        end
+        return icon .. 'LSP'
+      end
+
       require("lualine").setup({
         options = {
           theme = "kanagawa",
@@ -139,12 +145,12 @@ require('packer').startup(function(use)
           component_separators = "",
         },
         sections = {
-          lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_a = { { "mode", color = { gui = "bold" } } },
+          lualine_b = { "branch", "diff" },
           lualine_c = { { "filename", file_status = true, path = 1, formatter = filename } },
-          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_x = { "encoding", "fileformat", "filetype", get_words },
           lualine_y = { "progress" },
-          lualine_z = { "location", get_words, { "diagnostics", sources = { "nvim_lsp" } } },
+          lualine_z = { lsp_status, { "diagnostics", sources = { "nvim_lsp" } } },
         },
         extensions = {
           "fzf",
@@ -272,18 +278,6 @@ require('packer').startup(function(use)
     end
   })
 
-  use({
-    'declancm/cinnamon.nvim',
-    config = function()
-      require('cinnamon').setup {
-        extra_keymaps = true,
-        override_keymaps = true,
-        max_length = 500,
-        scroll_limit = -1,
-      }
-    end
-  })
-
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -354,29 +348,40 @@ require('kanagawa').setup({
   statementStyle = { bold = true },
   typeStyle = {},
   transparent = true,
-  terminalColors = true,
-  colors = {
-    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-  },
   theme = "dragon",
+  colors = {
+    palette = {},
+    theme = {
+      wave = {},
+      lotus = {},
+      dragon = {},
+      all = {
+        ui = {
+          bg_gutter = "none"
+        }
+      }
+    },
+  },
   overrides = function(colors)
     local theme = colors.theme
     return {
-      TelescopeTitle = { fg = theme.ui.special, bold = true },
-      TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+      TelescopeTitle = { bold = true },
+      TelescopePromptNormal = { bg = theme.ui.bg_p1, fg = "none" },
       TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = "none" },
       TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = "none" },
       TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = "none" },
       TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-      TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
-      NormalFloat = { bg = "none" },
-      FloatBorder = { bg = "none" },
-      FloatTitle = { bg = "none" },
+      -- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+      -- NormalFloat = { bg = "none" },
       LineNr = { bg = "none" },
+      CursorLineNr = { bg = "none" },
+      GitsignsAdd = { bg = "none" },
+      GitSignsChange = { bg = "none" },
+      GitsignsDelete = { bg = "none" },
     }
   end,
   background = {
-    dark = "wave",
+    dark = "dragon",
     light = "lotus"
   },
 })
@@ -429,7 +434,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Enable Comment.nvim
 require('Comment').setup()
 
--- Enable `lukas-reineke/indent-blankline.nvim`
+
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
   char = '┊',
@@ -496,7 +501,7 @@ require('telescope').setup {
       "--line-number", "--column", "--smart-case", "--hidden",
       "--glob=!.git/", "--glob=!node_modules/", "--glob=!.venv/"
     },
-    prompt_prefix = '🔍 ',
+    prompt_prefix = "🔍 ",
     selection_caret = " ",
     layout_strategy = "horizontal",
     layout_config = {
@@ -512,7 +517,8 @@ require('telescope').setup {
     initial_mode = "insert",
     path_display = { "truncate" },
     winblend = 20,
-    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    borderchars = { '━', '┃', '━', '┃', '┏', '┓', '┛', '┗' },
     color_devicons = true,
     use_less = true,
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
@@ -1063,19 +1069,19 @@ require("bufferline").setup {
     diagnostics = "nvim_lsp",
     offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "left" } },
     show_close_icon = false,
-    separator_style = "any", -- | "thick" | "thin" | { 'any', 'any' },
+    separator_style = "any",
     insert_at_end = false,
     insert_at_start = true,
-    icon_separator_active = '▎',
-    icon_separator_inactive = '▎',
-    icon_close_tab = '',
-    icon_close_tab_modified = '',
-    icon_pinned = '車',
+    icon_separator_active = "▎",
+    icon_separator_inactive = "▎",
+    icon_close_tab = "",
+    icon_close_tab_modified = "",
+    icon_pinned = "車",
     semantic_letters = true,
     hover = {
       enabled = true,
       delay = 100,
-      reveal = { 'close' }
+      reveal = { "close" }
     },
     indicator = { style = "none" },
     show_buffer_close_icons = false,

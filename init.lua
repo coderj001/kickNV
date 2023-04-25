@@ -53,15 +53,96 @@ require('packer').startup(function(use)
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
+    config = function()
+      -- [[ Configure Treesitter ]]
+      -- See `:help nvim-treesitter`
+      require('nvim-treesitter.configs').setup {
+        -- Add languages to be installed here that you want installed for treesitter
+        ensure_installed = {
+          "cpp", "python", "javascript", "html", "json", "tsx", "go", "gomod",
+          "typescript", "bash", "lua", "dockerfile", "comment", "markdown",
+          "glimmer", "regex", "tsx", "vim", "yaml", "toml"
+        },
+        highlight = { enable = true, additional_vim_regex_highlighting = false, disable = { "cpp", "latex" } },
+        indent = { enable = { "javascriptreact" }, disable = { 'python' } },
+        autotag = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = '<c-space>',
+            node_incremental = '<c-space>',
+            scope_incremental = '<c-s>',
+            node_decremental = '<c-backspace>',
+          },
+        },
+        rainbow = { enable = true, extendend_mode = true, max_file_lines = 1000 },
+        context_commentstring = {
+          enable = true,
+        },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+            keymaps = {
+              -- You can use the capture groups defined in textobjects.scm
+              ['aa'] = '@parameter.outer',
+              ['ia'] = '@parameter.inner',
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
+              ['ic'] = '@class.inner',
+            },
+          },
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              [']m'] = '@function.outer',
+              [']]'] = '@class.outer',
+            },
+            goto_next_end = {
+              [']M'] = '@function.outer',
+              [']['] = '@class.outer',
+            },
+            goto_previous_start = {
+              ['[m'] = '@function.outer',
+              ['[['] = '@class.outer',
+            },
+            goto_previous_end = {
+              ['[M'] = '@function.outer',
+              ['[]'] = '@class.outer',
+            },
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ['<leader>a'] = '@parameter.inner',
+            },
+            swap_previous = {
+              ['<leader>A'] = '@parameter.inner',
+            },
+          },
+        },
+      }
+    end,
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
   }
 
-  use { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
+  use({
+    'nvim-treesitter/nvim-treesitter-textobjects', -- Additional text objects via treesitter
     after = 'nvim-treesitter',
-  }
+  })
 
-  use({ "p00f/nvim-ts-rainbow" })   -- Additional Color to Brackets
-  use({ "windwp/nvim-ts-autotag" }) -- Additional Auto open tags
+  use({
+    "p00f/nvim-ts-rainbow", -- Additional Color to Brackets
+    after = 'nvim-treesitter',
+  })
+  use({
+    "windwp/nvim-ts-autotag", -- Additional Auto open tags
+    after = 'nvim-treesitter'
+  })
 
   -- Window Split Manager
   use {
@@ -91,6 +172,8 @@ require('packer').startup(function(use)
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
+  use 'tpope/vim-surround'
+  use 'jiangmiao/auto-pairs'
   use 'lewis6991/gitsigns.nvim'
 
   -- colorscheme
@@ -164,8 +247,13 @@ require('packer').startup(function(use)
 
 
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
+  use {
+    'numToStr/Comment.nvim',                -- "gc" to comment visual regions/lines
+    config = function()
+      require('Comment').setup()
+    end
+  }
+  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -173,7 +261,7 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
   use { "debugloop/telescope-undo.nvim" }
-  use { 'nvim-telescope/telescope-ui-select.nvim' }
+
 
   use({ "windwp/nvim-autopairs" })      -- auto-pairs
   use { "max397574/better-escape.nvim", -- better excepe experience
@@ -216,11 +304,11 @@ require('packer').startup(function(use)
     config = function()
       require("modes").setup({
         colors = {
-          normal = "#c792ea",
-          insert = "#89ddff",
+          normal = "#8ba4b0",
+          insert = "#98bb6c",
           delete = "#ff5370",
           copy = "#f78c6c",
-          visual = "#82aaff"
+          visual = "#8992a7"
         },
         line_opacity = 0.25,
         set_cursor = true,
@@ -241,6 +329,16 @@ require('packer').startup(function(use)
       })
     end
   })
+
+  use {
+  'AckslD/nvim-trevJ.lua',
+  config = 'require("trevj").setup()',
+  setup = function()
+    vim.keymap.set('n', '<leader>j', function()
+      require('trevj').format_at_cursor()
+    end)
+  end,
+}
 
   use({
     "NTBBloodbath/rest.nvim",
@@ -431,8 +529,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 
--- Enable Comment.nvim
-require('Comment').setup()
 
 
 -- See `:help indent_blankline.txt`
@@ -589,73 +685,6 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
-require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { "cpp", "python", "javascript", "html", "json", "tsx", "go", "gomod",
-    "typescript", "bash", "lua", "dockerfile", "comment", "markdown",
-    "glimmer", "regex", "tsx", "vim", "yaml", "toml" },
-
-  highlight = { enable = true, additional_vim_regex_highlighting = false, disable = { "cpp", "latex" } },
-  indent = { enable = { "javascriptreact" }, disable = { 'python' } },
-  autotag = { enable = true },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<c-backspace>',
-    },
-  },
-  rainbow = { enable = true, extendend_mode = true, max_file_lines = 1000 },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
-  },
-}
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -1079,10 +1108,10 @@ require("bufferline").setup {
     icon_pinned = "車",
     semantic_letters = true,
     hover = {
-      enabled = true,
-      delay = 100,
-      reveal = { "close" }
-    },
+          enabled = true,
+          delay = 100,
+          reveal = { "close" }
+        },
     indicator = { style = "none" },
     show_buffer_close_icons = false,
     show_tab_indicators = false,
@@ -1092,6 +1121,7 @@ require("bufferline").setup {
 
 vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

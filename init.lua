@@ -179,6 +179,8 @@ require('packer').startup(function(use)
   -- colorscheme
   use "Alexis12119/nightly.nvim"
   use "rebelot/kanagawa.nvim"
+  use 'folke/tokyonight.nvim'
+
 
   use { 'kyazdani42/nvim-web-devicons' }
   -- StatusLine For Neovim
@@ -223,7 +225,7 @@ require('packer').startup(function(use)
 
       require("lualine").setup({
         options = {
-          theme = "kanagawa",
+          theme = "tokyonight",
           section_separators = "",
           component_separators = "",
         },
@@ -331,14 +333,14 @@ require('packer').startup(function(use)
   })
 
   use {
-  'AckslD/nvim-trevJ.lua',
-  config = 'require("trevj").setup()',
-  setup = function()
-    vim.keymap.set('n', '<leader>j', function()
-      require('trevj').format_at_cursor()
-    end)
-  end,
-}
+    'AckslD/nvim-trevJ.lua',
+    config = 'require("trevj").setup()',
+    setup = function()
+      vim.keymap.set('n', '<leader>j', function()
+        require('trevj').format_at_cursor()
+      end)
+    end,
+  }
 
   use({
     "NTBBloodbath/rest.nvim",
@@ -484,8 +486,28 @@ require('kanagawa').setup({
   },
 })
 
+require("tokyonight").setup({
+  style = "moon",
+  light_style = "night",
+  transparent = true,
+  terminal_colors = true,
+  styles = {
+    comments = { italic = true },
+    keywords = { italic = true },
+    functions = { italic = true },
+    variables = { italic = true },
+    sidebars = "dark",
+    floats = "dark",
+  },
+  sidebars = { "qf", "help" },
+  day_brightness = 0.3,
+  hide_inactive_statusline = true,
+  dim_inactive = true,
+  lualine_bold = true,
+})
 
-vim.cmd [[colorscheme kanagawa]]
+
+vim.cmd [[colorscheme tokyonight]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -684,6 +706,7 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sx', require('telescope.builtin').resume, { desc = '[S]earch by [X]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- Diagnostic keymaps
@@ -957,11 +980,11 @@ vim.api.nvim_set_keymap("n", "<C-l>", ":lua require('smart-splits').move_cursor_
 -- Load nvim-tree plugin
 require('nvim-tree').setup {
   -- Set options for nvim-tree
-  disable_netrw       = true, -- Disable netrw
-  hijack_netrw        = true, -- Hijack netrw window on startup
+  disable_netrw       = false, -- Disable netrw
+  hijack_netrw        = false, -- Hijack netrw window on startup
   update_focused_file = {
-    enable     = true,        -- Update the focused file in the tree when you change files
-    update_cwd = true,        -- Update the current working directory of the tree
+    enable     = true,         -- Update the focused file in the tree when you change files
+    update_cwd = true,         -- Update the current working directory of the tree
   },
   view                = {
     cursorline = true,
@@ -1073,17 +1096,48 @@ load_extra_options()
 -- Hop Config
 -- place this in one of your configuration file(s)
 local hop = require('hop')
-hop.setup { term_seq_bias = 0.5, keys = 'etovxqpdygfblzhckisuran' }
+hop.setup {
+  term_seq_bias = 0.5,
+  keys = 'etovxqpdygfblzhckisuran',
+}
 local directions = require('hop.hint').HintDirection
 vim.keymap.set({ 'n', 'v' }, 'f',
-  function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true }) end, { remap = true })
+  function()
+    hop.hint_char1({
+      direction = directions.AFTER_CURSOR,
+      current_line_only = true,
+    })
+  end,
+  { remap = true })
 vim.keymap.set({ 'n', 'v' }, 'F',
-  function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true }) end, { remap = true })
+  function()
+    hop.hint_char1(
+      {
+        direction = directions.BEFORE_CURSOR,
+        current_line_only = true,
+      }
+    )
+  end,
+  { remap = true })
 vim.keymap.set({ 'n', 'v' }, 't',
-  function() hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 }) end,
+  function()
+    hop.hint_char1(
+      {
+        direction = directions.AFTER_CURSOR,
+        current_line_only = true,
+        hint_offset = -1,
+      }
+    )
+  end,
   { remap = true })
 vim.keymap.set({ 'n', 'v' }, 'T',
-  function() hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }) end,
+  function()
+    hop.hint_char1({
+      direction = directions.BEFORE_CURSOR,
+      current_line_only = true,
+      hint_offset = 1,
+    })
+  end,
   { remap = true })
 vim.keymap.set({ 'n', 'v' }, '<leader>w', function() hop.hint_words() end, {})
 vim.keymap.set({ 'n', 'v' }, '<leader>k', function() hop.hint_lines() end, {})
@@ -1108,10 +1162,10 @@ require("bufferline").setup {
     icon_pinned = "車",
     semantic_letters = true,
     hover = {
-          enabled = true,
-          delay = 100,
-          reveal = { "close" }
-        },
+      enabled = true,
+      delay = 100,
+      reveal = { "close" }
+    },
     indicator = { style = "none" },
     show_buffer_close_icons = false,
     show_tab_indicators = false,

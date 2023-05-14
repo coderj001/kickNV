@@ -615,9 +615,17 @@ require('gitsigns').setup {
 require('telescope').setup {
   defaults = {
     vimgrep_arguments = {
-      "rg", "--color=never", "--no-heading", "--with-filename",
-      "--line-number", "--column", "--smart-case", "--hidden",
-      "--glob=!.git/", "--glob=!node_modules/", "--glob=!.venv/"
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+      "--glob=!.git/",
+      "--glob=!node_modules/",
+      "--glob=!.venv/",
     },
     prompt_prefix = "🔍 ",
     selection_caret = " ",
@@ -648,6 +656,10 @@ require('telescope').setup {
       i = {
         ['<C-u>'] = false,
         ['<C-d>'] = false,
+        ["<C-n>"] = require('telescope.actions').cycle_history_next,
+        ["<C-p>"] = require('telescope.actions').cycle_history_prev,
+        ["<C-j>"] = require('telescope.actions').move_selection_next,
+        ["<C-k>"] = require('telescope.actions').move_selection_previous,
       },
     },
   },

@@ -41,7 +41,10 @@ require('packer').startup(function(use)
       'saadparwaiz1/cmp_luasnip',
       {
         "L3MON4D3/LuaSnip",
-        wants = { "friendly-snippets", "vim-snippets" },
+        wants = {
+          "friendly-snippets",
+          "vim-snippets",
+        },
       },
       "rafamadriz/friendly-snippets",
       "honza/vim-snippets",
@@ -59,12 +62,36 @@ require('packer').startup(function(use)
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = {
-          "cpp", "python", "javascript", "html", "json", "tsx", "go", "gomod",
-          "typescript", "bash", "lua", "dockerfile", "comment", "markdown",
-          "glimmer", "regex", "tsx", "vim", "yaml", "toml"
+          "cpp",
+          "python",
+          "javascript",
+          "html",
+          "json",
+          "tsx",
+          "go",
+          "gomod",
+          "typescript",
+          "bash",
+          "lua",
+          "dockerfile",
+          "comment",
+          "markdown",
+          "glimmer",
+          "regex",
+          "tsx",
+          "vim",
+          "yaml",
+          "toml",
         },
-        highlight = { enable = true, additional_vim_regex_highlighting = false, disable = { "cpp", "latex" } },
-        indent = { enable = { "javascriptreact" }, disable = { 'python' } },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+          disable = { "cpp", "latex" },
+        },
+        indent = {
+          enable = { "javascriptreact" },
+          disable = { 'python' },
+        },
         autotag = { enable = true },
         incremental_selection = {
           enable = true,
@@ -75,7 +102,11 @@ require('packer').startup(function(use)
             node_decremental = '<c-backspace>',
           },
         },
-        rainbow = { enable = true, extendend_mode = true, max_file_lines = 1000 },
+        rainbow = {
+          enable = true,
+          extendend_mode = true,
+          max_file_lines = 1000,
+        },
         context_commentstring = {
           enable = true,
         },
@@ -292,11 +323,18 @@ require('packer').startup(function(use)
     event = "BufRead",
     config = function()
       require("nvim-lastplace").setup({
-        lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-        lastplace_ignore_filetype = {
-          "gitcommit", "gitrebase", "svn", "hgcommit"
+        lastplace_ignore_buftype = {
+          "quickfix",
+          "nofile",
+          "help",
         },
-        lastplace_open_folds = true
+        lastplace_ignore_filetype = {
+          "gitcommit",
+          "gitrebase",
+          "svn",
+          "hgcommit",
+        },
+        lastplace_open_folds = true,
       })
     end
   })
@@ -314,7 +352,10 @@ require('packer').startup(function(use)
         },
         line_opacity = 0.25,
         set_cursor = true,
-        ignore_filetypes = { "NvimTree", "TelescopePrompt" }
+        ignore_filetypes = {
+          "NvimTree",
+          "TelescopePrompt",
+        }
       })
     end
   })
@@ -326,7 +367,11 @@ require('packer').startup(function(use)
         cursor = "",
         fancy = {
           enable = true,
-          head = { cursor = "", texthl = "SmoothCursor", linehl = nil }
+          head = {
+            cursor = "",
+            texthl = "SmoothCursor",
+            linehl = nil,
+          }
         }
       })
     end

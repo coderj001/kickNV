@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y \
     git \
     libtool \
     pkg-config \
-    unzip
+    unzip \
+    nodejs \
+    npm
 
 # Build neovim (and use it as an example codebase)
 RUN git clone https://github.com/neovim/neovim.git

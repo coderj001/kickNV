@@ -11,7 +11,8 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use { -- LSP Configuration & Plugins
+  use({
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
@@ -26,10 +27,11 @@ require('packer').startup(function(use)
     },
     config = function()
       require("plugin.config.lsp").setup()
-    end
-  }
+    end,
+  })
 
-  use { -- Autocompletion
+  use({
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
@@ -55,20 +57,50 @@ require('packer').startup(function(use)
     config = function()
       require("plugin.config.cmp").setup()
     end
-  }
+  })
 
-  use { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
+  use({
+    -- Highlight, edit, and navigate code
+    "nvim-treesitter/nvim-treesitter",
     run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
+      pcall(require("nvim-treesitter.install").update { with_sync = true })
     end,
     config = function()
       require("plugin.config.treesitter").setup()
     end,
     dependencies = {
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
-  }
+    requires = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects", -- Additional text objects via treesitter
+        after = 'nvim-treesitter',
+      },
+      {
+        "p00f/nvim-ts-rainbow", -- Additional Color to Brackets
+        after = 'nvim-treesitter',
+      },
+      {
+        "windwp/nvim-ts-autotag", -- Additional Auto open tags
+        after = 'nvim-treesitter'
+      }
+    }
+  })
+
+  -- Window Split Manager
+  use({
+    "mrjones2014/smart-splits.nvim",
+    config = function()
+      require("plugin.config.smartsplit").setup()
+    end
+  })
+
+  use({
+    "kwkarlwang/bufresize.nvim",
+    config = function()
+      require("plugin.config.bufresize").setup()
+    end,
+  })
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')

@@ -1,135 +1,30 @@
--- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = true
-  vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
-  vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-  -- Package manager
-  use 'wbthomason/packer.nvim'
-
-  use({
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    requires = {
-      -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
-
-      -- Additional lua configuration, makes nvim stuff amazing
-      'folke/neodev.nvim',
-    },
-    config = function()
-      require("plugin.config.lsp").setup()
-    end,
-  })
-
-  use({
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    requires = {
-      'hrsh7th/cmp-nvim-lsp',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-nvim-lua',
-      'ray-x/cmp-treesitter',
-      'lukas-reineke/cmp-rg',
-      'quangnguyen30192/cmp-nvim-tags',
-      'andersevenrud/cmp-tmux',
-      'saadparwaiz1/cmp_luasnip',
-      {
-        "L3MON4D3/LuaSnip",
-        wants = {
-          "friendly-snippets",
-          "vim-snippets",
-        },
-      },
-      "rafamadriz/friendly-snippets",
-      "honza/vim-snippets",
-    },
-    config = function()
-      require("plugin.config.cmp").setup()
-    end
-  })
-
-  use({
-    -- Highlight, edit, and navigate code
-    "nvim-treesitter/nvim-treesitter",
-    run = function()
-      pcall(require("nvim-treesitter.install").update { with_sync = true })
-    end,
-    config = function()
-      require("plugin.config.treesitter").setup()
-    end,
+local plugins = {
+  {
+    "neovim/nvim-lspconfig",
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
-    requires = {
       {
-        "nvim-treesitter/nvim-treesitter-textobjects", -- Additional text objects via treesitter
-        after = 'nvim-treesitter',
-      },
-      {
-        "p00f/nvim-ts-rainbow", -- Additional Color to Brackets
-        after = 'nvim-treesitter',
-      },
-      {
-        "windwp/nvim-ts-autotag", -- Additional Auto open tags
-        after = 'nvim-treesitter'
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "j-hui/fidget.nvim",
+        "folke/neodev.nvim",
       }
     }
-  })
+  }
+}
 
-  -- Window Split Manager
-  use({
-    "mrjones2014/smart-splits.nvim",
-    config = function()
-      require("plugin.config.smartsplit").setup()
-    end
-  })
+local opts = {}
 
-  use({
-    "kwkarlwang/bufresize.nvim",
-    config = function()
-      require("plugin.config.bufresize").setup()
-    end,
-  })
-
-  -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
-  local has_plugins, plugins = pcall(require, 'custom.plugins')
-  if has_plugins then
-    plugins(use)
-  end
-
-  if is_bootstrap then
-    require('packer').sync()
-  end
-end)
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- You'll need to restart nvim, and then it will work.
-if is_bootstrap then
-  print '=================================='
-  print '    Plugins are being installed'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '=================================='
-  return
-end
-
--- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', {
-  command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile',
-  group = packer_group,
-  pattern = vim.fn.expand '$MYVIMRC',
-})
+require("lazy").setup(plugins, opts)

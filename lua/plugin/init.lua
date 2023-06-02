@@ -109,11 +109,28 @@ local plugins = {
     config = function()
       require('Comment').setup()
     end
-  },                 -- "gc" to comment visual regions/lines
+  },                  -- "gc" to comment visual regions/lines
 
-  "tpope/vim-sleuth" -- Detect tabstop and shiftwidth automatically
+  "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+
+  "windwp/nvim-autopairs", -- braket and tag
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require('better_escape').setup {
+        mapping = { "jk" }, -- a table with mappings to use
+      }
+    end
+  },
+
+  { -- File manager
+    "nvim-tree/nvim-tree.lua",
+    version = "nightly"
+  },
+
 }
 
 local opts = {}
 
 require("lazy").setup(plugins, opts)
+require('plugin.config.colorscheme').setup()

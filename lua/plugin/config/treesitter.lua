@@ -1,17 +1,17 @@
 local M = {}
+local status, ts = pcall(require, "nvim-treesitter.configs")
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 
 function M.setup()
-  -- [[ Configure Treesitter ]]
-  -- See `:help nvim-treesitter`
-  require('nvim-treesitter.configs').setup {
-    -- Add languages to be installed here that you want installed for treesitter
+  if (not status) then return end
+  ts.setup {
     ensure_installed = {
       "cpp",
       "python",
       "javascript",
       "html",
       "json",
-      "tsx",
+      "json5",
       "go",
       "gomod",
       "typescript",
@@ -22,10 +22,14 @@ function M.setup()
       "markdown",
       "glimmer",
       "regex",
-      "tsx",
       "vim",
       "yaml",
       "toml",
+      "tsx",
+      "css",
+      "scss",
+      "dockerfile",
+      "vim",
     },
     highlight = {
       enable = true,
@@ -99,6 +103,7 @@ function M.setup()
       },
     },
   }
+  parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 end
 
 return M

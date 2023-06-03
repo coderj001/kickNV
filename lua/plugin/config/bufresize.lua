@@ -1,7 +1,7 @@
 local M = {}
+local opts = require("core.default_config").opts
 
 function M.setup()
-  local opts = require("core.default_config").opts
   require("bufresize").setup({
     register = {
       keys = {

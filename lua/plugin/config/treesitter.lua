@@ -29,7 +29,6 @@ function M.setup()
       "css",
       "scss",
       "dockerfile",
-      "vim",
     },
     highlight = {
       enable = true,

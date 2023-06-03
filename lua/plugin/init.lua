@@ -12,8 +12,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  -- LSP
   {
+    -- LSP: Langauge Server Protocol
     "neovim/nvim-lspconfig",
     dependencies = {
       {
@@ -27,8 +27,8 @@ local plugins = {
       require('plugin.config.lsp').setup()
     end
   },
-  -- AutoCompletion
   {
+    -- AutoCompletion
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -52,6 +52,7 @@ local plugins = {
     }
   },
   {
+    -- File Syntax
     "nvim-treesitter/nvim-treesitter",
     build = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
@@ -78,10 +79,16 @@ local plugins = {
       end
     }
   },
+
   -- Git related plugins
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
-  "lewis6991/gitsigns.nvim",
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("plugin.config.gitsigns").setup()
+    end
+  },
 
   "jiangmiao/auto-pairs",
   "tpope/vim-surround",
@@ -102,16 +109,24 @@ local plugins = {
     }
   },
 
-  "lukas-reineke/indent-blankline.nvim", -- Add indentation guides even on blank lines
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require('indent_blankline').setup {
+        char = '┊',
+        show_trailing_blankline_indent = false,
+      }
+    end
+  }, -- Add indentation guides even on blank lines
 
   {
     "numToStr/Comment.nvim",
     config = function()
       require('Comment').setup()
     end
-  },                  -- "gc" to comment visual regions/lines
+  },                       -- "gc" to comment visual regions/lines
 
-  "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+  "tpope/vim-sleuth",      -- Detect tabstop and shiftwidth automatically
 
   "windwp/nvim-autopairs", -- braket and tag
   {
@@ -123,11 +138,66 @@ local plugins = {
     end
   },
 
-  { -- File manager
+  {
+    -- File manager
     "nvim-tree/nvim-tree.lua",
     version = "nightly"
   },
 
+  {
+    -- Bufferline
+    'akinsho/bufferline.nvim',
+    version = "v3.*",
+    config = function()
+      require("plugin.config.bufferline").setup()
+    end
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    version = "0.1.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make",
+        cond = vim.fn.executable "make" == 1,
+      },
+      "debugloop/telescope-undo.nvim"
+    }
+  },
+
+  {
+    "ethanholz/nvim-lastplace",
+    event = "BufRead",
+    config = function()
+      require('plugin.config.lastplace').setup()
+    end
+  },
+
+  {
+    "mvllow/modes.nvim",
+    config = function()
+      require("plugin.config.modes").setup()
+    end
+  },
+
+  {
+    "gen740/SmoothCursor.nvim",
+    config = function()
+      require("plugin.config.smoothcursor").setup()
+    end
+  },
+
+  {
+    "NTBBloodbath/rest.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    config = function()
+      require("plugin.config.rest")
+    end
+  }
 }
 
 local opts = {}

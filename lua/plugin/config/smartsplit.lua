@@ -1,8 +1,8 @@
 local M = {}
+local smart_splits = require "smart-splits"
 
 function M.setup()
-  -- Smart Split Config
-  require("smart-splits").setup {
+  smart_splits.setup {
     ignored_filetypes = { 'nofile', 'quickfix', 'prompt' },
     ignored_buftypes = { 'NvimTree' },
     resize_mode = {

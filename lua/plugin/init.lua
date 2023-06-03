@@ -145,6 +145,15 @@ local plugins = {
   },
 
   {
+    -- Notifocation
+    "rcarriga/nvim-notify",
+    config = function()
+      require("plugin.config.notification").setup()
+    end,
+    lazy = false
+  },
+
+  {
     -- Bufferline
     'akinsho/bufferline.nvim',
     version = "v3.*",
@@ -155,6 +164,8 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
+    event = "Bufenter",
+    cmd = { "Telescope" },
     version = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -164,7 +175,10 @@ local plugins = {
         cond = vim.fn.executable "make" == 1,
       },
       "debugloop/telescope-undo.nvim"
-    }
+    },
+    config = function()
+      require("plugin.config.telescope").setup()
+    end
   },
 
   {

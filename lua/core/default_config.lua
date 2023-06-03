@@ -10,18 +10,25 @@ M.ui = {
 	changed_themes = {},
 	theme_toggle = { "onedark", "one_light" },
 	theme = "onedark",    -- default theme
-	transparency = false,
-	lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
+	transparency = true,
 }
 
-M.plugins = "" -- path i.e "custom.plugins", so make custom/plugins.lua file
+M.plugins = ""
 
 M.opts = { noremap = true, silent = true }
 
 M.servers = {
 	clangd = {},
 	gopls = {},
-	pyright = {},
+	pyright = {
+		settings = {
+			python = {
+				analysis = {
+					typeCheckingMode = "off",
+				},
+			},
+		},
+	},
 	rust_analyzer = {},
 	jsonls = {
 		settings = {

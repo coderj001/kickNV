@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     unzip \
     nodejs \
-    npm
+    npm \ 
+    python3 \
+    python3-pip
 
 # Build neovim (and use it as an example codebase)
 RUN git clone https://github.com/neovim/neovim.git
@@ -28,5 +30,8 @@ RUN apt-get install -y \
     universal-ctags \
     ripgrep
 
-WORKDIR /root/.config/nvim
+RUN npm i -g neovim
 
+RUN pip install pynvim
+
+WORKDIR /root/.config/nvim

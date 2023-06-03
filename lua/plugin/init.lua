@@ -141,7 +141,11 @@ local plugins = {
   {
     -- File manager
     "nvim-tree/nvim-tree.lua",
-    version = "nightly"
+    version = "nightly",
+    event = "VimEnter",
+    config = function()
+      require('plugin.config.nvimtree').setup()
+    end
   },
 
   {
@@ -211,6 +215,12 @@ local plugins = {
     config = function()
       require("plugin.config.rest")
     end
+  },
+
+  {
+    "phaazon/hop.nvim",
+    version = "v2",
+    config = function() require("plugin.config.hop").setup() end
   }
 }
 

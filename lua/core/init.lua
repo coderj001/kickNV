@@ -1,7 +1,6 @@
 local opt = vim.opt
 local g = vim.g
 local o = vim.o
-local keymap = vim.keymap.set
 
 ------------ options ----------
 
@@ -47,3 +46,6 @@ opt.ruler = false
 
 g.mapleader = " "
 g.maplocalleader = " "
+
+
+------------ autocommand ----------

@@ -1,4 +1,5 @@
 local M = {}
+local keymap = vim.keymap.set
 
 M.options = {
 	kicknv_branch = "master"
@@ -9,7 +10,7 @@ M.ui = {
 	hl_override = {},
 	changed_themes = {},
 	theme_toggle = { "onedark", "one_light" },
-	theme = "onedark",    -- default theme
+	theme = "onedark", -- default theme
 	transparency = true,
 }
 
@@ -104,5 +105,16 @@ M.on_attach = function(_, bufnr)
 		vim.lsp.buf.format()
 	end, { desc = 'Format current buffer with LSP' })
 end
+
+M.keymap = keymap
+
+M.keymaps = {
+	telescope = function()
+		print("Hi")
+	end,
+	hop = function()
+		print("Hi")
+	end
+}
 
 return M

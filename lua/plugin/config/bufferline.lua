@@ -1,5 +1,7 @@
 local M = {}
 local bufferline = require "bufferline"
+local opts = require("core.default_config").opts
+local keymap = require("core.default_config").keymap
 
 function M.setup()
   bufferline.setup {
@@ -28,8 +30,9 @@ function M.setup()
       always_show_bufferline = true,
     }
   }
+
+  keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", opts)
+  keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", opts)
 end
 
-vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 return M

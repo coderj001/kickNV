@@ -1,4 +1,6 @@
 local M = {}
+local keymap = require("core.default_config").keymap
+local opts = require("core.default_config").opts
 
 
 function M.setup()
@@ -90,6 +92,13 @@ function M.setup()
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
   pcall(require('telescope').load_extension, 'undo')
+
+  keymap('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+  keymap('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+  keymap('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+  keymap('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+  keymap('n', '<leader>sx', require('telescope.builtin').resume, { desc = '[S]earch by [X]rep' })
+  keymap('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 end
 
 return M

@@ -1,4 +1,6 @@
 local M = {}
+local opts = require("core.default_config").opts
+local keymap = require("core.default_config").keymap
 
 function M.setup()
   -- Load nvim-tree plugin
@@ -85,7 +87,7 @@ function M.setup()
   }
 
   -- Keybindings for nvim-tree
-  vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+  keymap('n', '<leader>n', ':NvimTreeToggle<CR>', opts)
 end
 
 return M

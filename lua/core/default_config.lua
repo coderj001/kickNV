@@ -1,5 +1,9 @@
 local M = {}
-local keymap = vim.keymap.set
+local set = vim.keymap.set
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+local opts_s = { silent = true }
+local opts_e_s = { expr = true, silent = true }
 
 M.options = {
 	kicknv_branch = "master"
@@ -16,7 +20,7 @@ M.ui = {
 
 M.plugins = ""
 
-M.opts = { noremap = true, silent = true }
+M.opts = opts
 
 M.servers = {
 	clangd = {},
@@ -107,6 +111,7 @@ M.on_attach = function(_, bufnr)
 end
 
 M.keymap = keymap
+M.set = set
 
 M.keymaps = {
 	telescope = function()
@@ -114,6 +119,19 @@ M.keymaps = {
 	end,
 	hop = function()
 		print("Hi")
+	end,
+	default_keymaps = function()
+		set({ 'n', 'v' }, '<Space>', '<Nop>', opts_s)
+		set('n', 'k', "v:count == 0 ? 'gk' : 'k'", opts_e_s)
+		set('n', 'j', "v:count == 0 ? 'gj' : 'j'", opts_e_s)
+		-- better indenting
+		set("v", "<", "<gv")
+		set("v", ">", ">gv")
+		-- Resize window using <ctrl> arrow keys
+		set("n", "<C-Up>", "<cmd>resize +2<cr>")
+		set("n", "<C-Down>", "<cmd>resize -2<cr>")
+		set("n", "<C-Left>", "<cmd>vertical resize -2<cr>")
+		set("n", "<C-Right>", "<cmd>vertical resize +2<cr>")
 	end
 }
 

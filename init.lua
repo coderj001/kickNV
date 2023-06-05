@@ -61,28 +61,8 @@ require('packer').startup(function(use)
       -- See `:help nvim-treesitter`
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = {
-          "cpp",
-          "python",
-          "javascript",
-          "html",
-          "json",
-          "tsx",
-          "go",
-          "gomod",
-          "typescript",
-          "bash",
-          "lua",
-          "dockerfile",
-          "comment",
-          "markdown",
-          "glimmer",
-          "regex",
-          "tsx",
-          "vim",
-          "yaml",
-          "toml",
-        },
+        ensure_installed = "all",
+        sync_install = false,
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
@@ -105,10 +85,11 @@ require('packer').startup(function(use)
         rainbow = {
           enable = true,
           extendend_mode = true,
-          max_file_lines = 1000,
+          max_file_lines = nil,
         },
         context_commentstring = {
           enable = true,
+          enable_autocmd = false,
         },
         textobjects = {
           select = {
@@ -122,6 +103,15 @@ require('packer').startup(function(use)
               ['if'] = '@function.inner',
               ['ac'] = '@class.outer',
               ['ic'] = '@class.inner',
+            },
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ['<leader>a'] = '@parameter.inner',
+            },
+            swap_previous = {
+              ['<leader>A'] = '@parameter.inner',
             },
           },
           move = {
@@ -144,21 +134,9 @@ require('packer').startup(function(use)
               ['[]'] = '@class.outer',
             },
           },
-          swap = {
-            enable = true,
-            swap_next = {
-              ['<leader>a'] = '@parameter.inner',
-            },
-            swap_previous = {
-              ['<leader>A'] = '@parameter.inner',
-            },
-          },
         },
       }
-    end,
-    dependencies = {
-      'JoosepAlviste/nvim-ts-context-commentstring',
-    },
+    end
   }
 
   use({
@@ -173,6 +151,22 @@ require('packer').startup(function(use)
   use({
     "windwp/nvim-ts-autotag", -- Additional Auto open tags
     after = 'nvim-treesitter'
+  })
+
+  use({
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    after = 'nvim-treesitter'
+  })
+
+  use({
+    "numToStr/Comment.nvim",
+    config = function()
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      })
+    end,
+    after = "nvim-ts-context-commentstring",
+    require = { { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' } }
   })
 
   -- Window Split Manager
@@ -280,13 +274,7 @@ require('packer').startup(function(use)
 
 
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use {
-    'numToStr/Comment.nvim',                -- "gc" to comment visual regions/lines
-    config = function()
-      require('Comment').setup()
-    end
-  }
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -607,6 +595,13 @@ require('indent_blankline').setup {
 -- Gitsigns
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {
+  current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+    delay = 10,
+    ignore_whitespace = false,
+  },
   signs = {
     add = { text = '+' },
     change = { text = '~' },
@@ -647,7 +642,7 @@ require('gitsigns').setup {
     map('n', '<leader>hp', gs.preview_hunk)
     map('n', '<leader>hb', function() gs.blame_line { full = true } end)
     map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
+    map('v', '<leader>hd', gs.diffthis)
     map('n', '<leader>hd', function() gs.diffthis('~') end)
     map('n', '<leader>td', gs.toggle_deleted)
     map({ 'o', 'x' }, 'ih', ':<c-u>gitsigns select_hunk<cr>')
@@ -903,6 +898,9 @@ local path_symbol = ""
 local tmux_symbol = ""
 
 cmp.setup {
+  performance = {
+    max_view_entries = 20,
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -916,7 +914,7 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    ['<C-j>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -925,7 +923,7 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    ['<C-k>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -936,14 +934,21 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp',   icon = lsp_symbol },
-    { name = 'luasnip',    icon = luasnip_symbol },
-    { name = 'treesitter', icon = treesitter_symbol },
-    { name = 'buffer',     icon = buffer_symbol },
-    { name = 'rg',         icon = rg_symbol },
-    { name = 'tags',       icon = tags_symbol },
-    { name = 'path',       icon = path_symbol },
-    { name = 'tmux',       icon = tmux_symbol },
+    {
+      name = 'nvim_lsp',
+      icon = lsp_symbol,
+      max_item_count = 10,
+      entry_filter = function(entry)
+        return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+      end
+    },
+    { name = 'luasnip',    icon = luasnip_symbol,    max_item_count = 5 },
+    { name = 'treesitter', icon = treesitter_symbol, max_item_count = 5 },
+    { name = 'buffer',     icon = buffer_symbol,     max_item_count = 5 },
+    { name = 'rg',         icon = rg_symbol,         max_item_count = 5 },
+    { name = 'tags',       icon = tags_symbol,       max_item_count = 4 },
+    { name = 'path',       icon = path_symbol,       max_item_count = 3 },
+    { name = 'tmux',       icon = tmux_symbol,       max_item_count = 2 },
   },
   formatting = {
     fields = { "kind", "abbr", "menu" },
@@ -989,7 +994,6 @@ cmp.setup {
       return vim_item
     end,
   },
-  max_limit = 9,
   window = {
     documentation = {
       border = "rounded",
@@ -1230,7 +1234,7 @@ require("bufferline").setup {
   }
 }
 
-vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", {})
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 
 

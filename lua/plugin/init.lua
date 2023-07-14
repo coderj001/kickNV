@@ -145,7 +145,15 @@ local plugins = {
     event = "VimEnter",
     config = function()
       require('plugin.config.nvimtree').setup()
-    end
+    end,
+    dependencies = {
+      {
+        'antosha417/nvim-lsp-file-operations',
+        config = function()
+          require("lsp-file-operations").setup()
+        end
+      }
+    }
   },
 
   {

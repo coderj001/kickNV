@@ -169,6 +169,23 @@ require('packer').startup(function(use)
     require = { { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' } }
   })
 
+  use({
+    "danymat/neogen",
+    config = function()
+      require('neogen').setup {}
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+    after = "nvim-treesitter"
+  })
+
+  use({
+    "ray-x/sad.nvim",
+    requires = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+    config = function()
+      require("sad").setup {}
+    end,
+  })
+
   -- Window Split Manager
   use {
     "mrjones2014/smart-splits.nvim",
@@ -790,21 +807,11 @@ local on_attach = function(_, bufnr)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  -- nmap('<leader>D', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
-  -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  -- nmap('<leader>wl', function()
-  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  -- end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -932,6 +939,38 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
+    -- Keybindings for luasnip
+    ['<A-k>'] = function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end,
+    ['<A-j>'] = function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end,
+    ['<A-l>'] = function(fallback)
+      if luasnip.choice_active() then
+        luasnip.change_choice(1)
+      else
+        -- Print current time
+        local t = os.date("*t")
+        local time = string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
+        print(time)
+      end
+    end,
+    ['<A-h>'] = function(fallback)
+      if luasnip.choice_active() then
+        luasnip.change_choice(-1)
+      else
+        fallback()
+      end
+    end,
   },
   sources = {
     {
@@ -1009,6 +1048,23 @@ require("luasnip.loaders.from_snipmate").lazy_load()
 
 -- Load custom javascript
 require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets/typescript" } }
+
+require('luasnip.loaders.from_lua').load({ paths = { "./snippets" } })
+
+luasnip.config.set_config({
+  history = true,                            --keep around last snippet local to jump back
+  updateevents = "TextChanged,TextChangedI", --update changes as you type
+  enable_autosnippets = true,
+  ext_opts = {
+    [require("luasnip.util.types").choiceNode] = {
+      active = {
+        virt_text = { { "●", "GruvboxOrange" } },
+      },
+    },
+  },
+})
+
+vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]])
 
 -- Smart Split Config
 require("smart-splits").setup {
@@ -1234,9 +1290,10 @@ require("bufferline").setup {
   }
 }
 
-vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", {})
+vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap("n", "<M-d>", ":lua require('neogen').generate()<CR>", { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

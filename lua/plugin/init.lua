@@ -89,6 +89,13 @@ local plugins = {
       require("plugin.config.gitsigns").setup()
     end
   },
+  {
+    'NeogitOrg/neogit',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = function()
+      require("plugin.config.neogit").setup()
+    end
+  },
 
   "jiangmiao/auto-pairs",
   "tpope/vim-surround",
@@ -175,6 +182,7 @@ local plugins = {
   },
 
   {
+    -- Telescope
     "nvim-telescope/telescope.nvim",
     event = "Bufenter",
     cmd = { "Telescope" },
@@ -229,6 +237,14 @@ local plugins = {
     "phaazon/hop.nvim",
     version = "v2",
     config = function() require("plugin.config.hop").setup() end
+  },
+
+  {
+    'goolord/alpha-nvim',
+    event = "VimEnter",
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+    end
   }
 }
 

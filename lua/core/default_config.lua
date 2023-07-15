@@ -114,24 +114,21 @@ M.keymap = keymap
 M.set = set
 
 M.keymaps = {
-	telescope = function()
-		print("Hi")
-	end,
-	hop = function()
-		print("Hi")
-	end,
-	default_keymaps = function()
-		set({ 'n', 'v' }, '<Space>', '<Nop>', opts_s)
-		set('n', 'k', "v:count == 0 ? 'gk' : 'k'", opts_e_s)
-		set('n', 'j', "v:count == 0 ? 'gj' : 'j'", opts_e_s)
-		-- better indenting
+	default = function()
+		set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+		set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+		set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 		set("v", "<", "<gv")
 		set("v", ">", ">gv")
-		-- Resize window using <ctrl> arrow keys
 		set("n", "<C-Up>", "<cmd>resize +2<cr>")
 		set("n", "<C-Down>", "<cmd>resize -2<cr>")
 		set("n", "<C-Left>", "<cmd>vertical resize -2<cr>")
 		set("n", "<C-Right>", "<cmd>vertical resize +2<cr>")
+		set("n", "<C-j>", ":lua require('smart-splits').move_cursor_down()<cr>", opts)
+		set("n", "<C-k>", ":lua require('smart-splits').move_cursor_up()<cr>", opts)
+		set("n", "<C-h>", ":lua require('smart-splits').move_cursor_left()<cr>", opts)
+		set("n", "<C-l>", ":lua require('smart-splits').move_cursor_right()<cr>", opts)
+		print("Hi, Here")
 	end
 }
 

@@ -17,7 +17,6 @@ function M.setup()
       "typescript",
       "bash",
       "lua",
-      "dockerfile",
       "comment",
       "markdown",
       "glimmer",

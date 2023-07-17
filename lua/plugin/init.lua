@@ -19,7 +19,10 @@ local plugins = {
       {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "j-hui/fidget.nvim",
+        {
+          "j-hui/fidget.nvim",
+          branch = "legacy"
+        },
         "folke/neodev.nvim",
       }
     },
@@ -41,6 +44,7 @@ local plugins = {
       "quangnguyen30192/cmp-nvim-tags",
       "andersevenrud/cmp-tmux",
       "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
       {
         "honza/vim-snippets",
@@ -49,7 +53,10 @@ local plugins = {
           "vim-snippets",
         }
       }
-    }
+    },
+    config = function()
+      require('plugin.config.cmp').setup()
+    end
   },
   {
     -- File Syntax

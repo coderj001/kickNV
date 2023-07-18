@@ -79,6 +79,7 @@ local plugins = {
     config = function()
       require("plugin.config.smartsplit").setup()
     end,
+    lazy = false,
     dependencies = {
       "kwkarlwang/bufresize.nvim",
       config = function()
@@ -169,7 +170,12 @@ local plugins = {
       }
     }
   },
-
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  },
   {
     -- Notifocation
     "rcarriga/nvim-notify",
@@ -209,10 +215,30 @@ local plugins = {
   },
 
   {
+    -- Lastplace
     "ethanholz/nvim-lastplace",
     event = "BufRead",
     config = function()
       require('plugin.config.lastplace').setup()
+    end
+  },
+
+  {
+    -- keymaps, commands, and autocommands
+    'mrjones2014/legendary.nvim',
+    priority = 10000,
+    lazy = false,
+    dependencies = {
+      'kkharji/sqlite.lua',
+      {
+        'stevearc/dressing.nvim',
+        config = function()
+          require('dressing').setup()
+        end
+      }
+    },
+    config = function()
+      require("plugin.config.legendary").setup()
     end
   },
 
@@ -239,18 +265,34 @@ local plugins = {
       require("plugin.config.rest")
     end
   },
-
   {
-    "phaazon/hop.nvim",
-    version = "v2",
-    config = function() require("plugin.config.hop").setup() end
+    'folke/flash.nvim',
+    keys = {
+      {
+        's',
+        function()
+          require('flash').jump()
+        end,
+        mode = { 'n', 'x', 'o' },
+        desc = 'Jump forwards',
+      },
+      {
+        'S',
+        function()
+          require('flash').jump({ search = { forward = false } })
+        end,
+        mode = { 'n', 'x', 'o' },
+        desc = 'Jump backwards',
+      },
+    },
   },
 
   {
+    -- Dashboard
     'goolord/alpha-nvim',
     event = "VimEnter",
     config = function()
-      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+      require('plugin.config.dashboard').setup()
     end
   }
 }
@@ -259,3 +301,9 @@ local opts = {}
 
 require("lazy").setup(plugins, opts)
 require('plugin.config.colorscheme').setup()
+
+
+-------------------------------
+------------ keymaps ----------
+-------------------------------
+require('core.default_config').keymaps.default()

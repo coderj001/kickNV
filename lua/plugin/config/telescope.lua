@@ -92,13 +92,29 @@ function M.setup()
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
   pcall(require('telescope').load_extension, 'undo')
+end
 
-  -- keymap('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-  -- keymap('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-  -- keymap('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-  -- keymap('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-  -- keymap('n', '<leader>sx', require('telescope.builtin').resume, { desc = '[S]earch by [X]rep' })
-  -- keymap('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+function M.edit_neovim()
+  require('telescope.builtin').git_files {
+    shorten_path = true,
+    cwd = "~/.config/nvim",
+    prompt = "~ dotfiles ~",
+    height = 13,
+    layout_strategy = 'horizontal',
+    layout_options = {
+      preview_width = 0.75
+    }
+  }
+end
+
+function M.search_current_buffer()
+  require('telescope.builtin').current_buffer_fuzzy_find {
+    require('telescope.themes').get_dropdown {
+      winblend = 15,
+      previewer = false,
+      prompt_title = '✨ Search Current Buffers ✨',
+    }
+  }
 end
 
 return M

@@ -50,9 +50,3 @@ g.maplocalleader = " "
 
 ------------ autocommand ----------
 
-
--------------------------------
------------- keymaps ----------
--------------------------------
-
-require "core.default_config".keymaps.default()

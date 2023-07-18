@@ -1,5 +1,6 @@
 local M = {}
 local telescope_builtin = require('telescope.builtin')
+local gs = require('gitsigns')
 
 function M.setup()
   require('legendary').setup({
@@ -14,7 +15,7 @@ function M.setup()
       { '<leader>sf', telescope_builtin.find_files,  description = '[S]earch [F]iles' },
       { '<leader>sw', telescope_builtin.grep_string, description = '[S]earch current  [W]ord' },
       { '<leader>sg', telescope_builtin.live_grep,   description = '[S]earch by [G]rep' },
-      { '<leader>sb', telescope_builtin.buffers,     description = '[S]earch [B]uffers' },
+      { '<leader><leader>', telescope_builtin.buffers,     description = '[S]earch [B]uffers' },
       { '<leader>sc', telescope_builtin.colorscheme, description = '[S]earch [C]olorscheme' },
       {
         '<leader>/',
@@ -23,7 +24,8 @@ function M.setup()
         '[/] Fuzzily search in current buffer'
       },
       { '<leader>en', require('plugin.config.telescope').edit_neovim, description = '[E]dit [N]eovim' },
-      { '<leader>cp', require('legendary').find, description = '[C]ommand [P]allet' },
+      { '<leader>gb', telescope_builtin.git_branches, description = '[G]it [B]ranches' },
+      { '<leader>cp', require('legendary').find, description = '[C]ommand [P]allet', mode = {'n', 'v'} },
       -- LSP
       { 'K',          vim.lsp.buf.hover,                              description = 'Hover Documentation',  mode = { 'n' } },
       { 'gD',         vim.lsp.buf.declaration,                        description = '[G]oto [D]eclaration', mode = { 'n' } },
@@ -41,16 +43,40 @@ function M.setup()
         end
         ,
         description = 'Format current buffer with LSP',
-        mode = {'n'}
+        mode = { 'n' }
       },
       {
         ':ToggleLspLine',
-        function ()
+        function()
           require('lsp_lines').toggle()
         end,
         description = 'Toggle lsp_lines',
-        mode = {'n'}
-      }
+        mode = { 'n' }
+      },
+      {
+        ':ToggleBlameLine',
+        function()
+          gs.toggle_current_line_blame()
+        end,
+        description = 'Toggle Current Line Blame',
+        mode = { 'n' }
+      },
+      {
+        ':DiffThis',
+        function()
+          gs.diffthis()
+        end,
+        description = 'Diff this',
+        mode = { 'n' }
+      },
+      {
+        ':DiffView',
+        function()
+          gs.diffthis('~')
+        end,
+        description = 'Diff View',
+        mode = { 'n' }
+      },
     },
     lazy_nvim = {
       auto_register = true

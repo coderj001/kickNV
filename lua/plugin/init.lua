@@ -24,6 +24,12 @@ local plugins = {
           branch = "legacy"
         },
         "folke/neodev.nvim",
+        {
+          "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+          config = function()
+            require("lsp_lines").setup()
+          end,
+        },
       }
     },
     config = function()
@@ -33,6 +39,7 @@ local plugins = {
   {
     -- AutoCompletion
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "saadparwaiz1/cmp_luasnip",
@@ -137,8 +144,14 @@ local plugins = {
   {
     "numToStr/Comment.nvim",
     config = function()
-      require('Comment').setup()
-    end
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      })
+    end,
+    dependencies = {
+      'nvim-ts-context-commentstring',
+      'JoosepAlviste/nvim-ts-context-commentstring'
+    }
   },                       -- "gc" to comment visual regions/lines
 
   "tpope/vim-sleuth",      -- Detect tabstop and shiftwidth automatically
@@ -169,12 +182,6 @@ local plugins = {
         end
       }
     }
-  },
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
   },
   {
     -- Notifocation
@@ -267,22 +274,23 @@ local plugins = {
   },
   {
     'folke/flash.nvim',
+    event = "VeryLazy",
     keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o",               function() require("flash").remote() end,     desc = "Remote Flash" },
       {
-        's',
-        function()
-          require('flash').jump()
-        end,
-        mode = { 'n', 'x', 'o' },
-        desc = 'Jump forwards',
+        "R",
+        mode = { "o", "x" },
+        function() require("flash").treesitter_search() end,
+        "Treesitter Search"
       },
       {
-        'S',
-        function()
-          require('flash').jump({ search = { forward = false } })
-        end,
-        mode = { 'n', 'x', 'o' },
-        desc = 'Jump backwards',
+        "<c-s>",
+        mode = { "c" },
+        function() require("flash").toggle() end,
+        desc =
+        "Toggle Flash Search"
       },
     },
   },
@@ -294,6 +302,15 @@ local plugins = {
     config = function()
       require('plugin.config.dashboard').setup()
     end
+  },
+
+  {
+    -- Split
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({})
+    end,
   }
 }
 

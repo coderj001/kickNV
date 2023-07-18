@@ -11,12 +11,13 @@ function M.setup()
     wrap = "overflow"
   }
   dashboard.section.buttons.val = {
-    dashboard.button("e", " New File", ":ene <BAR> startinsert <CR>"),
-    dashboard.button("SPC sf", " Search Files", ":Telescope find_files<CR>"),
-    dashboard.button("SPC sg", " Find Word", ":Telescope live_grep<CR>"),
-    dashboard.button("SPC sh", " Recently Opened Files", ":Telescope oldfiles<CR>"),
-    dashboard.button("SPC gb", " Git Branches", ":Telescope git_commits<CR>"),
-    dashboard.button("q", " Quit NVIM", ":qa<CR>"),
+    dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
+    dashboard.button("SPC sf", "🔍 Search Files", ":Telescope find_files<CR>"),
+    dashboard.button("SPC sg", "  Find Word", ":Telescope live_grep<CR>"),
+    dashboard.button("SPC sh", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
+    dashboard.button("SPC gb", "  Git Branches", ":Telescope git_commits<CR>"),
+    dashboard.button("SPC ne", "📝 Neovim Edit", ":lua require('plugin.config.telescope').edit_neovim()<CR>"),
+    dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
   }
 
   dashboard.section.footer.val  = "kickNV by coderj001"

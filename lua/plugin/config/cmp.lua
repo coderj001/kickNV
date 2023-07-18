@@ -20,33 +20,65 @@ function M.setup()
         luasnip.lsp_expand(args.body)
       end,
     },
-    mapping = cmp.mapping.preset.insert {
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
-      ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
+  mapping = cmp.mapping.preset.insert {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
     },
+    ['<C-j>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    -- Keybindings for luasnip
+    ['<A-k>'] = function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end,
+    ['<A-j>'] = function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end,
+    ['<A-l>'] = function(fallback)
+      if luasnip.choice_active() then
+        luasnip.change_choice(1)
+      else
+        -- Print current time
+        local t = os.date("*t")
+        local time = string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
+        print(time)
+      end
+    end,
+    ['<A-h>'] = function(fallback)
+      if luasnip.choice_active() then
+        luasnip.change_choice(-1)
+      else
+        fallback()
+      end
+    end,
+  },
     sources = {
       { name = 'nvim_lsp',   icon = lsp_symbol },
       { name = 'luasnip',    icon = luasnip_symbol },

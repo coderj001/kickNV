@@ -28,7 +28,7 @@ function M.setup()
       { 'K',          vim.lsp.buf.hover,                              description = 'Hover Documentation',  mode = { 'n' } },
       { 'gD',         vim.lsp.buf.declaration,                        description = '[G]oto [D]eclaration', mode = { 'n' } },
       { 'gI',         vim.lsp.buf.implementation,                        description = '[G]oto [I]mplementation', mode = { 'n' } },
-      { 'gd',         telescope_builtin.lsp_definitions,                        description = '[G]oto [D]efinition', mode = { 'n' } },
+      { 'gd',         vim.lsp.buf.definition,                        description = '[G]oto [D]efinition', mode = { 'n' } },
       { 'gr',         telescope_builtin.lsp_references,                        description = '[G]oto [R]eferences', mode = { 'n' } },
       { '<leader>rn',  vim.lsp.buf.rename,                        description = '[R]e[n]ame', mode = { 'n' } },
       { '<leader>ca',  vim.lsp.buf.code_action,                        description = '[C]ode [A]ction', mode = { 'n' } },

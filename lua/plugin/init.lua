@@ -219,12 +219,13 @@ local plugins = {
     version = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
+      "gbrlsnchs/telescope-lsp-handlers.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "make",
         cond = vim.fn.executable "make" == 1,
       },
-      "debugloop/telescope-undo.nvim"
+      -- "debugloop/telescope-undo.nvim"
     },
     config = function()
       require("plugin.config.telescope").setup()

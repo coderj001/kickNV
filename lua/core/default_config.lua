@@ -60,7 +60,27 @@ M.servers = {
 			},
 		},
 	},
-	tsserver = {},
+	tsserver = {
+		settings = {
+			typescript = {
+				format = {
+					enable = true,
+					options = {
+						tabSize = 2,
+					},
+				},
+			},
+			javascript = {
+				format = {
+					enable = true,
+					options = {
+						tabSize = 2,
+					},
+				},
+			},
+		},
+		telemetry = { enable = false }, -- Disable telemetry
+	},
 	lua_ls = {
 		Lua = {
 			diagnostics = {
@@ -107,6 +127,8 @@ M.on_attach = function(_, bufnr)
 
 	-- Lesser used LSP functionality
 	nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+
 	-- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
 	-- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
 	-- nmap('<leader>wl', function()
@@ -134,15 +156,15 @@ M.keymaps = {
 
 
 function M.load_extra_options()
-  local function bind_extra_cmd(options)
-    for optionCount = 1, #options do vim.cmd(options[optionCount]) end
-  end
-  local options = {
-    "filetype plugin on", "filetype indent on", "cabbr Q q", "cabbr Q! q!",
-    "cabbr W! w!", "cabbr W w", "cabbr WA wa", "cabbr Wa wa", "cabbr Wq wq",
-    "cabbr WQ wq", "cabbr Qa qa", "cabbr QA qa"
-  }
-  bind_extra_cmd(options)
+	local function bind_extra_cmd(options)
+		for optionCount = 1, #options do vim.cmd(options[optionCount]) end
+	end
+	local options = {
+		"filetype plugin on", "filetype indent on", "cabbr Q q", "cabbr Q! q!",
+		"cabbr W! w!", "cabbr W w", "cabbr WA wa", "cabbr Wa wa", "cabbr Wq wq",
+		"cabbr WQ wq", "cabbr Qa qa", "cabbr QA qa"
+	}
+	bind_extra_cmd(options)
 end
 
 return M

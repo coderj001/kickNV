@@ -15,7 +15,7 @@ function M.setup()
     dashboard.button("LDR  ?", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
     dashboard.button("LDR sf", "🔍 Search Files", ":Telescope find_files<CR>"),
     dashboard.button("LDR sg", "  Find Word", ":Telescope live_grep<CR>"),
-    dashboard.button("LDR gb", "  Git Branches", ":Telescope git_commits<CR>"),
+    dashboard.button("LDR gb", "  Git Branches", ":Telescope git_branches<CR>"),
     dashboard.button("LDR ne", "📝 Neovim Edit", ":lua require('plugin.config.telescope').edit_neovim()<CR>"),
     dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
   }

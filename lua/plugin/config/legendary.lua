@@ -13,12 +13,7 @@ function M.setup()
       { '<leader>sg', telescope_builtin.live_grep,   description = '[S]earch by [G]rep' },
       { '<leader><leader>', telescope_builtin.buffers,     description = '[S]earch [B]uffers' },
       { '<leader>sc', telescope_builtin.colorscheme, description = '[S]earch [C]olorscheme' },
-      {
-        '<leader>/',
-        require('plugin.config.telescope').current_buffer_fuzzy_find,
-        description =
-        '[/] Fuzzily search in current buffer'
-      },
+      { '<leader>/', require('plugin.config.telescope').current_buffer_fuzzy_find, description = '[/] Fuzzily search in current buffer' },
       { '<leader>en', require('plugin.config.telescope').edit_neovim, description = '[E]dit [N]eovim' },
       { '<leader>gb', telescope_builtin.git_branches, description = '[G]it [B]ranches' },
       { '<leader>gc', telescope_builtin.git_commits, description = '[G]it [B]ranches' },

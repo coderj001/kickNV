@@ -91,6 +91,7 @@ local plugins = {
   },
   {
     "mrjones2014/smart-splits.nvim",
+    event = "Bufenter",
     config = function()
       require("plugin.config.smartsplit").setup()
     end,
@@ -167,6 +168,7 @@ local plugins = {
   "windwp/nvim-autopairs", -- braket and tag
   {
     "max397574/better-escape.nvim",
+    event = "InsertEnter",
     config = function()
       require('better_escape').setup {
         mapping = { "jk" }, -- a table with mappings to use
@@ -342,11 +344,6 @@ local plugins = {
       require('plugin.config.relativenumber').setup()
     end
   },
-
-  {
-    'willothy/moveline.nvim',
-    build = 'make'
-  }
 }
 
 local opts = {}

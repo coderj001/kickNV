@@ -35,9 +35,6 @@ function M.setup()
 
       -- Split
       { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
-      -- move
-      { '<M-k>',  require('moveline').block_up,                        description = 'move up', mode = { 'v' } },
-      { '<M-j>',  require('moveline').block_down,                        description = 'move down', mode = { 'v' } },
     },
     commands = {
       { ':Format', function() vim.lsp.buf.format() end, description = 'Format current buffer with LSP', mode = { 'n' } },

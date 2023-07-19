@@ -6,12 +6,8 @@ function M.setup()
   require('legendary').setup({
     keymaps = {
       -- Telescope
-      {
-        '<leader>?',
-        telescope_builtin.oldfiles,
-        description =
-        '[?] Find recently opened files'
-      },
+      { '<leader>n', ':NvimTreeToggle<CR>', description = '[N]vimTree Toggle' },
+      { '<leader>?', telescope_builtin.oldfiles, description = '[?] Find recently opened files' },
       { '<leader>sf', telescope_builtin.find_files, description = '[S]earch [F]iles' },
       { '<leader>sw', telescope_builtin.grep_string, description = '[S]earch current  [W]ord' },
       { '<leader>sg', telescope_builtin.live_grep,   description = '[S]earch by [G]rep' },
@@ -25,6 +21,8 @@ function M.setup()
       },
       { '<leader>en', require('plugin.config.telescope').edit_neovim, description = '[E]dit [N]eovim' },
       { '<leader>gb', telescope_builtin.git_branches, description = '[G]it [B]ranches' },
+      { '<leader>gc', telescope_builtin.git_commits, description = '[G]it [B]ranches' },
+      { '<leader>gs', telescope_builtin.git_status, description = '[G]it [B]ranches' },
       { '<leader>cp', require('legendary').find, description = '[C]ommand [P]allet', mode = {'n', 'v'} },
       -- LSP
       { 'K',          vim.lsp.buf.hover,                              description = 'Hover Documentation',  mode = { 'n' } },
@@ -37,6 +35,9 @@ function M.setup()
 
       -- Split
       { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
+      -- move
+      { '<M-k>',  require('moveline').block_up,                        description = 'move up', mode = { 'v' } },
+      { '<M-j>',  require('moveline').block_down,                        description = 'move down', mode = { 'v' } },
     },
     commands = {
       { ':Format', function() vim.lsp.buf.format() end, description = 'Format current buffer with LSP', mode = { 'n' } },
@@ -61,6 +62,19 @@ function M.setup()
         description = 'Edit Snippets Files',
         mode = { 'n' },
       },
+      {
+        ':Notifi',
+        ':Telescope notify<cr>',
+        description = 'Notify',
+        mode = { 'n' }
+      },
+      {
+        ':Colorscheme',
+        ':Telescope colorscheme<CR>'
+        ,
+        description = '[S]earch [C]olorscheme',
+        mode = { 'n' }
+      }
     },
     lazy_nvim = {
       auto_register = true

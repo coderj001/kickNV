@@ -53,6 +53,7 @@ local plugins = {
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+      "lukas-reineke/cmp-under-comparator",
       {
         "honza/vim-snippets",
         dependencies = {
@@ -78,7 +79,14 @@ local plugins = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "p00f/nvim-ts-rainbow",
-      "windwp/nvim-ts-autotag"
+      "windwp/nvim-ts-autotag",
+      {
+        "ZhiyuanLck/smart-pairs",
+        event = 'InsertEnter',
+        config = function()
+          require('pairs'):setup()
+        end
+      }
     }
   },
   {
@@ -326,6 +334,18 @@ local plugins = {
         }
       }
     end
+  },
+
+  {
+    'cpea2506/relative-toggle.nvim',
+    config = function()
+      require('plugin.config.relativenumber').setup()
+    end
+  },
+
+  {
+    'willothy/moveline.nvim',
+    build = 'make'
   }
 }
 

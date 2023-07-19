@@ -1,7 +1,8 @@
 local M = {}
+local notify = require("notify")
 
 function M.setup()
-  require("notify").setup({
+  notify.setup({
     stages = "fade_in_slide_out",
     render = "compact",
     timeout = 1500,
@@ -11,7 +12,7 @@ function M.setup()
     max_width = function()
       return math.floor(vim.o.columns * 0.75)
     end,
-    background_colour = "Normal",
+    background_colour = "PMenu",
     minimum_width = 26,
     icons = {
       ERROR = "",
@@ -21,6 +22,7 @@ function M.setup()
       TRACE = "✎"
     }
   })
+  vim.notify = notify
 end
 
 return M

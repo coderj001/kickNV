@@ -60,9 +60,6 @@ function M.setup()
       },
     },
   }
-
-  -- Keybindings for nvim-tree
-  keymap('n', '<leader>n', ':NvimTreeToggle<CR>', opts)
 end
 
 return M

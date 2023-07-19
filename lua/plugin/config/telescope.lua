@@ -90,13 +90,14 @@ function M.setup()
   -- Enable telescope fzf native, if installed
   pcall(telescope.load_extension, 'fzf')
   pcall(telescope.load_extension, 'undo')
+  pcall(telescope.load_extension, 'notify')
 end
 
 function M.edit_neovim()
   require('telescope.builtin').git_files {
     shorten_path = true,
     cwd = "~/.config/nvim",
-    prompt = "~ dotfiles ~",
+    prompt = "~ kickNV ~",
     height = 13,
     layout_strategy = 'horizontal',
     layout_options = {
@@ -104,7 +105,6 @@ function M.edit_neovim()
     }
   }
 end
-
 
 function M.current_buffer_fuzzy_find()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {

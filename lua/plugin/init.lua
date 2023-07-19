@@ -309,8 +309,23 @@ local plugins = {
     'Wansmer/treesj',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('treesj').setup({})
+      require('plugin.config.treesj').setup()
     end,
+  },
+
+  { -- tmux nav for nvim
+    'alexghergh/nvim-tmux-navigation',
+    config = function()
+      require 'nvim-tmux-navigation'.setup {
+        disable_when_zoomed = true,
+        keybindings = {
+          left = "<C-h>",
+          down = "<C-j>",
+          up = "<C-k>",
+          right = "<C-l>",
+        }
+      }
+    end
   }
 }
 

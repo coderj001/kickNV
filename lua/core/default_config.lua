@@ -94,7 +94,7 @@ M.on_attach = function(_, bufnr)
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+	-- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 	nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 	nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	-- nmap('<leader>D', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
@@ -129,22 +129,6 @@ M.keymaps = {
 		set('n', 'j', "v:count == 0 ? 'gj' : 'j'", opts_e_s)
 		set("v", "<", "<gv")
 		set("v", ">", ">gv")
-		-- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
-		set('n', '<A-h>', require('smart-splits').resize_left)
-		set('n', '<A-j>', require('smart-splits').resize_down)
-		set('n', '<A-k>', require('smart-splits').resize_up)
-		set('n', '<A-l>', require('smart-splits').resize_right)
-		-- moving between splits
-		set('n', '<C-h>', require('smart-splits').move_cursor_left)
-		set('n', '<C-j>', require('smart-splits').move_cursor_down)
-		set('n', '<C-k>', require('smart-splits').move_cursor_up)
-		set('n', '<C-l>', require('smart-splits').move_cursor_right)
-		-- swapping buffers between windows
-		set('n', '<leader><leader>h', require('smart-splits').swap_buf_left)
-		set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
-		set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
-		set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
-		print("Hi, Here")
 	end
 }
 

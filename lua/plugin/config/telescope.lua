@@ -1,10 +1,8 @@
 local M = {}
-local keymap = require("core.default_config").keymap
-local opts = require("core.default_config").opts
-
+local telescope = require('telescope')
 
 function M.setup()
-  require('telescope').setup {
+  telescope.setup {
     defaults = {
       vimgrep_arguments = {
         "rg",
@@ -64,10 +62,10 @@ function M.setup()
         },
       },
       fzf = {
-        fuzzy = true,                   -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true,    -- override the file sorter
-        case_mode = 'smart_case',       -- or "ignore_case" or "respect_case"
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = 'smart_case',
       },
     },
     pickers = {
@@ -86,12 +84,12 @@ function M.setup()
         sort_mru = true,
         preview_title = false,
         initial_mode = "normal"
-      },
+      }
     }
   }
   -- Enable telescope fzf native, if installed
-  pcall(require('telescope').load_extension, 'fzf')
-  pcall(require('telescope').load_extension, 'undo')
+  pcall(telescope.load_extension, 'fzf')
+  pcall(telescope.load_extension, 'undo')
 end
 
 function M.edit_neovim()
@@ -107,14 +105,13 @@ function M.edit_neovim()
   }
 end
 
-function M.search_current_buffer()
-  require('telescope.builtin').current_buffer_fuzzy_find {
-    require('telescope.themes').get_dropdown {
-      winblend = 15,
-      previewer = false,
-      prompt_title = '✨ Search Current Buffers ✨',
-    }
-  }
+
+function M.current_buffer_fuzzy_find()
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 15,
+    previewer = false,
+    prompt_title = '✨ Search Current Buffers ✨',
+  })
 end
 
 return M

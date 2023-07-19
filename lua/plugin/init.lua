@@ -17,13 +17,36 @@ local plugins = {
     "neovim/nvim-lspconfig",
     dependencies = {
       {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        {
+          "williamboman/mason.nvim",
+          event = { "BufReadPre", "VimEnter" },
+          build = ":MasonUpdate",
+          dependencies = {
+            {
+              "williamboman/mason-lspconfig.nvim",
+              event = "BufReadPre",
+
+            }
+          }
+        },
         {
           "j-hui/fidget.nvim",
+          event = "VimEnter",
           branch = "legacy"
         },
-        "folke/neodev.nvim",
+        {
+          "folke/neodev.nvim",
+          config = function()
+            require("neodev").setup({
+              library = {
+                enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
+                runtime = true, -- runtime path
+                types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+                plugins = true, -- installed opt or start plugins in packpath
+              },
+            })
+          end
+        },
         {
           "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
           config = function()
@@ -214,7 +237,7 @@ local plugins = {
   {
     -- Telescope
     "nvim-telescope/telescope.nvim",
-    event = "Bufenter",
+    event = { "VimEnter" },
     cmd = { "Telescope" },
     version = "0.1.x",
     dependencies = {
@@ -345,6 +368,11 @@ local plugins = {
       require('plugin.config.relativenumber').setup()
     end
   },
+  {
+    "norcalli/nvim-colorizer.lua",
+    event = "VeryLazy",
+    config = true,
+  },
 }
 
 local opts = {}
@@ -357,3 +385,11 @@ require('plugin.config.colorscheme').setup()
 ------------ keymaps ----------
 -------------------------------
 require('core.default_config').keymaps.default()
+
+vim.cmd([[
+  augroup LazyReload
+    autocmd!
+    autocmd BufWritePost <buffer> source <afile> | silent! LspStop | silent! LspStart
+  augroup END
+]])
+

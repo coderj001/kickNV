@@ -29,6 +29,16 @@ function M.setup()
       }
     end,
   }
+  local lspconfig = require('lspconfig')
+  lspconfig.lua_ls.setup({
+    settings = {
+      Lua = {
+        completion = {
+          callSnippet = "Replace"
+        }
+      }
+    }
+  })
 
   -- Turn on lsp status information
   require('fidget').setup()

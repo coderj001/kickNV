@@ -27,7 +27,12 @@ function M.setup()
     },
     filters             = {
       dotfiles = true,
-      exclude = { 'node_modules', '.venv', 'env', '.env' },
+      exclude = {
+        'node_modules',
+        '.venv',
+        'env',
+        '.env',
+      },
     },
     renderer            = {
       add_trailing   = true,
@@ -42,7 +47,9 @@ function M.setup()
         show = {
           file = true,
         },
-        glyphs = { default = " ", },
+        glyphs = {
+          default = " ",
+        },
       },
     },
     log                 = {

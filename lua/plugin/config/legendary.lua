@@ -32,7 +32,7 @@ function M.setup()
       { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
     },
     commands = {
-      { ':Format', function() vim.lsp.buf.format() end, description = 'Format current buffer with LSP', mode = { 'n' } },
+      { ':Format', function() vim.lsp.buf.format({async = true}) end, description = 'Format current buffer with LSP', mode = { 'n' } },
       { ':ToggleLspLine', function() require('lsp_lines').toggle() end, description = 'Toggle lsp_lines', mode = { 'n' } },
       {
         ':ToggleBlameLine',

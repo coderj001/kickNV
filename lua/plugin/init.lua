@@ -14,9 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   {
     "neovim/nvim-lspconfig",
-    event = "VimEnter",
-    priority = 1,
-    module = true,
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',

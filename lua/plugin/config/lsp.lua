@@ -18,37 +18,8 @@ local servers = {
         schemas = {},
       },
     },
-    setup = {
-      commands = {
-        Format = {
-          function()
-            vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
-          end,
-        },
-      },
-    },
   },
-  tsserver = {
-    settings = {
-      typescript = {
-        format = {
-          enable = true,
-          options = {
-            tabSize = 2,
-          },
-        },
-      },
-      javascript = {
-        format = {
-          enable = true,
-          options = {
-            tabSize = 2,
-          },
-        },
-      },
-    },
-    telemetry = { enable = false },
-  },
+  tsserver = {},
   lua_ls = {
     Lua = {
       diagnostics = {

@@ -1,15 +1,15 @@
-local M = {}
+local M         = {}
+local alpha     = require('alpha')
+local dashboard = require('alpha.themes.dashboard')
 
 function M.setup()
-  local alpha                   = require('alpha')
-  local dashboard               = require('alpha.themes.dashboard')
-
   dashboard.section.header.val  = require('core.default_config').options.figlet_name
   dashboard.section.header.opts = {
     position = "center",
     hl = "Type",
     wrap = "overflow"
   }
+
   dashboard.section.buttons.val = {
     dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
     dashboard.button("LDR  ?", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
@@ -20,8 +20,7 @@ function M.setup()
     dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
   }
 
-  dashboard.section.footer.val  = "kickNV by coderj001"
-
+  dashboard.section.footer.val = "Total plugins: " .. require("lazy").stats().count
 
   local handle = io.popen('fortune')
   local fortune = handle:read("*a")

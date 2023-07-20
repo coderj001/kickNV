@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   {
-    -- LSP: Langauge Server Protocol
+    -- LSP: Language Server Protocol
     "neovim/nvim-lspconfig",
     dependencies = {
       {
@@ -25,7 +25,6 @@ local plugins = {
             {
               "williamboman/mason-lspconfig.nvim",
               event = "BufReadPre",
-
             }
           }
         },
@@ -34,19 +33,7 @@ local plugins = {
           event = "VimEnter",
           branch = "legacy"
         },
-        {
-          "folke/neodev.nvim",
-          config = function()
-            require("neodev").setup({
-              library = {
-                enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
-                runtime = true, -- runtime path
-                types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-                plugins = true, -- installed opt or start plugins in packpath
-              },
-            })
-          end
-        },
+        { "folke/neodev.nvim" },
         {
           "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
           config = function()
@@ -57,6 +44,13 @@ local plugins = {
     },
     config = function()
       require('plugin.config.lsp').setup()
+    end
+  },
+  {
+    "folke/neoconf.nvim",
+    cmd = "Neoconf",
+    config = function()
+      require("neoconf").setup()
     end
   },
   {
@@ -385,11 +379,3 @@ require('plugin.config.colorscheme').setup()
 ------------ keymaps ----------
 -------------------------------
 require('core.default_config').keymaps.default()
-
-vim.cmd([[
-  augroup LazyReload
-    autocmd!
-    autocmd BufWritePost <buffer> source <afile> | silent! LspStop | silent! LspStart
-  augroup END
-]])
-

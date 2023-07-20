@@ -256,6 +256,7 @@ local plugins = {
       'kkharji/sqlite.lua',
       {
         'stevearc/dressing.nvim',
+        event = "VeryLazy",
         config = function()
           require('dressing').setup()
         end
@@ -265,7 +266,13 @@ local plugins = {
       require("plugin.config.legendary").setup()
     end
   },
-
+  {
+    "monaqa/dial.nvim",
+    keys = {
+      "<C-a>",
+      { "<C-x>", mode = "n" },
+    },
+  },
   {
     "mvllow/modes.nvim",
     config = function()

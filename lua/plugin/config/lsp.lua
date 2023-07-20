@@ -47,7 +47,7 @@ local servers = {
         },
       },
     },
-    telemetry = { enable = false }, -- Disable telemetry
+    telemetry = { enable = false },
   },
   lua_ls = {
     Lua = {

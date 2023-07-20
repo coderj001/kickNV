@@ -80,14 +80,21 @@ function M.setup()
       end,
     },
     sources = {
-      { name = 'nvim_lsp',   icon = lsp_symbol },
-      { name = 'luasnip',    icon = luasnip_symbol },
-      { name = 'treesitter', icon = treesitter_symbol },
-      { name = 'buffer',     icon = buffer_symbol },
-      { name = 'rg',         icon = rg_symbol },
-      { name = 'tags',       icon = tags_symbol },
-      { name = 'path',       icon = path_symbol },
-      { name = 'tmux',       icon = tmux_symbol },
+      {
+        name = 'nvim_lsp',
+        icon = lsp_symbol,
+        max_item_count = 10,
+        entry_filter = function(entry)
+          return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+        end
+      },
+      { name = 'luasnip',    icon = luasnip_symbol,    max_item_count = 5 },
+      { name = 'treesitter', icon = treesitter_symbol, max_item_count = 5 },
+      { name = 'buffer',     icon = buffer_symbol,     max_item_count = 5 },
+      { name = 'rg',         icon = rg_symbol,         max_item_count = 5 },
+      { name = 'tags',       icon = tags_symbol,       max_item_count = 4 },
+      { name = 'path',       icon = path_symbol,       max_item_count = 3 },
+      { name = 'tmux',       icon = tmux_symbol,       max_item_count = 2 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },

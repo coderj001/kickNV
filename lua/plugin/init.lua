@@ -15,6 +15,8 @@ local plugins = {
   {
     -- LSP: Language Server Protocol
     "neovim/nvim-lspconfig",
+    event = "VimEnter",
+    priority = 1,
     dependencies = {
       {
         {
@@ -236,7 +238,6 @@ local plugins = {
     version = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "gbrlsnchs/telescope-lsp-handlers.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "make",

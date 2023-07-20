@@ -28,6 +28,8 @@ function M.setup()
       { '<leader>rn', vim.lsp.buf.rename, description = '[R]e[n]ame', mode = { 'n' } },
       { '<leader>ca', vim.lsp.buf.code_action, description = '[C]ode [A]ction', mode = { 'n' } },
 
+      { '<leader>l',        ':Neogit<cr>',                                                description = 'NeoGit', mode = { 'n' } },
+
       -- Split
       { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
       { '<leader>k',  ':ISwap<CR>',                        description = 'Swap', mode = { 'n', 'v' } },

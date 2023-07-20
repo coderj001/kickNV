@@ -3,7 +3,7 @@ local neogit = require('neogit')
 
 function M.setup()
   neogit.setup {
-    kind = "floating",
+    kind = "vsplit",
     integrations = {
       telescope = true,
       diffview = true,

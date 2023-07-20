@@ -120,7 +120,10 @@ local plugins = {
   },
   {
     'NeogitOrg/neogit',
-    dependencies = 'nvim-lua/plenary.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim'
+    },
     config = function()
       require("plugin.config.neogit").setup()
     end
@@ -230,6 +233,7 @@ local plugins = {
         cond = vim.fn.executable "make" == 1,
       },
       -- "debugloop/telescope-undo.nvim"
+      "xiyaowong/telescope-emoji.nvim"
     },
     config = function()
       require("plugin.config.telescope").setup()

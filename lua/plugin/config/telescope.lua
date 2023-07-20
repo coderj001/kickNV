@@ -91,6 +91,7 @@ function M.setup()
   pcall(telescope.load_extension, 'fzf')
   -- pcall(telescope.load_extension, 'undo')
   pcall(telescope.load_extension, 'notify')
+  pcall(telescope.load_extension, 'emoji')
 end
 
 function M.edit_neovim()
@@ -98,7 +99,7 @@ function M.edit_neovim()
     shorten_path = true,
     cwd = "~/.config/nvim",
     prompt = "~ kickNV ~",
-    height = 13,
+    height = 9,
     layout_strategy = 'horizontal',
     layout_options = {
       preview_width = 0.75

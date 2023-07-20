@@ -13,19 +13,16 @@ function M.setup()
   dashboard.section.buttons.val = {
     dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
     dashboard.button("LDR  ?", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
+    dashboard.button("LDR  n", "📁  Explorer", ":NvimTreeOpen<CR>"),
     dashboard.button("LDR sf", "🔍 Search Files", ":Telescope find_files<CR>"),
     dashboard.button("LDR sg", "  Find Word", ":Telescope live_grep<CR>"),
     dashboard.button("LDR gb", "  Git Branches", ":Telescope git_branches<CR>"),
+    dashboard.button("LDR gc", "  Git Commits", ":Telescope git_commits<CR>"),
     dashboard.button("LDR ne", "📝 Neovim Edit", ":lua require('plugin.config.telescope').edit_neovim()<CR>"),
     dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
   }
 
   dashboard.section.footer.val = "Total plugins: " .. require("lazy").stats().count
-
-  local handle = io.popen('fortune')
-  local fortune = handle:read("*a")
-  handle:close()
-  dashboard.section.footer.val = fortune
 
   alpha.setup(dashboard.opts)
 end

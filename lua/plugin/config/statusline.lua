@@ -56,7 +56,17 @@ function M.setup()
           newfile = '',
         }
       } },
-      lualine_x = { "encoding", "fileformat", "filetype", get_words },
+      lualine_x = {
+        "encoding",
+        "fileformat",
+        "filetype",
+        get_words,
+        {
+          require("lazy.status").updates,
+          cond = require("lazy.status").has_updates,
+          color = { fg = "#ff9e64" },
+        },
+      },
       lualine_y = { "progress" },
       lualine_z = { lsp_status, { "diagnostics", sources = { "nvim_lsp" } } },
     },

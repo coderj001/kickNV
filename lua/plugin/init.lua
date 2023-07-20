@@ -73,6 +73,9 @@ local plugins = {
   {
     -- File Syntax
     "nvim-treesitter/nvim-treesitter",
+    build = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = false })
+    end,
     config = function()
       require("plugin.config.treesitter").setup()
     end,
@@ -81,6 +84,7 @@ local plugins = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
+      "mizlan/iswap.nvim",
       {
         "ZhiyuanLck/smart-pairs",
         event = 'InsertEnter',
@@ -287,7 +291,7 @@ local plugins = {
       "nvim-lua/plenary.nvim"
     },
     config = function()
-      require("plugin.config.rest")
+      require("plugin.config.rest").setup()
     end
   },
   {
@@ -352,11 +356,6 @@ local plugins = {
     config = function()
       require('plugin.config.relativenumber').setup()
     end
-  },
-  {
-    "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
-    config = true,
   },
 }
 

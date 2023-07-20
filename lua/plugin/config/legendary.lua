@@ -17,19 +17,20 @@ function M.setup()
       { '<leader>en', require('plugin.config.telescope').edit_neovim, description = '[E]dit [N]eovim' },
       { '<leader>gb', telescope_builtin.git_branches, description = '[G]it [B]ranches' },
       { '<leader>gc', telescope_builtin.git_commits, description = '[G]it [B]ranches' },
-      { '<leader>gs', telescope_builtin.git_status, description = '[G]it [B]ranches' },
       { '<leader>cp', require('legendary').find, description = '[C]ommand [P]allet', mode = {'n', 'v'} },
       -- LSP
-      { 'K',          vim.lsp.buf.hover,                              description = 'Hover Documentation',  mode = { 'n' } },
-      { 'gD',         vim.lsp.buf.declaration,                        description = '[G]oto [D]eclaration', mode = { 'n' } },
-      { 'gI',         vim.lsp.buf.implementation,                        description = '[G]oto [I]mplementation', mode = { 'n' } },
-      { 'gd',         vim.lsp.buf.definition,                        description = '[G]oto [D]efinition', mode = { 'n' } },
-      { 'gr',         telescope_builtin.lsp_references,                        description = '[G]oto [R]eferences', mode = { 'n' } },
-      { '<leader>rn',  vim.lsp.buf.rename,                        description = '[R]e[n]ame', mode = { 'n' } },
-      { '<leader>ca',  vim.lsp.buf.code_action,                        description = '[C]ode [A]ction', mode = { 'n' } },
+      { 'K', vim.lsp.buf.hover, description = 'Hover Documentation', mode = { 'n' } },
+      { 'gD', vim.lsp.buf.declaration, description = '[G]oto [D]eclaration', mode = { 'n' } },
+      { 'gI', vim.lsp.buf.implementation, description = '[G]oto [I]mplementation', mode = { 'n' } },
+      { 'gd', vim.lsp.buf.definition, description = '[G]oto [D]efinition', mode = { 'n' } },
+      { 'gr', telescope_builtin.lsp_references, description = '[G]oto [R]eferences', mode = { 'n' } },
+      { 'gs', vim.lsp.buf.signature_help, description = '[G]oto [S]ignature', mode = { 'n' } },
+      { '<leader>rn', vim.lsp.buf.rename, description = '[R]e[n]ame', mode = { 'n' } },
+      { '<leader>ca', vim.lsp.buf.code_action, description = '[C]ode [A]ction', mode = { 'n' } },
 
       -- Split
       { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
+      { '<leader>k',  ':ISwap<CR>',                        description = 'Swap', mode = { 'n', 'v' } },
     },
     commands = {
       { ':Format', function() vim.lsp.buf.format({async = true}) end, description = 'Format current buffer with LSP', mode = { 'n' } },

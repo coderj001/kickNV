@@ -19,7 +19,15 @@ local servers = {
       },
     },
   },
-  tsserver = {},
+  tsserver = {
+    filetypes = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+      "javascript",
+      "javascriptreact",
+    }
+  },
   lua_ls = {
     Lua = {
       diagnostics = {

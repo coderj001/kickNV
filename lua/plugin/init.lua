@@ -13,40 +13,28 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   {
-    -- LSP: Language Server Protocol
     "neovim/nvim-lspconfig",
     event = "VimEnter",
     priority = 1,
+    module = true,
     dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'folke/neodev.nvim',
       {
-        {
-          "williamboman/mason.nvim",
-          event = { "BufReadPre", "VimEnter" },
-          build = ":MasonUpdate",
-          dependencies = {
-            {
-              "williamboman/mason-lspconfig.nvim",
-              event = "BufReadPre",
-            }
-          }
-        },
-        {
-          "j-hui/fidget.nvim",
-          event = "VimEnter",
-          branch = "legacy"
-        },
-        { "folke/neodev.nvim" },
-        {
-          "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-          config = function()
-            require("lsp_lines").setup()
-          end,
-        },
-      }
+        'j-hui/fidget.nvim',
+        branch = "legacy"
+      },
+      {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+          require("lsp_lines").setup()
+        end,
+      },
     },
     config = function()
-      require('plugin.config.lsp').setup()
-    end
+      require("plugin.config.lsp").setup()
+    end,
   },
   {
     "folke/neoconf.nvim",
@@ -344,6 +332,7 @@ local plugins = {
 
   { -- tmux nav for nvim
     'alexghergh/nvim-tmux-navigation',
+    event = "VeryLazy",
     config = function()
       require 'nvim-tmux-navigation'.setup {
         disable_when_zoomed = true,

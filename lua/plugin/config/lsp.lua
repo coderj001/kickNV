@@ -65,6 +65,52 @@ local servers = {
 }
 
 local on_attach = function(_, bufnr)
+  vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError", numhl = "" })
+  vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn", numhl = "" })
+  vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo", numhl = "" })
+
+  if vim.lsp.setup then
+    vim.lsp.setup {
+      floating_preview = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" } },
+      diagnostics = {
+        signs = { error = " ", warning = " ", hint = " ", information = " " },
+        display = {
+          underline = true,
+          update_in_insert = false,
+          -- virtual_text = { spacing = 4, prefix = "●" },
+          virtual_text = false,
+          severity_sort = true,
+        },
+      },
+      completion = {
+        kind = {
+          Class = " ",
+          Color = " ",
+          Constant = " ",
+          Constructor = " ",
+          Enum = "了 ",
+          EnumMember = " ",
+          Field = " ",
+          File = " ",
+          Folder = " ",
+          Function = " ",
+          Interface = "ﰮ ",
+          Keyword = " ",
+          Method = "ƒ ",
+          Module = " ",
+          Property = " ",
+          Snippet = "﬌ ",
+          Struct = " ",
+          Text = " ",
+          Unit = " ",
+          Value = " ",
+          Variable = " ",
+        },
+      },
+    }
+  else
+  end
+
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -109,6 +155,16 @@ function M.setup()
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  capabilities.textDocument.completion.completionItem.preselectSupport = true
+  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { "documentation", "detail", "additionalTextEdits" },
+  }
 
   -- Setup mason so it can manage external tooling
   require('mason').setup()

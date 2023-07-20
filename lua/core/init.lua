@@ -20,6 +20,10 @@ o.updatetime = 250
 -- Set colorscheme
 o.termguicolors = true
 
+o.foldmethod = "expr"
+o.foldexpr = "nvim_treesitter#foldexpr()"
+o.foldlevel = 99
+
 opt.laststatus = 3 -- global statusline
 opt.showmode = false
 
@@ -42,7 +46,6 @@ opt.mouse = "a"
 opt.number = true
 opt.numberwidth = 2
 opt.ruler = false
-
 
 g.mapleader = " "
 g.maplocalleader = " "

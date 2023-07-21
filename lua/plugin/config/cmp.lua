@@ -142,9 +142,8 @@ function M.setup()
     },
     max_limit = 9,
     window = {
-      documentation = {
-        border = "rounded",
-      },
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
       experimental = { ghost_text = false, native_menu = false }
     },
     sorting = {
@@ -162,8 +161,8 @@ function M.setup()
   }
 
   luasnip.config.set_config({
-    history = true,                            --keep around last snippet local to jump back
-    updateevents = "TextChanged,TextChangedI", --update changes as you type
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
     enable_autosnippets = true,
     ext_opts = {
       [require("luasnip.util.types").choiceNode] = {

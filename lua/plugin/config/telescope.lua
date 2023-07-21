@@ -87,11 +87,11 @@ function M.setup()
       }
     }
   }
-  -- Enable telescope fzf native, if installed
   pcall(telescope.load_extension, 'fzf')
   -- pcall(telescope.load_extension, 'undo')
   pcall(telescope.load_extension, 'notify')
   pcall(telescope.load_extension, 'emoji')
+  pcall(telescope.load_extension, 'agrolens')
 end
 
 function M.edit_neovim()
@@ -108,11 +108,21 @@ function M.edit_neovim()
 end
 
 function M.current_buffer_fuzzy_find()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 15,
-    previewer = false,
-    prompt_title = '✨ Search Current Buffers ✨',
-  })
+  require('telescope.builtin').current_buffer_fuzzy_find(
+    require('telescope.themes').get_dropdown {
+      winblend = 15,
+      previewer = false,
+      prompt_title = '✨ Search Current Buffers ✨',
+    })
+end
+
+function M.treesitter()
+  require('telescope.builtin').treesitter {
+    require('telescope.themes').get_dropdown {
+      winblend = 10,
+      prompt_title = 'Treesitter Symbols'
+    }
+  }
 end
 
 return M

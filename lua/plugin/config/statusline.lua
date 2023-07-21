@@ -50,10 +50,10 @@ function M.setup()
         path = 1,
         formatter = filename,
         symbols = {
-          modified = '',
-          readonly = '',
-          unnamed = '',
-          newfile = '',
+          modified = '  ',
+          readonly = '  ',
+          unnamed = '  ',
+          newfile = '  ',
         }
       } },
       lualine_x = {

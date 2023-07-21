@@ -13,7 +13,7 @@ function M.setup()
   dashboard.section.buttons.val = {
     dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
     dashboard.button("LDR  ?", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
-    dashboard.button("LDR  n", "📁  Explorer", ":NvimTreeOpen<CR>"),
+    dashboard.button("LDR  n", "📁 Explorer", ":NvimTreeOpen<CR>"),
     dashboard.button("LDR sf", "🔍 Search Files", ":Telescope find_files<CR>"),
     dashboard.button("LDR sg", "  Find Word", ":Telescope live_grep<CR>"),
     dashboard.button("LDR gb", "  Git Branches", ":Telescope git_branches<CR>"),

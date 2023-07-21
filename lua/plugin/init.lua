@@ -83,8 +83,15 @@ local plugins = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "p00f/nvim-ts-rainbow",
+      "HiPhish/nvim-ts-rainbow2",
       "windwp/nvim-ts-autotag",
       "mizlan/iswap.nvim",
+      {
+        "m-demare/hlargs.nvim",
+        config = function()
+          require('hlargs').setup()
+        end
+      },
       {
         "ZhiyuanLck/smart-pairs",
         event = 'InsertEnter',
@@ -233,7 +240,8 @@ local plugins = {
         cond = vim.fn.executable "make" == 1,
       },
       -- "debugloop/telescope-undo.nvim"
-      "xiyaowong/telescope-emoji.nvim"
+      "xiyaowong/telescope-emoji.nvim",
+      "desdic/agrolens.nvim",
     },
     config = function()
       require("plugin.config.telescope").setup()
@@ -360,6 +368,14 @@ local plugins = {
     config = function()
       require('plugin.config.relativenumber').setup()
     end
+  },
+
+  {
+    "ray-x/sad.nvim",
+    dependencies = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+    config = function()
+      require("sad").setup {}
+    end,
   },
 }
 

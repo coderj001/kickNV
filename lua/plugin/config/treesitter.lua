@@ -57,6 +57,8 @@ function M.setup()
       enable = true,
       extendend_mode = true,
       max_file_lines = 1000,
+      query = 'rainbow-parens',
+      strategy = require('ts-rainbow').strategy.global,
     },
     context_commentstring = {
       enable = true,

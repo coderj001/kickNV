@@ -37,17 +37,15 @@ function M.setup()
       { 'K', vim.lsp.buf.hover, description = 'Hover Documentation', mode = { 'n' } },
       { 'gD', vim.lsp.buf.declaration, description = '[G]oto [D]eclaration', mode = { 'n' } },
       { 'gI', vim.lsp.buf.implementation, description = '[G]oto [I]mplementation', mode = { 'n' } },
-      { 'gd', vim.lsp.buf.definition, description = '[G]oto [D]efinition', mode = { 'n' } },
+      { 'gd', telescope_builtin.lsp_definitions, description = '[G]oto [D]efinition', mode = { 'n' } },
       { 'gr', telescope_builtin.lsp_references, description = '[G]oto [R]eferences', mode = { 'n' } },
       { 'gs', vim.lsp.buf.signature_help, description = '[G]oto [S]ignature', mode = { 'n' } },
       { '<leader>rn', vim.lsp.buf.rename, description = '[R]e[n]ame', mode = { 'n' } },
       { '<leader>ca', vim.lsp.buf.code_action, description = '[C]ode [A]ction', mode = { 'n' } },
-
-      { '<leader>l',        ':Neogit<cr>',                                                description = 'NeoGit', mode = { 'n' } },
-
+      { '<leader>l', ':Neogit<cr>', description = 'NeoGit', mode = { 'n' } },
       -- Split
-      { '<leader>j',  require('treesj.').toggle,                        description = 'Toggle Split or Join', mode = { 'n' } },
-      { '<leader>k',  ':ISwap<CR>',                        description = 'Swap', mode = { 'n', 'v' } },
+      { '<leader>j', require('treesj.').toggle, description = 'Toggle Split or Join', mode = { 'n' } },
+      { '<leader>k', ':ISwap<CR>', description = 'Swap', mode = { 'n', 'v' } },
     },
     commands = {
       { ':Format', function() vim.lsp.buf.format({async = true}) end, description = 'Format current buffer with LSP', mode = { 'n', 'v', 'x' } },
@@ -62,7 +60,14 @@ function M.setup()
       },
       { ':DiffThis', function() gs.diffthis() end,             description = 'Diff this',   mode = { 'n' } },
       { ':DiffView', function() gs.diffthis('~') end,          description = 'Diff View',   mode = { 'n' } },
-      { ':TSJSplit', function() require('treesj').split() end, description = 'Split Lines', mode = { 'n' } },
+      {
+        ':TSJSplit',
+        function()
+          require('treesj').split()
+        end,
+        description = 'Split Lines',
+        mode = { 'n' },
+      },
       { ':TSJJoin',  function() require('treesj').join() end,  description = 'Join Lines',  mode = { 'n' } },
       {
         ':LuaSnipEdit',

@@ -19,18 +19,20 @@ M.options = {
 }
 
 M.ui = {
-	hl_add = {},
-	hl_override = {},
-	changed_themes = {},
-	theme_toggle = { "onedark", "one_light" },
-	theme = "onedark", -- default theme
+	theme_toggle = {
+		"nightly",
+		"tokyonight",
+		"tokyonight-moon",
+		"tokyonight-night",
+		"tokyonight",
+		"kanagawa",
+		"kanagawa-wave",
+	},
+	theme = "tokyonight",
 	transparency = true,
 }
 
-M.plugins = ""
-
 M.opts = opts
-
 
 M.keymap = keymap
 M.set = set

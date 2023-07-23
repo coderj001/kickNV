@@ -140,9 +140,10 @@ local plugins = {
   "tpope/vim-surround",
 
   -- colorscheme
-  "Alexis12119/nightly.nvim",
-  "rebelot/kanagawa.nvim",
-  "folke/tokyonight.nvim",
+  { "catppuccin/nvim",          name = "catppuccin" },
+  { "Alexis12119/nightly.nvim", name = "nightly" },
+  { "rebelot/kanagawa.nvim", },
+  { "folke/tokyonight.nvim", },
 
   -- statusline
   {

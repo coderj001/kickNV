@@ -1,4 +1,6 @@
 local M = {}
+local ui = require("core.default_config").ui
+
 
 function M.setup()
   require('kanagawa').setup({
@@ -8,7 +10,7 @@ function M.setup()
     keywordStyle = { italic = true },
     statementStyle = { bold = true },
     typeStyle = {},
-    transparent = true,
+    transparent = ui.transparency,
     theme = "dragon",
     colors = {
       palette = {},
@@ -43,14 +45,13 @@ function M.setup()
     end,
     background = {
       dark = "dragon",
-      light = "lotus"
     },
   })
 
   require("tokyonight").setup({
     style = "moon",
     light_style = "night",
-    transparent = true,
+    transparent = ui.transparency,
     terminal_colors = true,
     styles = {
       comments = { italic = true },
@@ -66,6 +67,47 @@ function M.setup()
     dim_inactive = true,
     lualine_bold = true,
   })
+
+  require("catppuccin").setup({
+    flavour = "mocha",
+    background = {
+      dark = "mocha",
+    },
+    transparent_background = ui.transparency,
+    show_end_of_buffer = false,
+    term_colors = false,
+    dim_inactive = {
+      enabled = false,
+      shade = "dark",
+      percentage = 0.15,
+    },
+    styles = {
+      comments = { "italic" },
+      conditionals = { "italic" },
+      loops = { "reverse" },
+      functions = { "italic" },
+      keywords = {},
+      strings = {},
+      variables = { "italic" },
+      numbers = {},
+      booleans = { "italic" },
+      properties = {},
+      types = {},
+      operators = {},
+    },
+    integrations = {
+      cmp = true,
+      gitsigns = true,
+      nvimtree = true,
+      treesitter = true,
+      notify = true,
+      neogit = true,
+      treesitter_context = true,
+      ts_rainbow2 = true,
+      ts_rainbow = true,
+    },
+  })
+
   vim.cmd [[colorscheme tokyonight]]
 end
 

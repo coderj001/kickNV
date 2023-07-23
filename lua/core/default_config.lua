@@ -9,12 +9,12 @@ M.options = {
 	kicknv_branch = "master",
 	name = "kickNV",
 	figlet_name = {
-		[[	 __   .__        __    ___________   ____ ]],
-		[[	|  | _|__| ____ |  | __\      \   \ /   / ]],
-		[[	|  |/ /  |/ ___\|  |/ //   |   \   Y   /  ]],
-		[[	|    <|  \  \___|    </    |    \     /   ]],
-		[[	|__|_ \__|\___  >__|_ \____|__  /\___/    ]],
-		[[	     \/       \/     \/       \/          ]],
+		[[			 __   .__        __    ___________   ____ 			]],
+		[[			|  | _|__| ____ |  | __\      \   \ /   / 			]],
+		[[			|  |/ /  |/ ___\|  |/ //   |   \   Y   /  			]],
+		[[			|    <|  \  \___|    </    |    \     /   			]],
+		[[			|__|_ \__|\___  >__|_ \____|__  /\___/    			]],
+		[[			     \/       \/     \/       \/          			]],
 	}
 }
 
@@ -22,13 +22,10 @@ M.ui = {
 	theme_toggle = {
 		"nightly",
 		"tokyonight",
-		"tokyonight-moon",
-		"tokyonight-night",
-		"tokyonight",
 		"kanagawa",
-		"kanagawa-wave",
+		"catppuccin",
 	},
-	theme = "tokyonight",
+	theme = "catppuccin",
 	transparency = true,
 }
 

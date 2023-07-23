@@ -1,4 +1,6 @@
 local M = {}
+local ui = require("core.default_config").ui
+
 local function get_words()
   if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
     if vim.fn.wordcount().visual_words == 1 then
@@ -37,7 +39,7 @@ end
 function M.setup()
   require("lualine").setup({
     options = {
-      theme = "tokyonight",
+      theme = ui.theme,
       section_separators = "",
       component_separators = "",
     },

@@ -147,11 +147,13 @@ function M.setup()
       experimental = { ghost_text = false, native_menu = false }
     },
     sorting = {
+      priority_weight = 2,
       comparators = {
+        cmp.config.compare.score,
+        cmp.config.compare.recently_used,
+        require "cmp-under-comparator".under,
         cmp.config.compare.offset,
         cmp.config.compare.exact,
-        cmp.config.compare.score,
-        require "cmp-under-comparator".under,
         cmp.config.compare.kind,
         cmp.config.compare.sort_text,
         cmp.config.compare.length,

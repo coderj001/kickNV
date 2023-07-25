@@ -13,12 +13,11 @@ function M.setup()
     dashboard.button("LDR sg", "  Search Grep", ":Telescope live_grep<CR>"),
     dashboard.button("LDR gb", "  Git Branches", ":Telescope git_branches<CR>"),
     dashboard.button("LDR gc", "  Git Commits", ":Telescope git_commits<CR>"),
-    dashboard.button("LDR ne", "📝 Neovim Edit", ":lua require('plugin.config.telescope').edit_neovim()<CR>"),
+    dashboard.button("LDR en", "📝 Neovim Edit", ":lua require('plugin.config.telescope').edit_neovim()<CR>"),
     dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
   }
 
   dashboard.section.footer.val      = "Total plugins: " .. require("lazy").stats().count
-  dashboard.section.footer.opts.hl  = "Normal"
   dashboard.section.header.opts.hl  = "Include"
   dashboard.section.buttons.opts.hl = "Keyword"
   dashboard.opts.opts.noautocmd     = true

@@ -380,7 +380,19 @@ local plugins = {
   },
 }
 
-local opts = {}
+local opts = {
+  spec = {
+    { import = "base" },
+    { import = "pde" },
+  },
+  install = {
+    missing = true,
+    colorscheme = {
+      "tokyonight",
+      "catppuccin",
+    },
+  }
+}
 
 require("lazy").setup(plugins, opts)
 require('plugin.config.colorscheme').setup()

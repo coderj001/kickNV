@@ -30,7 +30,7 @@ local plugins = {
       },
     },
     config = function()
-      require("plugin.config.lsp")
+      require("plugin.config.lsp").setup()
     end,
   },
   {

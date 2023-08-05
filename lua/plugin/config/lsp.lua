@@ -91,7 +91,6 @@ local servers = {
   },
 }
 
-
 local on_attach = function(_, bufnr)
   vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError", numhl = "" })
   vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn", numhl = "" })

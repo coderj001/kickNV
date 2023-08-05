@@ -22,7 +22,8 @@ o.termguicolors = true
 
 o.foldmethod = "expr"
 o.foldexpr = "nvim_treesitter#foldexpr()"
-o.foldlevel = 99
+o.nofoldenable = true
+-- o.foldlevel = 99
 
 opt.laststatus = 3 -- global statusline
 opt.showmode = false

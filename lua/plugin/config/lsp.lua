@@ -41,7 +41,56 @@ local servers = {
       },
     },
   },
+  ltex = {
+    filetypes = {
+      "bib",
+      "gitcommit",
+      "markdown",
+      "org",
+      "plaintex",
+      "rst",
+      "rnoweb",
+      "tex",
+      "pandoc",
+      "rust",
+      "javascript",
+      "typescript",
+      "javascriptreact",
+      "typescriptreact",
+      "lua",
+      "python",
+      "html",
+    },
+    settings = {
+      ltex = {
+        enabled = {
+          "bib",
+          "gitcommit",
+          "markdown",
+          "org",
+          "plaintex",
+          "rst",
+          "rnoweb",
+          "tex",
+          "pandoc",
+          "rust",
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+          "lua",
+          "python",
+          "html",
+        },
+        additionalRules = {
+          languageModel = "~/ngrams/",
+          checkFrequency = "save",
+        }
+      }
+    }
+  },
 }
+
 
 local on_attach = function(_, bufnr)
   vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError", numhl = "" })

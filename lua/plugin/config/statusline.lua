@@ -44,21 +44,43 @@ function M.setup()
       component_separators = "",
     },
     sections = {
-      lualine_a = { { "mode", color = { gui = "bold" } } },
-      lualine_b = { "branch", "diff" },
-      lualine_c = { {
-        "filename",
-        file_status = true,
-        path = 1,
-        formatter = filename,
-        symbols = {
-          modified = '  ',
-          readonly = '  ',
-          unnamed = '  ',
-          newfile = '  ',
-        }
-      } },
+      lualine_a = {
+        {
+          "mode",
+          color = {
+            gui = "bold",
+          },
+        },
+      },
+      lualine_b = {
+        "branch",
+        "diff",
+        lsp_status,
+        {
+          "diagnostics",
+          sources = {
+            "nvim_lsp",
+          },
+        },
+      },
+      lualine_c = {
+        {
+          "filename",
+          file_status = true,
+          path = 1,
+          formatter = filename,
+          symbols = {
+            modified = '  ',
+            readonly = '  ',
+            unnamed = '  ',
+            newfile = '  ',
+          },
+        },
+      },
       lualine_x = {
+        
+      },
+      lualine_y = {
         "encoding",
         "fileformat",
         "filetype",
@@ -69,14 +91,14 @@ function M.setup()
           color = { fg = "#ff9e64" },
         },
       },
-      lualine_y = { "progress" },
-      lualine_z = { lsp_status, { "diagnostics", sources = { "nvim_lsp" } } },
+      lualine_z = { "progress" },
     },
     extensions = {
       "fzf",
       "fugitive",
       "quickfix",
       "nvim-tree",
+      "man",
       "lazy"
     },
   })

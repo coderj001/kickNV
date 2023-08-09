@@ -7,6 +7,14 @@ local keymap = require("core.default_config").keymap
 function M.setup()
   bufferline.setup {
     options = {
+      offsets = {
+        {
+          filetype = "NvimTree",
+          text = "Explorer",
+          highlight = "Directory",
+          text_align = "left"
+        },
+      },
       number_style = "",
       separator_style = "any",
       insert_at_end = false,
@@ -18,6 +26,16 @@ function M.setup()
       show_buffer_close_icons = false,
       show_tab_indicators = false,
       always_show_bufferline = true,
+      max_name_length = 30,
+      max_prefix_length = 15,
+      tab_size = 20,
+      sort_by = "extension",
+      custom_filter = function(buf_number)
+        local name = vim.fn.bufname(buf_number)
+        if name ~= "" and not name:match("^term://") then
+          return true
+        end
+      end,
       highlight = require("catppuccin.groups.integrations.bufferline").get()
     }
   }

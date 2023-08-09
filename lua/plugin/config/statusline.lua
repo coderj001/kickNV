@@ -1,6 +1,18 @@
 local M = {}
 local ui = require("core.default_config").ui
 
+local function search_result()
+  if vim.v.hlsearch == 0 then
+    return ''
+  end
+  local last_search = vim.fn.getreg('/')
+  if not last_search or last_search == '' then
+    return ''
+  end
+  local searchcount = vim.fn.searchcount { maxcount = 9999 }
+  return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
+end
+
 local function get_words()
   if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
     if vim.fn.wordcount().visual_words == 1 then
@@ -78,12 +90,12 @@ function M.setup()
         },
       },
       lualine_x = {
-        
+        search_result
       },
       lualine_y = {
+        "filetype",
         "encoding",
         "fileformat",
-        "filetype",
         get_words,
         {
           require("lazy.status").updates,
@@ -92,6 +104,10 @@ function M.setup()
         },
       },
       lualine_z = { "progress" },
+    },
+    inactive_sections = {
+      lualine_c = { '%f %y %m' },
+      lualine_x = {},
     },
     extensions = {
       "fzf",

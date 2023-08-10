@@ -4,9 +4,13 @@ local servers = {
   gopls = {},
   pyright = {
     settings = {
+      autoImportCompletion = true,
       python = {
         analysis = {
-          typeCheckingMode = "off",
+          autoSearchPaths = true,
+          diagnosticMode = 'openFilesOnly',
+          useLibraryCodeForTypes = true,
+          typeCheckingMode = 'off',
         },
       },
     },
@@ -21,11 +25,12 @@ local servers = {
   },
   tsserver = {
     filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
       "typescript",
       "typescriptreact",
       "typescript.tsx",
-      "javascript",
-      "javascriptreact",
     }
   },
   lua_ls = {
@@ -169,15 +174,7 @@ end
 
 function M.setup()
   -- Setup neovim lua configuration
-  require('neodev').setup {
-    library = {
-      enabled = true,
-      runtime = true,
-      types = true,
-      plugins = true,
-    },
-  }
-
+  require('neodev').setup()
 
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()

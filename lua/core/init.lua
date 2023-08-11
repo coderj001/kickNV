@@ -68,7 +68,7 @@ opt.mouse = "a"
 
 -- Numbers
 opt.number = true
-opt.numberwidth = 2
+opt.numberwidth = 1
 opt.ruler = false
 
 g.mapleader = " "

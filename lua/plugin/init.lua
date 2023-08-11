@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   {
     "neovim/nvim-lspconfig",
-    event="VimEnter",
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -242,7 +241,7 @@ local plugins = {
         cond = vim.fn.executable "make" == 1,
       },
       -- "debugloop/telescope-undo.nvim"
-      "xiyaowong/telescope-emoji.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
       "desdic/agrolens.nvim",
     },
     config = function()
@@ -403,3 +402,4 @@ require('plugin.config.colorscheme').setup()
 ------------ keymaps ----------
 -------------------------------
 require('core.default_config').keymaps.default()
+

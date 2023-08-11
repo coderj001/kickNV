@@ -37,7 +37,19 @@ function M.setup()
       -- Command Pallet
       { '<leader>cp', require('legendary').find, description = '[C]ommand [P]allet', mode = {'n', 'v'} },
       -- LSP
-      { 'K', vim.lsp.buf.hover, description = 'Hover Documentation', mode = { 'n' } },
+      {
+        'K',
+        function()
+          local winid = require('ufo').peekFoldedLinesUnderCursor()
+          if not winid then
+            vim.lsp.buf.hover()
+          end
+      end, description = 'Hover Documentation', mode = { 'n' } },
+      -- UFO
+      { 'zR', require('ufo').openAllFolds, description = 'Open All Folds', mode = { 'n' } },
+      { 'zM', require('ufo').closeAllFolds, description = 'Close All Folds', mode = { 'n' } },
+      { 'zr', require('ufo').openFoldsExceptKinds, description = 'Open Folds Except Kinds', mode = { 'n' } },
+      { 'zm', require('ufo').closeFoldsWith, description = 'Open Folds With', mode = { 'n' } },
       { 'gD', vim.lsp.buf.declaration, description = '[G]oto [D]eclaration', mode = { 'n' } },
       { 'gI', vim.lsp.buf.implementation, description = '[G]oto [I]mplementation', mode = { 'n' } },
       { 'gd', telescope_builtin.lsp_definitions, description = '[G]oto [D]efinition', mode = { 'n' } },
@@ -72,7 +84,14 @@ function M.setup()
         description = 'Split Lines',
         mode = { 'n' },
       },
-      { ':TSJJoin',  function() require('treesj').join() end,  description = 'Join Lines',  mode = { 'n' } },
+      {
+        ':TSJJoin',
+        function()
+          require('treesj').join()
+        end,
+        description = 'Join Lines',
+        mode = { 'n' },
+      },
       {
         ':LuaSnipEdit',
         function()

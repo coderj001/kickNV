@@ -102,6 +102,14 @@ local plugins = {
     }
   },
   {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+    event = "BufReadPost",
+    config = function()
+      require('plugin.config.ufo').setup()
+    end
+  },
+  {
     "mrjones2014/smart-splits.nvim",
     event = "Bufenter",
     config = function()
@@ -402,4 +410,3 @@ require('plugin.config.colorscheme').setup()
 ------------ keymaps ----------
 -------------------------------
 require('core.default_config').keymaps.default()
-

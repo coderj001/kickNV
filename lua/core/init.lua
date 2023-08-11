@@ -4,8 +4,12 @@ local o = vim.o
 
 ------------ options ----------
 
+if vim.fn.has("nvim-0.9.0") == 1 then
+  opt.splitkeep = 'screen'
+end
+
 -- Set highlight on search
-o.hlsearch = false
+o.hlsearch = true
 -- Enable mouse mode
 o.mouse = 'a'
 -- Enable break indent
@@ -20,15 +24,18 @@ o.updatetime = 250
 -- Set colorscheme
 o.termguicolors = true
 
-o.foldmethod = "expr"
-o.foldexpr = "nvim_treesitter#foldexpr()"
-o.nofoldenable = true
--- o.foldlevel = 99
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = "expr"
+
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 opt.laststatus = 3 -- global statusline
 opt.showmode = false
 
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 opt.cursorline = true
 
 -- Indenting
@@ -38,7 +45,23 @@ opt.smartindent = true
 opt.tabstop = 2
 opt.softtabstop = 2
 
-opt.fillchars = { eob = " " }
+-- opt.fillchars = { eob = " " }
+opt.fillchars = {
+	fold = " ",
+	foldopen = "",
+	foldclose = "",
+	foldsep = " ",
+	diff = "╱",
+	eob = " ",
+}
+opt.listchars = {
+	tab = ">>>",
+	trail = "·",
+	precedes = "←",
+	extends = "→",
+	eol = "↲",
+	nbsp = "␣",
+}
 opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = "a"

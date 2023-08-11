@@ -2,19 +2,20 @@ local M = {}
 local servers = {
   clangd = {},
   gopls = {},
-  pyright = {
-    settings = {
-      autoImportCompletion = true,
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          diagnosticMode = 'openFilesOnly',
-          useLibraryCodeForTypes = true,
-          typeCheckingMode = 'off',
-        },
-      },
-    },
-  },
+  pylsp = {},
+  -- pyright = {
+  --   settings = {
+  --     autoImportCompletion = true,
+  --     python = {
+  --       analysis = {
+  --         autoSearchPaths = true,
+  --         diagnosticMode = 'openFilesOnly',
+  --         useLibraryCodeForTypes = true,
+  --         typeCheckingMode = 'off',
+  --       },
+  --     },
+  --   },
+  -- },
   rust_analyzer = {},
   jsonls = {
     settings = {
@@ -161,7 +162,7 @@ local on_attach = function(_, bufnr)
   -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
@@ -188,6 +189,10 @@ function M.setup()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation", "detail", "additionalTextEdits" },
+  }
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
   }
 
   -- Setup mason so it can manage external tooling

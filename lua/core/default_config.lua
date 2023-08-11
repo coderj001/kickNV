@@ -26,7 +26,7 @@ M.ui = {
 		"catppuccin",
 	},
 	theme = "catppuccin",
-	transparency = true,
+	transparency = false,
 }
 
 M.opts = opts

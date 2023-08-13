@@ -5,8 +5,9 @@ local gs = require('gitsigns')
 function M.setup()
   require('legendary').setup({
     keymaps = {
-      -- Telescope
       { '<leader>n', ':NvimTreeToggle<CR>', description = '[N]vimTree Toggle' },
+      { '<leader><Enter>', ':nohlsearch<CR>', description = 'No Highlights Search' },
+      -- Telescope
       { '<leader>?', telescope_builtin.oldfiles, description = '[?] Find recently opened files' },
       { '<leader>sf', telescope_builtin.find_files, description = '[S]earch [F]iles' },
       { '<leader>sw', telescope_builtin.grep_string, description = '[S]earch current  [W]ord' },
@@ -15,12 +16,17 @@ function M.setup()
       { '<leader>sc', function () require('plugin.config.telescope').colorscheme_picker() end, description = '[S]earch [C]olorscheme' },
       { '<leader>so', function () require('plugin.config.telescope').treesitter() end, description = '[S]earch Treesitter Symb[o]ls' },
       { '<leader>ss', telescope_builtin.symbols, description = '[S]earch [S]ymbols' },
+      { '<leader>sx', telescope_builtin.resume, description = '[S]earch [X]resume' },
+      { '<leader>sd', telescope_builtin.diagnostics, description = '[S]earch [D]iagnostics' },
+      { '<leader>sm', telescope_builtin.marks, description = '[S]earch [M]arks' },
+      { '<leader>sj', telescope_builtin.jumplist, description = '[S]earch [J]umplist' },
       { '<leader>/', require('plugin.config.telescope').current_buffer_fuzzy_find, description = '[/] Fuzzily search in current buffer' },
       { '<leader>en', require('plugin.config.telescope').edit_neovim, description = '[E]dit [N]eovim' },
       { '<leader>gb', telescope_builtin.git_branches, description = '[G]it [B]ranches' },
       { '<leader>gc', telescope_builtin.git_commits, description = '[G]it [B]ranches' },
       { '<leader>gs', telescope_builtin.git_status, description = '[G]it [S]tatus' },
       { '<leader>gt', telescope_builtin.git_stash, description = '[G]it s[T]atus' },
+      -- Git signs
       { '<leader>hs', gs.stage_hunk, description = 'Stage Hunk', mode = { 'n' } },
       { '<leader>hr', gs.reset_hunk, description = 'Reset Hunk', mode = { 'n' } },
       { '<leader>hs', function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end, description = 'Stage Hunk (Visual)', mode = { 'v' } },

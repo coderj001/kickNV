@@ -94,14 +94,18 @@ function M.setup()
       },
       lualine_y = {
         "filetype",
-        "encoding",
-        "fileformat",
+        -- "encoding",
+        -- "fileformat",
         get_words,
         {
           require("lazy.status").updates,
           cond = require("lazy.status").has_updates,
           color = { fg = "#ff9e64" },
         },
+        {
+          "location",
+          color = { fg = "#ff9e64" },
+        }
       },
       lualine_z = { "progress" },
     },

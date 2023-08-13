@@ -20,7 +20,7 @@ Steps to reproduce the behavior:
 - Terminal: 
 
 ** Neovim Version **
- - Output of running `:version` from inside of neovim:
+ - Output of running `:version` from inside neovim:
 
 ```
 ```

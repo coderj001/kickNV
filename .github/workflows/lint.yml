@@ -1,0 +1,25 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - kickNV
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        
+      - name: Set up Lua
+        uses: leafo/gh-actions-lua@v8
+
+      - name: Install linter
+        run: sudo luarocks install luacheck
+
+      - name: Run linter
+        run: luacheck .
+    
+      

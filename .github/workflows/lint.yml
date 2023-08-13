@@ -17,7 +17,7 @@ jobs:
         uses: leafo/gh-actions-lua@v8
 
       - name: Install linter
-        run: sudo luarocks install luacheck
+        run: luarocks install luacheck
 
       - name: Run linter
         run: luacheck .

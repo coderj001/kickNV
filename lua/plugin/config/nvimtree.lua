@@ -16,9 +16,6 @@ function M.setup()
       cursorline = true,
       width = 30,     -- Set the width of the tree view
       side = 'right', -- Put the tree view on the left side of the editor
-      mappings = {
-        custom_only = false,
-      },
     },
     actions             = {
       open_file = {

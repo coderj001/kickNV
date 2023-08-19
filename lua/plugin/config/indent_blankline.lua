@@ -29,6 +29,8 @@ function M.setup()
       "NeogitPopup",
       "NeogitStatus",
       "lazy",
+      "mason",
+      "cmp",
     },
     context_patterns = {
       "class",

@@ -152,13 +152,14 @@ local plugins = {
   },
 
   "jiangmiao/auto-pairs",
-  "tpope/vim-surround",
+  { "tpope/vim-surround",       event = "Bufenter" },
+  { "tpope/vim-repeat",         event = "Bufenter" },
 
   -- colorscheme
-  { "catppuccin/nvim",          name = "catppuccin" },
-  { "Alexis12119/nightly.nvim", name = "nightly" },
-  { "rebelot/kanagawa.nvim", },
-  { "folke/tokyonight.nvim", },
+  { "catppuccin/nvim",          name = "catppuccin", priority = 1000 },
+  { "Alexis12119/nightly.nvim", name = "nightly",    priority = 1000 },
+  { "rebelot/kanagawa.nvim",    priority = 1000 },
+  { "folke/tokyonight.nvim",    priority = 1000 },
 
   -- statusline
   {
@@ -173,6 +174,7 @@ local plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "VimEnter",
     config = function()
       require('plugin.config.indent_blankline').setup()
     end
@@ -291,10 +293,12 @@ local plugins = {
   },
   {
     "monaqa/dial.nvim",
+    event = "VeryLazy",
     keys = { "<C-a>", { "<C-x>", mode = "n" } },
   },
   {
     "mvllow/modes.nvim",
+    event = "VeryLazy",
     config = function()
       require("plugin.config.modes").setup()
     end
@@ -302,6 +306,7 @@ local plugins = {
 
   {
     "gen740/SmoothCursor.nvim",
+    event = "VeryLazy",
     config = function()
       require("plugin.config.smoothcursor").setup()
     end
@@ -309,6 +314,7 @@ local plugins = {
 
   {
     "NTBBloodbath/rest.nvim",
+    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim"
     },
@@ -351,6 +357,7 @@ local plugins = {
   {
     -- Split
     'Wansmer/treesj',
+    event = "BufWinEnter",
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       require('plugin.config.treesj').setup()
@@ -382,6 +389,7 @@ local plugins = {
 
   {
     "ray-x/sad.nvim",
+    event = "VeryLazy",
     dependencies = { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
     config = function()
       require("sad").setup {}

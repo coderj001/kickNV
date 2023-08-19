@@ -4,10 +4,10 @@ function M.setup()
   require('gitsigns').setup {
     signs = {
       add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
+      delete = { text = "-" },
+      change = { text = "±" },
       changedelete = { text = '~' },
+      topdelete = { text = '‾' },
     },
     current_line_blame_opts = {
       virt_text = true,

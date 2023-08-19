@@ -24,13 +24,14 @@ o.updatetime = 250
 -- Set colorscheme
 o.termguicolors = true
 
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.o.foldmethod = "expr"
+o.foldexpr = "nvim_treesitter#foldexpr()"
+o.foldmethod = "expr"
 
-vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
+o.foldcolumn = '0' -- '0' is not bad
+o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = -1
+o.foldenable = true
+o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 opt.laststatus = 3 -- global statusline
 opt.showmode = false

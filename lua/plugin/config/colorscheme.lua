@@ -75,11 +75,11 @@ function M.setup()
     },
     transparent_background = ui.transparency,
     show_end_of_buffer = false,
-    term_colors = false,
+    term_colors = true,
     dim_inactive = {
       enabled = false,
-      shade = "dark",
-      percentage = 0.15,
+      shade = "light",
+      percentage = 0.10,
     },
     styles = {
       comments = { "italic" },
@@ -105,10 +105,14 @@ function M.setup()
       treesitter_context = true,
       ts_rainbow2 = true,
       ts_rainbow = true,
+      telescope = {
+        enabled = true,
+        style = "nvchad",
+      },
     },
   })
 
-  vim.cmd [[colorscheme tokyonight]]
+  vim.cmd("colorscheme " .. ui.theme)
 end
 
 return M

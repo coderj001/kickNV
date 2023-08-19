@@ -26,6 +26,7 @@ function M.setup()
       "nvim-tree",
       "neogit",
       "diffview",
+      "NeogitPopup"
     },
     context_patterns = {
       "class",

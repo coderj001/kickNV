@@ -23,10 +23,12 @@ function M.setup()
       "help",
       "terminal",
       "alpha",
-      "nvim-tree",
+      "NvimTree",
       "neogit",
       "diffview",
-      "NeogitPopup"
+      "NeogitPopup",
+      "NeogitStatus",
+      "lazy",
     },
     context_patterns = {
       "class",

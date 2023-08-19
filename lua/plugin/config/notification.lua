@@ -13,14 +13,14 @@ function M.setup()
     max_width = function()
       return math.floor(vim.o.columns * 0.75)
     end,
-    background_colour = "PMenu",
+    background_colour = "#000000",
     minimum_width = 26,
     icons = {
       ERROR = "",
       WARN = "",
       INFO = "",
       DEBUG = "",
-      TRACE = "✎"
+      TRACE = "✎",
     }
   })
   vim.notify = notify

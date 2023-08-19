@@ -3,11 +3,46 @@ local M = {}
 function M.setup()
   require('gitsigns').setup {
     signs = {
-      add = { text = '+' },
-      delete = { text = "-" },
-      change = { text = "±" },
-      changedelete = { text = '~' },
-      topdelete = { text = '‾' },
+      add = {
+        -- text = '+',
+        text = "▎",
+        hl = "GitSignsAdd",
+        numhl = "GitSignsAddNr",
+        linehl = "GitSignsAddLn",
+      },
+      delete = {
+        -- text = "-",
+        text = "_",
+        hl = "GitSignsDelete",
+        numhl = "GitSignsDeleteNr",
+        linehl = "GitSignsDeleteLn",
+      },
+      change = {
+        -- text = "±",
+        text = "▎",
+        hl = "GitSignsChange",
+        numhl = "GitSignsChangeNr",
+        linehl = "GitSignsChangeLn",
+      },
+      changedelete = {
+        -- text = '~',
+        text = "▎",
+        hl = "GitSignsDelete",
+        numhl = "GitSignsChangeNr",
+        linehl = "GitSignsChangeLn",
+      },
+      topdelete = {
+        text = '‾',
+        hl = "GitSignsDelete",
+        numhl = "GitSignsDeleteNr",
+        linehl = "GitSignsDeleteLn",
+      },
+    },
+    numhl = false,
+    linehl = false,
+    watch_gitdir = {
+      interval = 1000,
+      follow_files = true,
     },
     current_line_blame_opts = {
       virt_text = true,

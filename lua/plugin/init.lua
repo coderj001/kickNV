@@ -1,13 +1,20 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+  local success, maybe_error = pcall(
+    vim.fn.system, {
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazypath,
+    }
+  )
+  if not success then
+    require('plugin.config.notification').error("ERROR: Fail to install plugin manager lazy.nvim", maybe_error)
+    require('plugin.config.notification').info("You can cleanup the " .. lazypath .. " and start again")
+    return
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -73,6 +80,10 @@ local plugins = {
   {
     -- File Syntax
     "nvim-treesitter/nvim-treesitter",
+    event = {
+      "BufReadPost",
+      "BufNewFile",
+    },
     build = function()
       pcall(require('nvim-treesitter.install').update { with_sync = false })
     end,
@@ -181,8 +192,8 @@ local plugins = {
   },                       -- "gc" to comment visual regions/lines
 
   "tpope/vim-sleuth",      -- Detect tabstop and shiftwidth automatically
-
   "windwp/nvim-autopairs", -- braket and tag
+
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -280,10 +291,7 @@ local plugins = {
   },
   {
     "monaqa/dial.nvim",
-    keys = {
-      "<C-a>",
-      { "<C-x>", mode = "n" },
-    },
+    keys = { "<C-a>", { "<C-x>", mode = "n" } },
   },
   {
     "mvllow/modes.nvim",
@@ -389,17 +397,17 @@ local opts = {
   install = {
     missing = true,
     colorscheme = {
-      "tokyonight",
       "catppuccin",
+      "tokyonight",
     },
   }
 }
 
 require("lazy").setup(plugins, opts)
-require('plugin.config.colorscheme').setup()
+require("plugin.config.colorscheme").setup()
 
 
 -------------------------------
 ------------ keymaps ----------
 -------------------------------
-require('core.default_config').keymaps.default()
+require("core.default_config").keymaps.default()

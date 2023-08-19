@@ -10,11 +10,14 @@ function M.setup()
       offsets = {
         {
           filetype = "NvimTree",
-          text = "Explorer",
+          text = " Explorer",
           highlight = "Directory",
-          text_align = "left"
+          text_align = "left",
+          padding = 1
         },
       },
+      left_trunc_marker = "",
+      right_trunc_marker = "",
       number_style = "",
       separator_style = "any",
       insert_at_end = false,

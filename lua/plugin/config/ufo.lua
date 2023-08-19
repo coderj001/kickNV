@@ -35,13 +35,25 @@ function M.setup()
   require('ufo').setup({
     fold_virt_text_handler = handler,
     provider_selector = function(bufnr, filetype, buftype)
-      return { 'treesitter', 'indent' }
+      return {
+        'treesitter',
+        'indent',
+      }
     end,
     preview = {
       win_config = {
-        border       = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+        border       = {
+          "┏",
+          "━",
+          "┓",
+          "┃",
+          "┛",
+          "━",
+          "┗",
+          "┃",
+        },
         winblend     = 0,
-        winhighlight = "Normal:LazyNormal",
+        winhighlight = "Normal:Folded",
       }
     }
   })

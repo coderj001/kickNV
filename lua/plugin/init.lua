@@ -21,10 +21,16 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      {
+        'folke/neodev.nvim',
+        config = function()
+          require('neodev').setup()
+        end
+      },
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'folke/neodev.nvim',
       {
         'j-hui/fidget.nvim',
         branch = "legacy"
@@ -38,6 +44,25 @@ local plugins = {
     },
     config = function()
       require("plugin.config.lsp").setup()
+    end,
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    ft = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("plugin.config.typescript-tools")
     end,
   },
   {

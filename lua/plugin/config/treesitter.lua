@@ -13,6 +13,7 @@ function M.setup()
       "typescript",
       "json",
       "json5",
+      "jsonc",
       "go",
       "gomod",
       "bash",

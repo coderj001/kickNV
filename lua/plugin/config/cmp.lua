@@ -88,13 +88,13 @@ function M.setup()
           return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
         end
       },
-      { name = 'luasnip',    icon = luasnip_symbol,    max_item_count = 5 },
-      { name = 'treesitter', icon = treesitter_symbol, max_item_count = 5 },
-      { name = 'buffer',     icon = buffer_symbol,     max_item_count = 5 },
-      { name = 'rg',         icon = rg_symbol,         max_item_count = 5 },
-      { name = 'tags',       icon = tags_symbol,       max_item_count = 4 },
-      { name = 'path',       icon = path_symbol,       max_item_count = 3 },
-      { name = 'tmux',       icon = tmux_symbol,       max_item_count = 2 },
+      { name = 'luasnip',    icon = luasnip_symbol,    max_item_count = 6 },
+      { name = 'treesitter', icon = treesitter_symbol, max_item_count = 6 },
+      { name = 'buffer',     icon = buffer_symbol,     max_item_count = 6 },
+      { name = 'rg',         icon = rg_symbol,         max_item_count = 6 },
+      { name = 'tags',       icon = tags_symbol,       max_item_count = 5 },
+      { name = 'path',       icon = path_symbol,       max_item_count = 4 },
+      { name = 'tmux',       icon = tmux_symbol,       max_item_count = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },

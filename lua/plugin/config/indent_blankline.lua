@@ -31,6 +31,7 @@ function M.setup()
       "lazy",
       "mason",
       "cmp",
+      "lspinfo",
     },
     context_patterns = {
       "class",

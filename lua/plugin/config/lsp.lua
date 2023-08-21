@@ -24,16 +24,16 @@ local servers = {
       },
     },
   },
-  tsserver = {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    }
-  },
+  -- tsserver = {
+  --   filetypes = {
+  --     "javascript",
+  --     "javascriptreact",
+  --     "javascript.jsx",
+  --     "typescript",
+  --     "typescriptreact",
+  --     "typescript.tsx",
+  --   }
+  -- },
   lua_ls = {
     Lua = {
       diagnostics = {
@@ -209,7 +209,7 @@ function M.setup()
         on_attach = on_attach,
         settings = servers[server_name],
         -- should I set it up for any LS?
-        single_file_support = server_name == 'tsserver' or server_name == 'eslint',
+        -- single_file_support = server_name == 'tsserver' or server_name == 'eslint',
       }
     end,
   }

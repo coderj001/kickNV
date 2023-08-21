@@ -45,25 +45,7 @@ local plugins = {
     config = function()
       require("plugin.config.lsp").setup()
     end,
-  },
-  {
-    "pmizio/typescript-tools.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    ft = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      require("plugin.config.typescript-tools")
-    end,
+    cmd = { "Mason" }
   },
   {
     "folke/neoconf.nvim",
@@ -433,6 +415,37 @@ local opts = {
       "catppuccin",
       "tokyonight",
     },
+  },
+  rtp = {
+    disabled_plugins = {
+      "2html_plugin",
+      "tohtml",
+      "getscript",
+      "getscriptPlugin",
+      "gzip",
+      "logipat",
+      "netrw",
+      "netrwPlugin",
+      "netrwSettings",
+      "netrwFileHandlers",
+      "matchit",
+      "tar",
+      "tarPlugin",
+      "rrhelper",
+      "spellfile",
+      "spellfile_plugin",
+      "vimball",
+      "vimballPlugin",
+      "zip",
+      "zipPlugin",
+      "tutor",
+      "rplugin",
+      "syntax",
+      "synmenu",
+      "optwin",
+      "compiler",
+      "bugreport",
+    }
   }
 }
 

@@ -1,6 +1,19 @@
 local M = {}
 local ui = require("core.default_config").ui
 
+local function getLsps()
+  local lspNames = "["
+  for _, client in pairs(vim.lsp.get_active_clients()) do
+    lspNames = lspNames .. client.name .. ", "
+  end
+
+  return string.sub(lspNames, 1, string.len(lspNames) - 2) .. "]"
+end
+
+local function getTotalLines()
+  return vim.fn.line("$")
+end
+
 local function search_result()
   if vim.v.hlsearch == 0 then
     return ''
@@ -90,6 +103,7 @@ function M.setup()
         },
       },
       lualine_x = {
+        getLsps,
         search_result
       },
       lualine_y = {
@@ -105,7 +119,8 @@ function M.setup()
         {
           "location",
           color = { fg = "#ff9e64" },
-        }
+        },
+        getTotalLines
       },
       lualine_z = { "progress" },
     },

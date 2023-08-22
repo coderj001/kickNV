@@ -47,24 +47,24 @@ local plugins = {
     end,
     cmd = { "Mason" }
   },
-  {
-    'pmizio/typescript-tools.nvim',
-    event = { 'BufReadPost *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-lspconfig' },
-    opts = {
-      on_attach = require('plugin.config.typescript-tools').on_attach,
-      settings = {
-        separate_diagnostic_server = true,
-        tsserver_file_preferences = {
-          includeInlayParameterNameHints = 'literals',
-          includeInlayVariableTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeCompletionsForModuleExports = true,
-          quotePreference = "auto",
-        },
-      },
-    },
-  },
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   event = { 'BufReadPost *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-lspconfig' },
+  --   opts = {
+  --     on_attach = require('plugin.config.typescript-tools').on_attach,
+  --     settings = {
+  --       separate_diagnostic_server = true,
+  --       tsserver_file_preferences = {
+  --         includeInlayParameterNameHints = 'literals',
+  --         includeInlayVariableTypeHints = true,
+  --         includeInlayFunctionLikeReturnTypeHints = true,
+  --         includeCompletionsForModuleExports = true,
+  --         quotePreference = "auto",
+  --       },
+  --     },
+  --   },
+  -- },
   {
     "folke/neoconf.nvim",
     cmd = "Neoconf",

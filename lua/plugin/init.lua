@@ -199,7 +199,7 @@ local plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "VimEnter",
+    event = 'FileType',
     config = function()
       require('plugin.config.indent_blankline').setup()
     end
@@ -251,6 +251,7 @@ local plugins = {
   {
     -- Notifocation
     "rcarriga/nvim-notify",
+    event = "VeryLazy",
     config = function()
       require("plugin.config.notification").setup()
     end,
@@ -286,6 +287,13 @@ local plugins = {
     config = function()
       require("plugin.config.telescope").setup()
     end
+  },
+
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    cmd = 'BqfAutoToggle',
+    event = 'QuickFixCmdPost',
   },
 
   {

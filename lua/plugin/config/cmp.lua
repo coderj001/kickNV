@@ -1,18 +1,21 @@
 local M = {}
+local status_cmp, cmp = pcall(require, "cmp")
+local status_luasnip, luasnip = pcall(require, "luasnip")
+
+local lsp_symbol = ""
+local luasnip_symbol = "﬌"
+local treesitter_symbol = ""
+local buffer_symbol = "﬘"
+local tags_symbol = ""
+local rg_symbol = ""
+local path_symbol = ""
+local tmux_symbol = ""
 
 function M.setup()
   -- nvim-cmp setup
-  local cmp = require 'cmp'
-  local luasnip = require 'luasnip'
 
-  local lsp_symbol = ""
-  local luasnip_symbol = "﬌"
-  local treesitter_symbol = ""
-  local buffer_symbol = "﬘"
-  local tags_symbol = ""
-  local rg_symbol = ""
-  local path_symbol = ""
-  local tmux_symbol = ""
+  if (not status_cmp) then return end
+  if (not status_luasnip) then return end
 
   cmp.setup {
     snippet = {

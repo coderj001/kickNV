@@ -1,8 +1,10 @@
-local M = {}
-local opts = require("core.default_config").opts
+local M                = {}
+local opts             = require("core.default_config").opts
+local status, bufresize = pcall(require, "bufresize")
 
 function M.setup()
-  require("bufresize").setup({
+  if (not status) then return end
+  bufresize.setup({
     register = {
       keys = {
         { "n", "<leader>=", "<C-w>=", opts },

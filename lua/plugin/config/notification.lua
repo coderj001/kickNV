@@ -1,7 +1,8 @@
 local M = {}
-local notify = require("notify")
+local status, notify = pcall(require, "notify")
 
 function M.setup()
+  if (not status) then return end
   notify.setup({
     stages = "fade_in_slide_out",
     render = "compact",

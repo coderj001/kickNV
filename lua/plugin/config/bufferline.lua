@@ -1,10 +1,11 @@
 ---@diagnostic disable: missing-fields
 local M = {}
-local bufferline = require "bufferline"
+local status, bufferline = pcall(require, "bufferline")
 local opts = require("core.default_config").opts
 local keymap = require("core.default_config").keymap
 
 function M.setup()
+  if (not status) then return end
   bufferline.setup {
     options = {
       offsets = {

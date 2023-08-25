@@ -1,7 +1,9 @@
 local M = {}
+local status, relativetoggle = pcall(require, "relative-toggle")
 
 function M.setup()
-  require("relative-toggle").setup({
+  if (not status) then return end
+  relativetoggle.setup({
     pattern = "*",
     events = {
       on = {

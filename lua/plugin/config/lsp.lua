@@ -1,21 +1,9 @@
 local M = {}
 local servers = {
-  clangd = {},
   gopls = {},
-  pylsp = {},
-  -- pyright = {
-  --   settings = {
-  --     autoImportCompletion = true,
-  --     python = {
-  --       analysis = {
-  --         autoSearchPaths = true,
-  --         diagnosticMode = 'openFilesOnly',
-  --         useLibraryCodeForTypes = true,
-  --         typeCheckingMode = 'off',
-  --       },
-  --     },
-  --   },
-  -- },
+  -- pylsp = {},
+  ruff_lsp = {},
+  tsserver = {},
   rust_analyzer = {},
   jsonls = {
     settings = {
@@ -23,16 +11,6 @@ local servers = {
         schemas = {},
       },
     },
-  },
-  tsserver = {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    }
   },
   lua_ls = {
     Lua = {
@@ -208,8 +186,6 @@ function M.setup()
         capabilities = capabilities,
         on_attach = on_attach,
         settings = servers[server_name],
-        -- should I set it up for any LS?
-        -- single_file_support = server_name == 'tsserver' or server_name == 'eslint',
       }
     end,
   }

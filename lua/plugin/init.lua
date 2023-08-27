@@ -24,15 +24,15 @@ local plugins = {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       {
-        'folke/neodev.nvim',
+        "folke/neodev.nvim",
         config = function()
-          require('neodev').setup()
+          require("neodev").setup()
         end
       },
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
       {
-        'j-hui/fidget.nvim',
+        "j-hui/fidget.nvim",
         branch = "legacy"
       },
       {
@@ -47,24 +47,31 @@ local plugins = {
     end,
     cmd = { "Mason" }
   },
-  -- {
-  --   'pmizio/typescript-tools.nvim',
-  --   event = { 'BufReadPost *.ts,*.tsx,*.js,*.jsx', 'BufNewFile *.ts,*.tsx,*.js,*.jsx' },
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-lspconfig' },
-  --   opts = {
-  --     on_attach = require('plugin.config.typescript-tools').on_attach,
-  --     settings = {
-  --       separate_diagnostic_server = true,
-  --       tsserver_file_preferences = {
-  --         includeInlayParameterNameHints = 'literals',
-  --         includeInlayVariableTypeHints = true,
-  --         includeInlayFunctionLikeReturnTypeHints = true,
-  --         includeCompletionsForModuleExports = true,
-  --         quotePreference = "auto",
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "pmizio/typescript-tools.nvim",
+    ft = { "typescript", "typescriptreact" },
+    event = {
+      "BufReadPost",
+      "BufNewFile",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-lspconfig",
+    },
+    -- opts = {
+    --   on_attach = require('plugin.config.typescript-tools').on_attach,
+    --   settings = {
+    --     separate_diagnostic_server = true,
+    --     tsserver_file_preferences = {
+    --       includeInlayParameterNameHints = 'literals',
+    --       includeInlayVariableTypeHints = true,
+    --       includeInlayFunctionLikeReturnTypeHints = true,
+    --       includeCompletionsForModuleExports = true,
+    --       quotePreference = "auto",
+    --     },
+    --   },
+    -- },
+  },
   {
     "folke/neoconf.nvim",
     cmd = "Neoconf",
@@ -99,7 +106,7 @@ local plugins = {
       }
     },
     config = function()
-      require('plugin.config.cmp').setup()
+      require("plugin.config.cmp").setup()
     end
   },
   {
@@ -110,7 +117,7 @@ local plugins = {
       "BufNewFile",
     },
     build = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = false })
+      pcall(require("nvim-treesitter.install").update { with_sync = false })
     end,
     config = function()
       require("plugin.config.treesitter").setup()
@@ -125,29 +132,29 @@ local plugins = {
       {
         "m-demare/hlargs.nvim",
         config = function()
-          require('hlargs').setup()
+          require("hlargs").setup()
         end
       },
       {
         "ZhiyuanLck/smart-pairs",
-        event = 'InsertEnter',
+        event = "InsertEnter",
         config = function()
-          require('pairs'):setup()
+          require("pairs"):setup()
         end
       }
     }
   },
   {
-    'kevinhwang91/nvim-ufo',
-    dependencies = 'kevinhwang91/promise-async',
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
     event = "BufReadPost",
     config = function()
-      require('plugin.config.ufo').setup()
+      require("plugin.config.ufo").setup()
     end
   },
   {
     "mrjones2014/smart-splits.nvim",
-    event = "Bufenter",
+    event = "BufEnter",
     config = function()
       require("plugin.config.smartsplit").setup()
     end,
@@ -166,10 +173,15 @@ local plugins = {
     end
   },
   {
-    'NeogitOrg/neogit',
+    "NeogitOrg/neogit",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim'
+      "nvim-lua/plenary.nvim",
+      {
+        "sindrets/diffview.nvim",
+        lazy = true,
+        enabled = true,
+        event = "BufRead",
+      }
     },
     config = function()
       require("plugin.config.neogit").setup()
@@ -177,8 +189,8 @@ local plugins = {
   },
 
   "jiangmiao/auto-pairs",
-  { "tpope/vim-surround",       event = "Bufenter" },
-  { "tpope/vim-repeat",         event = "Bufenter" },
+  { "tpope/vim-surround",       event = "BufEnter" },
+  { "tpope/vim-repeat",         event = "BufEnter" },
 
   -- colorscheme
   { "catppuccin/nvim",          name = "catppuccin", priority = 1000 },
@@ -199,33 +211,38 @@ local plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = 'FileType',
+    event = "FileType",
     config = function()
-      require('plugin.config.indent_blankline').setup()
+      require("plugin.config.indent_blankline").setup()
     end
   }, -- Add indentation guides even on blank lines
 
   {
     "numToStr/Comment.nvim",
     config = function()
-      require('Comment').setup({
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      require("Comment").setup({
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
       })
     end,
     dependencies = {
-      'nvim-ts-context-commentstring',
-      'JoosepAlviste/nvim-ts-context-commentstring'
+      "nvim-ts-context-commentstring",
+      "JoosepAlviste/nvim-ts-context-commentstring"
     }
-  },                       -- "gc" to comment visual regions/lines
+  },                  -- "gc" to comment visual regions/lines
 
-  "tpope/vim-sleuth",      -- Detect tabstop and shiftwidth automatically
-  "windwp/nvim-autopairs", -- braket and tag
+  "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+  {                   -- braket and tag
+    "windwp/nvim-autopairs",
+    config = function()
+      require("plugin.config.autopairs").setup()
+    end
+  },
 
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()
-      require('better_escape').setup {
+      require("better_escape").setup {
         mapping = { "jk" }, -- a table with mappings to use
       }
     end
@@ -237,11 +254,11 @@ local plugins = {
     version = "nightly",
     event = "VimEnter",
     config = function()
-      require('plugin.config.nvimtree').setup()
+      require("plugin.config.nvimtree").setup()
     end,
     dependencies = {
       {
-        'antosha417/nvim-lsp-file-operations',
+        "antosha417/nvim-lsp-file-operations",
         config = function()
           require("lsp-file-operations").setup()
         end
@@ -260,7 +277,7 @@ local plugins = {
 
   {
     -- Bufferline
-    'akinsho/bufferline.nvim',
+    "akinsho/bufferline.nvim",
     version = "v3.*",
     config = function()
       require("plugin.config.bufferline").setup()
@@ -292,8 +309,8 @@ local plugins = {
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
-    cmd = 'BqfAutoToggle',
-    event = 'QuickFixCmdPost',
+    cmd = "BqfAutoToggle",
+    event = "QuickFixCmdPost",
   },
 
   {
@@ -301,22 +318,22 @@ local plugins = {
     "ethanholz/nvim-lastplace",
     event = "BufRead",
     config = function()
-      require('plugin.config.lastplace').setup()
+      require("plugin.config.lastplace").setup()
     end
   },
 
   {
     -- keymaps, commands, and autocommands
-    'mrjones2014/legendary.nvim',
+    "mrjones2014/legendary.nvim",
     priority = 10000,
     lazy = false,
     dependencies = {
-      'kkharji/sqlite.lua',
+      "kkharji/sqlite.lua",
       {
-        'stevearc/dressing.nvim',
+        "stevearc/dressing.nvim",
         event = "VeryLazy",
         config = function()
-          require('dressing').setup()
+          require("dressing").setup()
         end
       }
     },
@@ -356,7 +373,7 @@ local plugins = {
     end
   },
   {
-    'folke/flash.nvim',
+    "folke/flash.nvim",
     event = "VeryLazy",
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
@@ -380,28 +397,28 @@ local plugins = {
 
   {
     -- Dashboard
-    'goolord/alpha-nvim',
+    "goolord/alpha-nvim",
     event = "VimEnter",
     config = function()
-      require('plugin.config.dashboard').setup()
+      require("plugin.config.dashboard").setup()
     end
   },
 
   {
     -- Split
-    'Wansmer/treesj',
+    "Wansmer/treesj",
     event = "BufWinEnter",
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      require('plugin.config.treesj').setup()
+      require("plugin.config.treesj").setup()
     end,
   },
 
   { -- tmux nav for nvim
-    'alexghergh/nvim-tmux-navigation',
+    "alexghergh/nvim-tmux-navigation",
     event = "VeryLazy",
     config = function()
-      require 'nvim-tmux-navigation'.setup {
+      require "nvim-tmux-navigation".setup {
         disable_when_zoomed = true,
         keybindings = {
           left = "<C-h>",
@@ -414,9 +431,9 @@ local plugins = {
   },
 
   {
-    'cpea2506/relative-toggle.nvim',
+    "cpea2506/relative-toggle.nvim",
     config = function()
-      require('plugin.config.relativenumber').setup()
+      require("plugin.config.relativenumber").setup()
     end
   },
 

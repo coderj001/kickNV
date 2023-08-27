@@ -1,7 +1,9 @@
 local M = {}
 
+local status, restnv = pcall(require, "rest-nvim")
+
 function M.setup()
-  require("rest-nvim").setup({
+  restnv.setup({
     result_split_horizontal = false,
     highlight = { enabled = true, timeout = 150 },
     result = {

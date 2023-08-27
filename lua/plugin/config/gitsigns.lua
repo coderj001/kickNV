@@ -1,7 +1,9 @@
 local M = {}
-
+local status, gitsigns = pcall(require, 'gitsigns')
 function M.setup()
-  require('gitsigns').setup {
+  if (not status) then return end
+
+  gitsigns.setup {
     signs = {
       add = {
         -- text = '+',

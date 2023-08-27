@@ -1,10 +1,12 @@
 local M = {}
 local opts = require("core.default_config").opts
 local keymap = require("core.default_config").keymap
+local status, nvimtree = pcall(require, 'nvim-tree')
 
 function M.setup()
   -- Load nvim-tree plugin
-  require('nvim-tree').setup {
+  if (not status) then return end
+  nvimtree.setup {
     -- Set options for nvim-tree
     disable_netrw       = false, -- Disable netrw
     hijack_netrw        = false, -- Hijack netrw window on startup

@@ -1,6 +1,17 @@
 local M = {}
+
 local status_cmp, cmp = pcall(require, "cmp")
+if (not status_cmp) then
+  return
+end
+
 local status_luasnip, luasnip = pcall(require, "luasnip")
+if (not status_luasnip) then
+  return
+end
+
+local types = require("cmp.types")
+
 
 local lsp_symbol = ""
 local luasnip_symbol = "﬌"
@@ -11,11 +22,18 @@ local rg_symbol = ""
 local path_symbol = ""
 local tmux_symbol = ""
 
+local function deprioritize_snippet(entry1, entry2)
+  if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return false
+  end
+  if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return true
+  end
+end
+
 function M.setup()
   -- nvim-cmp setup
 
-  if (not status_cmp) then return end
-  if (not status_luasnip) then return end
 
   cmp.setup {
     snippet = {
@@ -152,16 +170,23 @@ function M.setup()
     sorting = {
       priority_weight = 2,
       comparators = {
-        cmp.config.compare.score,
         cmp.config.compare.recently_used,
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        cmp.config.compare.locality,
+        cmp.config.compare.score,
         require "cmp-under-comparator".under,
-        cmp.config.compare.offset,
+        deprioritize_snippet,
         cmp.config.compare.exact,
+        cmp.config.compare.offset,
         cmp.config.compare.kind,
         cmp.config.compare.sort_text,
         cmp.config.compare.length,
         cmp.config.compare.order,
       },
+    },
+    confirm_opts = {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false,
     },
   }
 

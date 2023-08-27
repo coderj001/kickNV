@@ -6,6 +6,7 @@ local keymap = require("core.default_config").keymap
 
 function M.setup()
   if (not status) then return end
+
   bufferline.setup {
     options = {
       offsets = {
@@ -20,7 +21,10 @@ function M.setup()
       left_trunc_marker = "",
       right_trunc_marker = "",
       number_style = "",
-      separator_style = "any",
+      numbers = function(opts)
+        return string.format("%s", opts.ordinal)
+      end,
+      separator_style = { "|", "|" },
       insert_at_end = false,
       insert_at_start = true,
       close_icon = "",
@@ -38,9 +42,10 @@ function M.setup()
         local name = vim.fn.bufname(buf_number)
         if name ~= "" and not name:match("^term://") then
           return true
+          ---@diagnostic disable-next-line: missing-return
         end
       end,
-      highlight = require("catppuccin.groups.integrations.bufferline").get()
+      highlight = require("catppuccin.groups.integrations.bufferline").get(),
     }
   }
 

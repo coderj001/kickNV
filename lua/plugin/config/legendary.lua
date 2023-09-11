@@ -7,6 +7,7 @@ function M.setup()
     keymaps = {
       { '<leader>n', ':NvimTreeToggle<CR>', description = '[N]vimTree Toggle' },
       { '<leader><Enter>', ':nohlsearch<CR>', description = 'No Highlights Search' },
+      { '<leader>;', ':Legendary<CR>', description = '[:] Legendary Commands' },
       -- Telescope
       { '<leader>?', telescope_builtin.oldfiles, description = '[?] Find recently opened files' },
       { '<leader>sf', telescope_builtin.find_files, description = '[S]earch [F]iles' },

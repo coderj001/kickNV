@@ -24,6 +24,7 @@ M.ui = {
 		"tokyonight",
 		"kanagawa",
 		"catppuccin",
+		"neon"
 	},
 	theme = "catppuccin",
 	transparency = true,

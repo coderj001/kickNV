@@ -127,10 +127,10 @@ function M.setup()
         description = 'Space Age seD'
       }
     },
-    lazy_nvim = {
-      auto_register = true
-    },
     extensions = {
+      lazy_nvim = {
+        auto_register = true
+      },
       nvim_tree = false,
       smart_splits = {
         directions = { 'h', 'j', 'k', 'l' },

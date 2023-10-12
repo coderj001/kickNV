@@ -1,80 +1,35 @@
+-- Your Neovim Lua configuration
 local M = {}
 
 function M.setup()
-  vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-  vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-  require('indent_blankline').setup {
-    char = '┊',
-    buftype_exclude = { "terminal" },
-    show_trailing_blankline_indent = false,
-    show_current_context = true,
-    -- show_current_context_start = true,
-    filetype_exclude = {
-      "help",
-      "terminal",
-      "alpha",
-      "NvimTree",
-      "neogit",
-      "diffview",
-      "NeogitPopup",
-      "NeogitStatus",
-      "lazy",
-      "mason",
-      "cmp",
-      "lspinfo",
-      'checkhealth',
-      'git',
-      'gitcommit',
-      'help',
-      'man',
-      'lazy',
-      'alpha',
-      'dashboard',
-      'terminal',
-      'TelescopePrompt',
-      'TelescopeResults',
-      'neo-tree',
-      'Outline',
-      'mason',
-      'Trouble',
-    },
-    context_patterns = {
-      "class",
-      "function",
-      "method",
-      "^if",
-      "^while",
-      "^for",
-      "^object",
-      "^table",
-      "^type",
-      "^import",
-      "block",
-      "arguments"
-    },
-    use_treesitter = true,
-    space_char_blankline = " ",
-    char_highlight_list = {
-      "IndentBlanklineIndent1",
-      "IndentBlanklineIndent2",
-      "IndentBlanklineIndent3",
-      "IndentBlanklineIndent4",
-      "IndentBlanklineIndent5",
-      "IndentBlanklineIndent6",
-      "IndentBlanklineIndent7",
-      "IndentBlanklineIndent8",
-      "IndentBlanklineIndent9",
-      "IndentBlanklineIndent10",
+  -- Highlight colors for indent levels
+  local highlight = {
+    "IndentBlanklineIndent1",
+    "IndentBlanklineIndent2",
+    "IndentBlanklineIndent3",
+    "IndentBlanklineIndent4",
+    "IndentBlanklineIndent5",
+    "IndentBlanklineIndent6",
+    "IndentBlanklineIndent7",
+  }
+
+  local hooks = require "ibl.hooks"
+  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent1", { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent2", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent3", { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent4", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent5", { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent6", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "IndentBlanklineIndent7", { fg = "#56B6C2" })
+  end)
+
+
+  require('ibl').setup {
+    indent = { highlight = highlight, char = '┊', },
+    whitespace = {
+      highlight = highlight,
+      remove_blankline_trail = false,
     },
   }
 end

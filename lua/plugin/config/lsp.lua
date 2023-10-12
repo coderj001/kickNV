@@ -1,7 +1,7 @@
 local M = {}
 
 local servers = {
-  gopls = {},
+  -- gopls = {},
   -- pylsp = {},
   ruff_lsp = {},
   tsserver = {},

@@ -189,10 +189,62 @@ return {
     end
   },
 
+  {
+    -- Telescope
+    "nvim-telescope/telescope.nvim",
+    event = { "VimEnter" },
+    cmd = { "Telescope" },
+    version = "0.1.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make",
+        cond = vim.fn.executable "make" == 1,
+      },
+      -- "debugloop/telescope-undo.nvim"
+      "nvim-telescope/telescope-symbols.nvim",
+      "desdic/agrolens.nvim",
+    },
+    config = function()
+      require("plugins.extras.telescope").setup()
+    end
+  },
+
+  {
+    -- Split
+    "Wansmer/treesj",
+    event = "BufWinEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("plugins.extras.treesj").setup()
+    end,
+  },
+
 
 
   { "jiangmiao/auto-pairs", event = "BufEnter" },
   { "tpope/vim-surround",   event = "BufEnter" },
   { "tpope/vim-repeat",     event = "BufEnter" },
   { "tpope/vim-sleuth",     event = "BufEnter" },
+
+  {
+    -- keymaps, commands, and autocommands
+    "mrjones2014/legendary.nvim",
+    priority = 10000,
+    lazy = false,
+    dependencies = {
+      "kkharji/sqlite.lua",
+      {
+        "stevearc/dressing.nvim",
+        event = "VeryLazy",
+        config = function()
+          require("dressing").setup()
+        end
+      }
+    },
+    config = function()
+      require("plugins.extras.legendary").setup()
+    end
+  },
 }

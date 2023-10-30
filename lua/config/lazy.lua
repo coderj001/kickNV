@@ -11,9 +11,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+local opts = {
+  install = {
+    colorscheme = { require("config.default").ui.theme },
+  },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+}
+
 require("lazy").setup({
   spec = {
     { import = "plugins" },
+    { import = "plugins.lsp" },
   },
   defaults = {
     lazy = false,
@@ -31,4 +45,6 @@ require("lazy").setup({
       },
     },
   },
-})
+}, opts)
+
+vim.cmd("colorscheme " .. require("config.default").ui.theme)

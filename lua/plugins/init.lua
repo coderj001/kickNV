@@ -154,6 +154,42 @@ return {
       }
     end
   },
+  {
+    -- File manager
+    "nvim-tree/nvim-tree.lua",
+    version = "nightly",
+    event = "VimEnter",
+    config = function()
+      require("plugins.extras.nvimtree").setup()
+    end,
+    dependencies = {
+      {
+        "antosha417/nvim-lsp-file-operations",
+        config = function()
+          require("lsp-file-operations").setup()
+        end
+      }
+    }
+  },
+  {
+    -- Notifocation
+    "rcarriga/nvim-notify",
+    event = "VeryLazy",
+    config = function()
+      require("plugins.extras.notification").setup()
+    end,
+    lazy = false
+  },
+  {
+    -- Bufferline
+    "akinsho/bufferline.nvim",
+    version = "v3.*",
+    config = function()
+      require("plugins.extras.bufferline").setup()
+    end
+  },
+
+
 
   { "jiangmiao/auto-pairs", event = "BufEnter" },
   { "tpope/vim-surround",   event = "BufEnter" },

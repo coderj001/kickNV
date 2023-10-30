@@ -83,6 +83,4 @@ g.mapleader = " "
 g.maplocalleader = "\\"
 g.markdown_recommended_style = 0
 
------------- autocommand ----------
-
-require('core.default_config').load_extra_options()
+require("config.default").load_extra_options()

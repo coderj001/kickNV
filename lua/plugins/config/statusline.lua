@@ -1,5 +1,5 @@
 local M = {}
-local ui = require("core.default_config").ui
+local ui = require("config.default").ui
 
 local function getLsps()
   local lspNames = "["

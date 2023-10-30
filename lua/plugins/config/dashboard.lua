@@ -1,9 +1,9 @@
 local M         = {}
-local alpha     = require('alpha')
-local dashboard = require('alpha.themes.dashboard')
+local alpha     = require("alpha")
+local dashboard = require("alpha.themes.dashboard")
 
 function M.setup()
-  dashboard.section.header.val      = require('core.default_config').options.figlet_name
+  dashboard.section.header.val      = require("config.default").options.figlet_name
 
   dashboard.section.buttons.val     = {
     dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),

@@ -27,7 +27,7 @@ return {
 
       -- set keybinds
       opts.desc = "Show LSP references"
-      keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+      keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
       opts.desc = "Go to declaration"
       keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
@@ -90,6 +90,48 @@ return {
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
+
+    if vim.lsp.setup then
+      vim.lsp.setup {
+        floating_preview = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" } },
+        diagnostics = {
+          signs = { error = " ", warning = " ", hint = " ", information = " " },
+          display = {
+            underline = true,
+            update_in_insert = false,
+            -- virtual_text = { spacing = 4, prefix = "●" },
+            virtual_text = false,
+            severity_sort = true,
+          },
+        },
+        completion = {
+          kind = {
+            Class = " ",
+            Color = " ",
+            Constant = " ",
+            Constructor = " ",
+            Enum = "了 ",
+            EnumMember = " ",
+            Field = " ",
+            File = " ",
+            Folder = " ",
+            Function = " ",
+            Interface = "ﰮ ",
+            Keyword = " ",
+            Method = "ƒ ",
+            Module = " ",
+            Property = " ",
+            Snippet = " ",
+            Struct = " ",
+            Text = " ",
+            Unit = " ",
+            Value = " ",
+            Variable = " ",
+          },
+        },
+      }
+    else
     end
 
     -- configure html server

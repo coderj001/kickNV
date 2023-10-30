@@ -10,6 +10,10 @@ return {
         require("lsp_lines").setup()
       end,
     },
+    {
+      "j-hui/fidget.nvim",
+      branch = "legacy"
+    },
     "nvim-lua/plenary.nvim",
   },
   config = function()

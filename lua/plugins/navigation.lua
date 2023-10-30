@@ -42,4 +42,23 @@ return {
       },
     },
   },
+  {
+    -- keymaps, commands, and autocommands
+    "mrjones2014/legendary.nvim",
+    priority = 10000,
+    lazy = false,
+    dependencies = {
+      "kkharji/sqlite.lua",
+      {
+        "stevearc/dressing.nvim",
+        event = "VeryLazy",
+        config = function()
+          require("dressing").setup()
+        end
+      }
+    },
+    config = function()
+      require("plugins.extras.legendary").setup()
+    end
+  },
 }

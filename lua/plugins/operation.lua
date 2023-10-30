@@ -3,7 +3,7 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     config = function()
-      require("plugin.config.indent_blankline").setup()
+      require("plugins.extras.indent-blankline").setup()
     end
   },
   {
@@ -48,6 +48,40 @@ return {
       require("plugins.extras.smoothcursor").setup()
     end
   },
+  {
+    -- Split
+    "Wansmer/treesj",
+    event = "BufWinEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("plugins.extras.treesj").setup()
+    end,
+  },
+
+  {
+    "cpea2506/relative-toggle.nvim",
+    config = function()
+      require("plugins.extras.relativeline").setup()
+    end
+  },
+  {
+    -- Dashboard
+    "goolord/alpha-nvim",
+    event = "VimEnter",
+    config = function()
+      require("plugins.extras.alpha").setup()
+    end
+  },
+
+  {
+    -- Notifocation
+    "rcarriga/nvim-notify",
+    event = "VeryLazy",
+    config = function()
+      require("plugins.extras.noti").setup()
+    end,
+    lazy = false
+  },
 
   {
     "NTBBloodbath/rest.nvim",
@@ -56,7 +90,7 @@ return {
       "nvim-lua/plenary.nvim"
     },
     config = function()
-      require("plugin.config.rest").setup()
+      require("plugins.extras.rest").setup()
     end
   },
 }

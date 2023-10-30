@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 local opts = {
   install = {
-    colorscheme = { require("config.default").ui.theme },
+    colorscheme = require("config.default").ui.theme_toggle,
   },
   checker = {
     enabled = true,

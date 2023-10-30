@@ -86,6 +86,7 @@ return {
       end
     }
   },
+  -- Git
   {
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -107,7 +108,55 @@ return {
       require("plugins.extras.neogit").setup()
     end
   },
+  -- statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      require("plugins.extras.lualine").setup()
+    end,
+    dependencies = {
+      "kyazdani42/nvim-web-devicons",
+    }
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    config = function()
+      require("plugins.extras.indent-blankline").setup()
+    end
+  },
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup({
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+      })
+    end,
+    dependencies = {
+      "nvim-ts-context-commentstring",
+      "JoosepAlviste/nvim-ts-context-commentstring"
+    }
+  }, -- "gc" to comment visual regions/lines
+
+  {  -- braket and tag
+    "windwp/nvim-autopairs",
+    config = function()
+      require("plugins.extras.autopairs").setup()
+    end
+  },
+
+  {
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
+    config = function()
+      require("better_escape").setup {
+        mapping = { "jk" }, -- a table with mappings to use
+      }
+    end
+  },
+
   { "jiangmiao/auto-pairs", event = "BufEnter" },
   { "tpope/vim-surround",   event = "BufEnter" },
   { "tpope/vim-repeat",     event = "BufEnter" },
+  { "tpope/vim-sleuth",     event = "BufEnter" },
 }

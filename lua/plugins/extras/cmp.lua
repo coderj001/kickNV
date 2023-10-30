@@ -14,9 +14,9 @@ local types = require("cmp.types")
 
 
 local lsp_symbol = ""
-local luasnip_symbol = ""
+local luasnip_symbol = "﬌"
 local treesitter_symbol = ""
-local buffer_symbol = ""
+local buffer_symbol = "﬘"
 local tags_symbol = ""
 local rg_symbol = ""
 local path_symbol = ""
@@ -219,4 +219,3 @@ function M.setup()
 end
 
 return M
-

@@ -64,6 +64,28 @@ return {
       }
     }
   },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    event = "BufReadPost",
+    config = function()
+      require("plugins.extras.ufo").setup()
+    end
+  },
+  {
+    "mrjones2014/smart-splits.nvim",
+    event = "BufEnter",
+    config = function()
+      require("plugins.extras.smartsplit").setup()
+    end,
+    lazy = false,
+    dependencies = {
+      "kwkarlwang/bufresize.nvim",
+      config = function()
+        require("plugins.extras.bufresize").setup()
+      end
+    }
+  },
   { "jiangmiao/auto-pairs", event = "BufEnter" },
   { "tpope/vim-surround",   event = "BufEnter" },
   { "tpope/vim-repeat",     event = "BufEnter" },

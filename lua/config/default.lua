@@ -20,11 +20,8 @@ M.options = {
 
 M.ui = {
 	theme_toggle = {
-		"nightly",
 		"tokyonight",
-		"kanagawa",
 		"catppuccin",
-		"neon"
 	},
 	theme = "catppuccin",
 	transparency = true,

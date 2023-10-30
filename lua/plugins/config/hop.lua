@@ -1,5 +1,5 @@
 local M = {}
-local keymap = require("core.default_config").keymap
+local keymap = require("config.default").keymap
 
 function M.setup()
   local hop = require('hop')

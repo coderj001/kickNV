@@ -1,6 +1,6 @@
 local M = {}
-local opts = require("core.default_config").opts
-local keymap = require("core.default_config").keymap
+local opts = require("config.default").opts
+local keymap = require("config.default").keymap
 local status, nvimtree = pcall(require, 'nvim-tree')
 
 function M.setup()

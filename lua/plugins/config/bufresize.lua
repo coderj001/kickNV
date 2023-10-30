@@ -1,5 +1,5 @@
 local M                = {}
-local opts             = require("core.default_config").opts
+local opts             = require("config.default").opts
 local status, bufresize = pcall(require, "bufresize")
 
 function M.setup()

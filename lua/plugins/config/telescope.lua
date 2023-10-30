@@ -129,7 +129,7 @@ function M.treesitter()
 end
 
 function M.colorscheme_picker()
-  local ui = require("core.default_config").ui
+  local ui = require("config.default").ui
   require('telescope.pickers').new({}, {
     prompt_title = "Select ColorScheme",
     finder = require('telescope.finders').new_table({

@@ -1,4 +1,4 @@
-local Config = require("config")
+loc😅al Config = require("config")
 local Util = require("util")
 
 ---@class util.json

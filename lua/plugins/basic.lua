@@ -19,8 +19,8 @@ return {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>n", mode = { "n" }, "<CMD>Oil<CR>",   desc = "Oil Explorer Current" },
-      { "<leader>N", mode = { "n" }, "<CMD>Oil .<CR>", desc = "Oil Explorer Root" },
+      { "<leader>e", mode = { "n" }, "<CMD>Oil<CR>",   desc = "Oil Explorer Current" },
+      { "<leader>E", mode = { "n" }, "<CMD>Oil .<CR>", desc = "Oil Explorer Root" },
     },
     opts = {
       default_file_explorer = true,
@@ -127,7 +127,7 @@ return {
   },
   {
     "echasnovski/mini.bufremove",
-
+    event = "BufEnter",
     keys = {
       {
         "<leader>bd",
@@ -150,4 +150,23 @@ return {
       { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     },
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "nightly",
+    event = "VimEnter",
+    keys = {
+      { "<leader>n", mode = { "n" }, "<CMD>NvimTreeToggle<CR>", desc = "NvimTree Explorer" },
+    },
+    config = function()
+      require("utils.nvimtree").setup()
+    end,
+    dependencies = {
+      {
+        "antosha417/nvim-lsp-file-operations",
+        config = function()
+          require("lsp-file-operations").setup()
+        end
+      }
+    }
+  }
 }

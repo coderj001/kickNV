@@ -26,9 +26,11 @@ local opts = {
 
 require("lazy").setup({
   spec = {
+    -- { import = "plugins.extras.coding" },
     { import = "plugins" },
     { import = "plugins.lsp" },
     { import = "plugins.colorschemes" },
+    -- { import = "plugins.extras.lsp" },
   },
   defaults = {
     lazy = false,
@@ -47,4 +49,3 @@ require("lazy").setup({
     },
   },
 }, opts)
-

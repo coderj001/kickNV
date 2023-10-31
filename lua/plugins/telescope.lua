@@ -14,7 +14,21 @@ return {
       "nvim-telescope/telescope-symbols.nvim",
       "desdic/agrolens.nvim",
     },
-    keys = {},
+    keys = {
+      {
+        "<leader>?",
+        mode = { "n" },
+        function() require("telescope.builtin").oldfiles() end,
+        desc =
+        "[?] Find recently opened files"
+      },
+      {
+        "<leader>sf",
+        mode = { "n" },
+        function() require("telescope.builtin").find_files() end,
+        desc = "[S]earch [F]iles",
+      },
+    },
     config = function()
       require("utils.telescope").setup()
     end

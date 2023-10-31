@@ -48,31 +48,6 @@ local plugins = {
     cmd = { "Mason" }
   },
   {
-    "pmizio/typescript-tools.nvim",
-    ft = { "typescript", "typescriptreact" },
-    event = {
-      "BufReadPost",
-      "BufNewFile",
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-lspconfig",
-    },
-    -- opts = {
-    --   on_attach = require('plugin.config.typescript-tools').on_attach,
-    --   settings = {
-    --     separate_diagnostic_server = true,
-    --     tsserver_file_preferences = {
-    --       includeInlayParameterNameHints = 'literals',
-    --       includeInlayVariableTypeHints = true,
-    --       includeInlayFunctionLikeReturnTypeHints = true,
-    --       includeCompletionsForModuleExports = true,
-    --       quotePreference = "auto",
-    --     },
-    --   },
-    -- },
-  },
-  {
     "folke/neoconf.nvim",
     cmd = "Neoconf",
     config = function()
@@ -446,28 +421,9 @@ local plugins = {
       require("sad").setup {}
     end,
   },
-  -- {
-  --   "akinsho/toggleterm.nvim",
-  --   lazy = true,
-  --   cmd = {
-  --     "ToggleTerm",
-  --     "ToggleTermSetName",
-  --     "ToggleTermToggleAll",
-  --     "ToggleTermSendVisualLines",
-  --     "ToggleTermSendCurrentLine",
-  --     "ToggleTermSendVisualSelection",
-  --   },
-  --   config = function()
-  --     require("toggleterm").setup()
-  --   end,
-  -- }
 }
 
 local opts = {
-  spec = {
-    { import = "base" },
-    { import = "pde" },
-  },
   install = {
     missing = true,
     colorscheme = {

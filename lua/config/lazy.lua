@@ -26,10 +26,10 @@ local opts = {
 
 require("lazy").setup({
   spec = {
-    -- { import = "plugins.extras.coding" },
     { import = "plugins" },
     { import = "plugins.lsp" },
     { import = "plugins.colorschemes" },
+    { import = "plugins.extras.coding" },
     -- { import = "plugins.extras.lsp" },
   },
   defaults = {

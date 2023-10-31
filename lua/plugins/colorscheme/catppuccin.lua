@@ -33,6 +33,8 @@ if true then
           operators = {},
         },
         integrations = {
+          flash = true,
+          alpha = true,
           cmp = true,
           gitsigns = true,
           nvimtree = true,
@@ -42,6 +44,8 @@ if true then
           treesitter_context = true,
           ts_rainbow2 = true,
           ts_rainbow = true,
+          indent_blankline = { enabled = true },
+          mason = true,
           telescope = {
             enabled = true,
             style = "nvchad",
@@ -60,4 +64,3 @@ if true then
     end,
   }
 end
-

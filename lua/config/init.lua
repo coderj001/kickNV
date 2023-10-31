@@ -1,25 +1,22 @@
 local Util = require("util")
+---@class config
 local M = {}
 
 local set = vim.keymap.set
 local keymap = vim.api.nvim_set_keymap
-local default = require("config.default").default
+local default = require("config.default").config
 local opts = { noremap = true, silent = true }
 
 M.opts = opts
 M.keymap = keymap
 M.set = set
-M.default = default
+M.defaults = default.defaults
 
 
 M.json = {
-	version = 2,
-	data = {
-		version = nil, ---@type string?
-		colorscheme = nil, ---@type string?
-		news = {}, ---@type table<string, string>
-		extras = {}, ---@type table<string, string>
-	},
+	version = nil, ---@type string?
+	colorscheme = nil, ---@type string?
+	extras = {}, ---@type table<string, string>
 }
 
 function M.json.load()
@@ -51,6 +48,7 @@ function M.load(name)
 end
 
 function M.setup(opts)
+	require("config.keymaps").load_extra_options()
 end
 
 return M

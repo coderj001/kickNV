@@ -1,82 +1,62 @@
-loc😅al Config = require("config")
 local Util = require("util")
+local Config = require("config")
 
----@class util.json
+---@class lazyvim.util.json
 local M = {}
 
+--- Encodes a Lua table to a JSON string.
 ---@param value any
----@param indent string
-local function encode(value, indent)
-  local t = type(value)
-
-  if t == "string" then
-    return string.format("%q", value)
-  elseif t == "number" or t == "boolean" then
+---@return string
+local function encode(value)
+  if value == nil then
+    return "null"
+  elseif type(value) == "string" then
+    return '"' .. value:gsub('"', '\\"') .. '"'
+  elseif type(value) == "number" or type(value) == "boolean" then
     return tostring(value)
-  elseif t == "table" then
-    local is_list = Util.is_list(value)
+  elseif type(value) == "table" then
     local parts = {}
-    local next_indent = indent .. "  "
-
-    if is_list then
-      ---@diagnostic disable-next-line: no-unknown
-      for _, v in ipairs(value) do
-        local e = encode(v, next_indent)
-        if e then
-          table.insert(parts, next_indent .. e)
-        end
-      end
-      return "[\n" .. table.concat(parts, ",\n") .. "\n" .. indent .. "]"
-    else
-      local keys = vim.tbl_keys(value)
-      table.sort(keys)
-      ---@diagnostic disable-next-line: no-unknown
-      for _, k in ipairs(keys) do
-        local e = encode(value[k], next_indent)
-        if e then
-          table.insert(parts, next_indent .. string.format("%q", k) .. ": " .. e)
-        end
-      end
-      return "{\n" .. table.concat(parts, ",\n") .. "\n" .. indent .. "}"
+    for k, v in pairs(value) do
+      table.insert(parts, encode(k) .. ":" .. encode(v))
     end
+    return "{" .. table.concat(parts, ",") .. "}"
   end
 end
 
-function M.encode(value)
-  return encode(value, "")
-end
-
+--- Saves the JSON data to a file.
 function M.save()
-  Config.json.data.version = Config.json.version
-  Config.json.data.colorscheme = Config.json.colorscheme
+  local jsonData = {
+    version = Config.json.version,
+    colorscheme = Config.json.colorscheme,
+    extras = Config.json.extras,
+  }
+
+  local jsonText = encode(jsonData)
   local path = vim.fn.stdpath("config") .. "/kicknv.json"
   local f = io.open(path, "w")
   if f then
-    f:write(Util.json.encode(Config.json.data))
+    f:write(jsonText)
     f:close()
   end
 end
 
+--- Migrates JSON data to the current version.
 function M.migrate()
-  Util.info("Migrating `kicknv.json` to version `" .. Config.json.version .. "`")
-  local json = Config.json
+  -- Util.info("Migrating `kicknv.json` to version `" .. Config.json.version .. "`")
+  print("Migrating `kicknv.json` to version `" .. Config.json.version .. "`")
+  -- Util.info("Migrating `kicknv.json` to version `" .. Config.json.version .. "`")
+  print("Migrating `kicknv.json` to version `" .. Config.json.version .. "`")
 
-  -- v0
-  if not json.data.version then
-    if json.data.hashes then
-      ---@diagnostic disable-next-line: no-unknown
-      json.data.hashes = nil
-    end
-    json.data.extras = vim.tbl_map(function(extra)
-      return "plugins.extras." .. extra
-    end, json.data.extras or {})
-  elseif json.data.version == 1 then
-    json.data.extras = vim.tbl_map(function(extra)
-      -- replace double extras module name
-      return extra:gsub("^plugins%.extras%.plugins%.extras%.", "plugins.extras.")
-    end, json.data.extras or {})
+  local json = Config.json.data
+
+  if not json.version then
+    json.new_field = "default_value"
+  elseif json.version == 1 then
+    json.new_name = json.old_name
+    json.old_name = nil
   end
 
+  json.version = Config.json.version
   M.save()
 end
 

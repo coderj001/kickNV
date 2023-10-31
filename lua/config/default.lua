@@ -1,6 +1,6 @@
 local M = {}
 
-M.default = {
+M.config = {
 	defaults = {
 		autocmds = false, -- config.autocmds
 		keymaps = false, -- config.keymaps

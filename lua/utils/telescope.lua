@@ -1,5 +1,5 @@
 local M = {}
-local telescope = require('telescope')
+local telescope = require("telescope")
 
 function M.setup()
   telescope.setup {
@@ -126,28 +126,6 @@ function M.treesitter()
       prompt_title = 'Treesitter Symbols'
     }
   }
-end
-
-function M.colorscheme_picker()
-  local ui = require("core.default_config").ui
-  require('telescope.pickers').new({}, {
-    prompt_title = "Select ColorScheme",
-    finder = require('telescope.finders').new_table({
-      results = ui.theme_toggle
-    }),
-    sorter = require('telescope.config').values.generic_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
-      local select_theme = function()
-        local selection = require('telescope.actions').get_selected_entry()
-        if selection then
-          ui.theme = selection.value
-        end
-      end
-      map('i', '<CR>', select_theme)
-      map('n', '<CR>', select_theme)
-      return true
-    end
-  }):find()
 end
 
 

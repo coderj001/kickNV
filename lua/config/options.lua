@@ -2,7 +2,9 @@ local opt = vim.opt
 local g = vim.g
 local o = vim.o
 
+-------------------------------
 ------------ options ----------
+-------------------------------
 
 if vim.fn.has("nvim-0.9.0") == 1 then
 	opt.splitkeep = 'screen'
@@ -71,7 +73,6 @@ opt.updatetime   = 200             -- Save swap file and trigger CursorHold
 opt.wildmode     = "longest:full,full" -- Command-line completion mode
 opt.winminwidth  = 5               -- Minimum window width
 opt.wrap         = false           -- Disable line wrap
-opt.dictionary:append("~/.config/nvim/dictionary.txt")
 
 
 -- Numbers
@@ -82,7 +83,3 @@ opt.ruler = false
 g.mapleader = " "
 g.maplocalleader = "\\"
 g.markdown_recommended_style = 0
-
------------- autocommand ----------
-
-require('core.default_config').load_extra_options()

@@ -31,6 +31,7 @@ require("lazy").setup({
     { import = "plugins.colorschemes" },
     -- { import = "plugins.extras.coding" },
     -- { import = "plugins.extras.lsp" },
+    -- { import = "plugins.extras.dashboard" },
   },
   defaults = {
     lazy = false,

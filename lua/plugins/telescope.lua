@@ -11,6 +11,7 @@ return {
         run = "make",
         cond = vim.fn.executable "make" == 1,
       },
+      "nvim-telescope/telescope-symbols.nvim",
     },
     keys = {
       {
@@ -43,6 +44,12 @@ return {
         mode = { "n" },
         function() require("telescope.builtin").tags() end,
         desc = "[S]earch by [T]ags",
+      },
+      {
+        "<leader>ss",
+        mode = { "n" },
+        function() require("telescope.builtin").symbols() end,
+        desc = "[S]earch [S]ymbols",
       },
       {
         "<leader><leader>",

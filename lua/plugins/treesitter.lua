@@ -26,7 +26,7 @@ return {
         config = function()
           require("pairs"):setup()
         end
-      }
+      },
     },
     build = function()
       pcall(require("nvim-treesitter.install").update { with_sync = false })

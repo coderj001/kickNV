@@ -21,6 +21,7 @@ local tags_symbol = ""
 local rg_symbol = ""
 local path_symbol = ""
 local tmux_symbol = ""
+local codeium_symbol = ""
 
 local function deprioritize_snippet(entry1, entry2)
   if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
@@ -32,9 +33,6 @@ local function deprioritize_snippet(entry1, entry2)
 end
 
 function M.setup()
-  -- nvim-cmp setup
-
-
   cmp.setup {
     snippet = {
       expand = function(args)
@@ -116,6 +114,7 @@ function M.setup()
       { name = 'tags',       icon = tags_symbol,       max_item_count = 5 },
       { name = 'path',       icon = path_symbol,       max_item_count = 4 },
       { name = 'tmux',       icon = tmux_symbol,       max_item_count = 3 },
+      -- { name = 'codeium',    icon = codeium_symbol,    max_item_count = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -157,6 +156,7 @@ function M.setup()
           tags = "[Tags]",
           path = "[Path]",
           tmux = "[Tmux]",
+          -- codeium = "[CODEIUM]",
         })[entry.source.name]
         return vim_item
       end,

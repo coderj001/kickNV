@@ -11,8 +11,6 @@ return {
         run = "make",
         cond = vim.fn.executable "make" == 1,
       },
-      "nvim-telescope/telescope-symbols.nvim",
-      "desdic/agrolens.nvim",
     },
     keys = {
       {
@@ -27,6 +25,36 @@ return {
         mode = { "n" },
         function() require("telescope.builtin").find_files() end,
         desc = "[S]earch [F]iles",
+      },
+      {
+        "<leader>sw",
+        mode = { "n" },
+        function() require("telescope.builtin").grep_string() end,
+        desc = "[S]earch current  [W]ord",
+      },
+      {
+        "<leader>sg",
+        mode = { "n" },
+        function() require("telescope.builtin").live_grep() end,
+        desc = "[S]earch by [G]rep",
+      },
+      {
+        "<leader>st",
+        mode = { "n" },
+        function() require("telescope.builtin").tags() end,
+        desc = "[S]earch by [T]ags",
+      },
+      {
+        "<leader><leader>",
+        mode = { "n" },
+        function() require("telescope.builtin").buffers() end,
+        desc = "[/] Fuzzily search in current buffer",
+      },
+      {
+        "<leader>/",
+        mode = { "n" },
+        function() require("utils.telescope").current_buffer_fuzzy_find() end,
+        desc = "[/] Fuzzily search in current buffer",
       },
     },
     config = function()

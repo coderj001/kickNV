@@ -1,10 +1,12 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = {
-      "BufReadPost",
-      "BufNewFile",
-    },
+    event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+    init = function(plugin)
+      require("lazy.core.loader").add_to_rtp(plugin)
+      require("nvim-treesitter.query_predicates")
+    end,
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
       "nvim-treesitter/nvim-treesitter-textobjects",
@@ -142,6 +144,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "BufWinEnter",
     main = "ibl",
     config = function()
       require("utils.indent_blankline").setup()
@@ -149,6 +152,7 @@ return {
   },
   {
     "numToStr/Comment.nvim",
+    event = "BufWinEnter",
     config = function()
       require("Comment").setup({
         pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
@@ -158,5 +162,23 @@ return {
       "nvim-ts-context-commentstring",
       "JoosepAlviste/nvim-ts-context-commentstring"
     }
+  },
+  {
+    -- Split
+    "Wansmer/treesj",
+    event = "BufWinEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    keys = {
+      { "<leader>j", mode = { "n" }, function() require("treej").toggle() end, desc = "Toggle Split or Join" },
+      { "<leader>k", mode = { "n" }, ":ISwap<CR>",                             desc = "Swap" },
+    },
+    config = function()
+      require('treesj').setup({
+        notify = true,
+        dot_repeat = false,
+        max_join_length = 500,
+        use_default_keymaps = false,
+      })
+    end,
   },
 }

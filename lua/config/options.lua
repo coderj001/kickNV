@@ -83,4 +83,5 @@ g.mapleader = " "
 g.maplocalleader = "\\"
 g.markdown_recommended_style = 0
 
-require("config.default").load_extra_options()
+-- Keymaps
+require("config.keymaps").load_extra_options()

@@ -11,28 +11,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-local opts = {
-  install = {
-    colorscheme = { require("config.default").ui.theme },
-  },
-  checker = {
-    enabled = true,
-    notify = false,
-  },
-  change_detection = {
-    notify = false,
-  },
-}
-
 require("lazy").setup({
   spec = {
+    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
-    { import = "plugins.lsp" },
+    { import = "plugins.colorscheme" },
   },
   defaults = {
     lazy = false,
     version = false,
   },
+  install = { colorscheme = { "tokyonight", "catppuccin" } },
   checker = { enabled = true },
   performance = {
     rtp = {
@@ -45,6 +34,4 @@ require("lazy").setup({
       },
     },
   },
-}, opts)
-
-vim.cmd("colorscheme " .. require("config.default").ui.theme)
+})

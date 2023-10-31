@@ -3,85 +3,13 @@ local M = {}
 
 local set = vim.keymap.set
 local keymap = vim.api.nvim_set_keymap
+local default = require("config.default").default
 local opts = { noremap = true, silent = true }
-
-M.version = "0.0.1"
-
-
-M.defaults = {
-	kicknv_branch = "kickNV",
-	name = "kickNV",
-	figlet_name = {
-		[[			 __   .__        __    ___________   ____ 			]],
-		[[			|  | _|__| ____ |  | __\      \   \ /   / 			]],
-		[[			|  |/ /  |/ ___\|  |/ //   |   \   Y   /  			]],
-		[[			|    <|  \  \___|    </    |    \     /   			]],
-		[[			|__|_ \__|\___  >__|_ \____|__  /\___/    			]],
-		[[			     \/       \/     \/       \/          			]],
-	},
-	colorscheme = function()
-		require("tokoynight").load()
-	end,
-	themes = {
-		"tokyonight",
-		"catppuccin",
-	},
-	transparent = true,
-	icons = {
-		git = {
-			added    = " ",
-			modified = " ",
-			removed  = " ",
-		},
-		diagnostics = {
-			Error = " ",
-			Warn  = " ",
-			Hint  = " ",
-			Info  = " ",
-		},
-		kind = {
-			Text = "",
-			Method = "m",
-			Function = "",
-			Constructor = "",
-			Field = "",
-			Variable = "",
-			Class = "",
-			Interface = "",
-			Module = "",
-			Property = "",
-			Unit = "",
-			Value = "",
-			Enum = "",
-			Keyword = "",
-			Snippet = "",
-			Color = "",
-			File = "",
-			Reference = "",
-			Folder = "",
-			EnumMember = "",
-			Constant = "",
-			Struct = "",
-			Event = "",
-			Operator = "",
-			TypeParameter = "",
-		},
-		cmp = {
-			lsp = "",
-			luasnip = "",
-			treesitter = "",
-			buffer = "",
-			tags = "",
-			rg = "",
-			path = "",
-			tmux = "",
-		}
-	}
-}
 
 M.opts = opts
 M.keymap = keymap
 M.set = set
+M.default = default
 
 
 M.json = {
@@ -89,6 +17,7 @@ M.json = {
 	data = {
 		version = nil, ---@type string?
 		colorscheme = nil, ---@type string?
+		news = {}, ---@type table<string, string>
 		extras = {}, ---@type table<string, string>
 	},
 }
@@ -112,6 +41,16 @@ function M.json.load()
 			end
 		end
 	end
+end
+
+---@param name "autocmds" | "options" | "keymaps"
+function M.load(name)
+	if M.defaults[name] or name == "options" then
+		require("config." .. name)
+	end
+end
+
+function M.setup(opts)
 end
 
 return M

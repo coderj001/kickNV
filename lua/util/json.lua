@@ -1,7 +1,7 @@
 local Config = require("config")
 local Util = require("util")
 
----@class lazyvim.util.json
+---@class util.json
 local M = {}
 
 ---@param value any
@@ -48,6 +48,7 @@ end
 
 function M.save()
   Config.json.data.version = Config.json.version
+  Config.json.data.colorscheme = Config.json.colorscheme
   local path = vim.fn.stdpath("config") .. "/kicknv.json"
   local f = io.open(path, "w")
   if f then
@@ -67,12 +68,12 @@ function M.migrate()
       json.data.hashes = nil
     end
     json.data.extras = vim.tbl_map(function(extra)
-      return "lazyvim.plugins.extras." .. extra
+      return "plugins.extras." .. extra
     end, json.data.extras or {})
   elseif json.data.version == 1 then
     json.data.extras = vim.tbl_map(function(extra)
       -- replace double extras module name
-      return extra:gsub("^lazyvim%.plugins%.extras%.lazyvim%.plugins%.extras%.", "lazyvim.plugins.extras.")
+      return extra:gsub("^plugins%.extras%.plugins%.extras%.", "plugins.extras.")
     end, json.data.extras or {})
   end
 

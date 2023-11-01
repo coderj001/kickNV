@@ -11,16 +11,17 @@ return {
           down = "<C-j>",
           up = "<C-k>",
           right = "<C-l>",
-        }
+        },
       }
     end
   },
   {
     "stevearc/oil.nvim",
+    event = "VimEnter",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>e", mode = { "n" }, "<CMD>Oil<CR>",   desc = "Oil Explorer Current" },
-      { "<leader>E", mode = { "n" }, "<CMD>Oil .<CR>", desc = "Oil Explorer Root" },
+      { "<leader>n", mode = { "n" }, "<CMD>Oil<CR>",   desc = "Oil Explorer Current" },
+      { "<leader>N", mode = { "n" }, "<CMD>Oil .<CR>", desc = "Oil Explorer Root" },
     },
     opts = {
       default_file_explorer = true,
@@ -29,6 +30,10 @@ return {
         "permissions",
         "size",
         "mtime",
+      },
+      buf_options = {
+        buflisted = false,
+        bufhidden = "hide",
       },
     },
   },
@@ -150,23 +155,4 @@ return {
       { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     },
   },
-  {
-    "nvim-tree/nvim-tree.lua",
-    version = "nightly",
-    event = "VimEnter",
-    keys = {
-      { "<leader>n", mode = { "n" }, "<CMD>NvimTreeToggle<CR>", desc = "NvimTree Explorer" },
-    },
-    config = function()
-      require("utils.nvimtree").setup()
-    end,
-    dependencies = {
-      {
-        "antosha417/nvim-lsp-file-operations",
-        config = function()
-          require("lsp-file-operations").setup()
-        end
-      }
-    }
-  }
 }

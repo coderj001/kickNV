@@ -84,7 +84,6 @@ function M.setup()
         if luasnip.choice_active() then
           luasnip.change_choice(1)
         else
-          -- Print current time
           local t = os.date("*t")
           local time = string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
           print(time)
@@ -102,19 +101,20 @@ function M.setup()
       {
         name = 'nvim_lsp',
         icon = lsp_symbol,
+        group_index = 1,
         max_item_count = 10,
         entry_filter = function(entry)
           return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
         end
       },
-      { name = 'luasnip',    icon = luasnip_symbol,    max_item_count = 6 },
-      { name = 'treesitter', icon = treesitter_symbol, max_item_count = 6 },
-      { name = 'buffer',     icon = buffer_symbol,     max_item_count = 6 },
-      { name = 'rg',         icon = rg_symbol,         max_item_count = 6 },
-      { name = 'tags',       icon = tags_symbol,       max_item_count = 5 },
-      { name = 'path',       icon = path_symbol,       max_item_count = 4 },
-      { name = 'tmux',       icon = tmux_symbol,       max_item_count = 3 },
-      -- { name = 'codeium',    icon = codeium_symbol,    max_item_count = 3 },
+      { name = 'luasnip',    icon = luasnip_symbol,    group_index = 1, max_item_count = 8 },
+      { name = 'treesitter', icon = treesitter_symbol, group_index = 2, max_item_count = 4 },
+      { name = 'buffer',     icon = buffer_symbol,     group_index = 2, max_item_count = 3 },
+      { name = 'rg',         icon = rg_symbol,         group_index = 2, max_item_count = 3 },
+      { name = 'tags',       icon = tags_symbol,       group_index = 2, max_item_count = 2 },
+      { name = 'path',       icon = path_symbol,       group_index = 2, max_item_count = 2 },
+      { name = 'tmux',       icon = tmux_symbol,       group_index = 2, max_item_count = 3 },
+      -- { name = 'codeium',    icon = codeium_symbol,group_index = 1,    max_item_count = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -165,15 +165,19 @@ function M.setup()
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
-      experimental = { ghost_text = false, native_menu = false }
+      experimental = {
+        ghost_text = {
+          hl_group = "CmpGhostText",
+        },
+      }
     },
     sorting = {
       priority_weight = 2,
       comparators = {
+        cmp.config.compare.score,
         cmp.config.compare.recently_used,
         ---@diagnostic disable-next-line: assign-type-mismatch
         cmp.config.compare.locality,
-        cmp.config.compare.score,
         require "cmp-under-comparator".under,
         deprioritize_snippet,
         cmp.config.compare.exact,

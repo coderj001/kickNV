@@ -169,7 +169,7 @@ return {
     event = "BufWinEnter",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     keys = {
-      { "<leader>j", mode = { "n" }, function() require("treej").toggle() end, desc = "Toggle Split or Join" },
+      { "<leader>j", mode = { "n" }, function() require("treesj").toggle() end, desc = "Toggle Split or Join" },
       { "<leader>k", mode = { "n" }, ":ISwap<CR>",                             desc = "Swap" },
     },
     config = function()

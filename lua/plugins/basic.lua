@@ -101,30 +101,17 @@ return {
   {
     "rcarriga/nvim-notify",
     priority = 1000,
-    event = "VeryLazy",
+    event = {
+      "CursorMoved",
+      "CursorHold",
+      "InsertEnter",
+      "CmdlineEnter",
+    },
     config = function()
       local status, notify = pcall(require, "notify")
       if (not status) then return end
       notify.setup({
-        stages = "fade_in_slide_out",
-        render = "compact",
-        timeout = 1500,
-        fps = 20,
-        max_height = function()
-          return math.floor(vim.o.lines * 0.75)
-        end,
-        max_width = function()
-          return math.floor(vim.o.columns * 0.75)
-        end,
-        background_colour = "#000000",
-        minimum_width = 26,
-        icons = {
-          ERROR = "",
-          WARN = "",
-          INFO = "",
-          DEBUG = "",
-          TRACE = "✎",
-        }
+        background_colour = "#000000"
       })
       vim.notify = notify
     end,

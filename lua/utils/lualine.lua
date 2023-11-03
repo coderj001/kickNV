@@ -64,7 +64,7 @@ end
 function M.setup()
   require("lualine").setup({
     options = {
-      theme = ui.theme,
+      theme = "catppuccin",
       section_separators = "",
       component_separators = "",
     },

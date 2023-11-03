@@ -33,3 +33,9 @@ vim.cmd([[command! Format :lua FormatWithLSP()]])
 function FormatWithLSP()
   vim.lsp.buf.format({ async = true })
 end
+
+vim.cmd([[command! LuaEditSnipFunc :lua LuaEditSnipFunc()]])
+
+function LuaEditSnipFunc()
+  require('luasnip.loaders.from_lua').edit_snippet_files()
+end

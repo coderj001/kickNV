@@ -25,9 +25,6 @@ return {
         "html",
         "cssls",
         "lua_ls",
-        "docker_compose_language_service",
-        "dockerls",
-        "yamlls",
       },
       automatic_installation = true,
     })

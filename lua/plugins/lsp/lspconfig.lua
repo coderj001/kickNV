@@ -32,6 +32,12 @@ return {
       opts.desc = "Show LSP type definitions"
       keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
+      opts.desc = "Show lsp symbols of buffer"
+      keymap.set("n", "gs", "<cmd>Telescope lsp_document_symbols<CR>", opts) -- show lsp type definitions
+
+      opts.desc = "Show lsp symbols of directory"
+      keymap.set("n", "gS", "<cmd>Telescope lsp_workspace_symbols<CR>", opts) -- show lsp type definitions
+
       opts.desc = "See available code actions"
       keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
@@ -156,7 +162,26 @@ return {
           },
         },
       },
+
     })
+    -- configure docker-compose server
+    lspconfig["docker_compose_language_service"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure docker server
+    lspconfig["dockerls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure yaml server
+    lspconfig["yamlls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Turn on lsp status information
     require("fidget").setup()
   end,

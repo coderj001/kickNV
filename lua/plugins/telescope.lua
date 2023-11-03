@@ -11,6 +11,7 @@ return {
         run = "make",
         cond = vim.fn.executable "make" == 1,
       },
+      "nvim-telescope/telescope-live-grep-args.nvim",
       "nvim-telescope/telescope-symbols.nvim",
     },
     keys = {
@@ -54,14 +55,36 @@ return {
       {
         "<leader><leader>",
         mode = { "n" },
-        function() require("telescope.builtin").buffers() end,
-        desc = "[/] Fuzzily search in current buffer",
+        function()
+          require("telescope.builtin").buffers({
+            ignore_current_buffer = true,
+            sort_mru = true,
+            sort_lastused = true
+          })
+        end,
+        desc = "Switch Buffers",
+      },
+      {
+        "<leader>sk",
+        function()
+          require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ postfix = false })
+        end,
+        desc = "Grep keyword under cursor (root dir)",
+        mode = { "n" },
       },
       {
         "<leader>/",
         mode = { "n" },
         function() require("utils.telescope").current_buffer_fuzzy_find() end,
         desc = "[/] Fuzzily search in current buffer",
+      },
+      {
+        "<leader>/",
+        function()
+          require("telescope-live-grep-args.shortcuts").grep_visual_selection({ postfix = false })
+        end,
+        desc = "Grep (root dir)",
+        mode = { "v" },
       },
     },
     config = function()

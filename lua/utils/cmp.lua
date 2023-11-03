@@ -16,14 +16,14 @@ local types = require("cmp.types")
 
 
 local lsp_symbol = "✳"
-local luasnip_symbol = ""
+local luasnip_symbol = "⇨"
 local treesitter_symbol = ""
-local buffer_symbol = ""
+local buffer_symbol = "󰕸"
 local tags_symbol = ""
 local rg_symbol = ""
 local path_symbol = ""
 local tmux_symbol = ""
-local codeium_symbol = ""
+local codeium_symbol = "󰨞"
 
 local function deprioritize_snippet(entry1, entry2)
   if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
@@ -116,7 +116,7 @@ function M.setup()
       { name = 'tags',       icon = tags_symbol,       group_index = 2, max_item_count = 2 },
       { name = 'path',       icon = path_symbol,       group_index = 2, max_item_count = 2 },
       { name = 'tmux',       icon = tmux_symbol,       group_index = 2, max_item_count = 3 },
-      -- { name = 'codeium',    icon = codeium_symbol,group_index = 1,    max_item_count = 3 },
+      { name = 'codeium',    icon = codeium_symbol,group_index = 1,    max_item_count = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -158,7 +158,7 @@ function M.setup()
           tags = "[Tags]",
           path = "[Path]",
           tmux = "[Tmux]",
-          -- codeium = "[CODEIUM]",
+          codeium = "[CODEIUM]",
         })[entry.source.name]
         return vim_item
       end,

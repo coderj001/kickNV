@@ -69,7 +69,11 @@ function M.setup()
       },
       agrolens = {
         theme = 'ivy'
-      }
+      },
+      live_grep_args = {
+        auto_quoting = true,
+      },
+
     },
     pickers = {
       buffers = {
@@ -127,6 +131,5 @@ function M.treesitter()
     }
   }
 end
-
 
 return M

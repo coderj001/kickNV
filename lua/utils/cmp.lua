@@ -2,18 +2,20 @@ local M = {}
 
 local status_cmp, cmp = pcall(require, "cmp")
 if (not status_cmp) then
+  vim.notify("error loading cmp")
   return
 end
 
 local status_luasnip, luasnip = pcall(require, "luasnip")
 if (not status_luasnip) then
+  vim.notify("error loading luasnip")
   return
 end
 
 local types = require("cmp.types")
 
 
-local lsp_symbol = ""
+local lsp_symbol = "✳"
 local luasnip_symbol = ""
 local treesitter_symbol = ""
 local buffer_symbol = ""

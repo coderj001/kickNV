@@ -6,6 +6,10 @@ return {
   },
   config = function()
     local status, restnv = pcall(require, "rest-nvim")
+    if (not status) then
+      vim.notify("error loading rest.nvim")
+      return
+    end
     restnv.setup({
       result_split_horizontal = false,
       highlight = { enabled = true, timeout = 150 },

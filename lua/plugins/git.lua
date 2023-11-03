@@ -2,6 +2,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufRead" },
+    keys = { },
     config = function()
       local status, gitsigns = pcall(require, 'gitsigns')
       if (not status) then return end
@@ -79,8 +80,8 @@ return {
       }
     },
     keys = {
-      { "<leader>l", mode = { "n" }, "<CMD>Neogit<CR>", desc = "Git" },
-      { "<leader>L", mode = { "n" }, "<CMD>Neogit commit<CR>", desc = "Git" },
+      { "<leader>l", mode = { "n" }, "<CMD>Neogit<CR>",        desc = "NeoGit UI" },
+      { "<leader>L", mode = { "n" }, "<CMD>Neogit commit<CR>", desc = "NeoGit UI Commmit" },
     },
     config = function()
       require('neogit').setup {

@@ -30,15 +30,18 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
     { import = "plugins.lsp" },
+    { import = "plugins.extras.explorer" },
     -- ColorScheme
     { import = "plugins.colorschemes." .. color_scheme },
     -- StatusLine Select One
     -- { import = "plugins.extras.statusline.lualine" },
-    -- { import = "plugins.extras.statusline.luafancy" },
-    { import = "plugins.extras.statusline.galaxyline" },
+    { import = "plugins.extras.statusline.luafancy" },
+    -- { import = "plugins.extras.statusline.galaxyline" },
     -- Added required configs
     -- { import = "plugins.extras.lsp" },
-    -- { import = "plugins.extras.dashboard" },
+    { import = "plugins.extras.dashboard.bufferline" },
+    { import = "plugins.extras.wilder" },
+    { import = "plugins.extras.figlet" },
   },
   defaults = {
     lazy = false,

@@ -15,7 +15,8 @@ M.config = {
 		"kanagawa",
 		"nightfox",
 	},
-  colorscheme = "catppuccin",
+  colorscheme = "nightfox",
+  transparent_background = true
 }
 
 function M.setup()

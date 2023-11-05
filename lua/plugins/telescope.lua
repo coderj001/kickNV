@@ -53,7 +53,7 @@ return {
         desc = "[S]earch [S]ymbols",
       },
       {
-        "<leader><leader>",
+        "<leader><Space>",
         mode = { "n" },
         function()
           require("telescope.builtin").buffers({

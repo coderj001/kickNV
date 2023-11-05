@@ -3,7 +3,7 @@ return {
   version = "nightly",
   event = "VimEnter",
   keys = {
-    { "<leader>e", mode = { "n" }, "<CMD>NvimTreeToggle<CR>", desc = "NvimTree Explorer" },
+    { "<leader>n", mode = { "n" }, "<CMD>NvimTreeToggle<CR>", desc = "NvimTree Explorer" },
   },
   config = function()
     require("utils.nvimtree").setup()

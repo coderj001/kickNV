@@ -110,13 +110,13 @@ function M.setup()
         end
       },
       { name = 'luasnip',    icon = luasnip_symbol,    group_index = 1, max_item_count = 8 },
-      { name = 'treesitter', icon = treesitter_symbol, group_index = 2, max_item_count = 4 },
+      { name = 'treesitter', icon = treesitter_symbol, group_index = 2, max_item_count = 4, keyword_length = 2 },
       { name = 'buffer',     icon = buffer_symbol,     group_index = 2, max_item_count = 3 },
       { name = 'rg',         icon = rg_symbol,         group_index = 2, max_item_count = 3 },
       { name = 'tags',       icon = tags_symbol,       group_index = 2, max_item_count = 2 },
       { name = 'path',       icon = path_symbol,       group_index = 2, max_item_count = 2 },
       { name = 'tmux',       icon = tmux_symbol,       group_index = 2, max_item_count = 3 },
-      { name = 'codeium',    icon = codeium_symbol,group_index = 1,    max_item_count = 3 },
+      { name = 'codeium',    icon = codeium_symbol,    group_index = 1, max_item_count = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -178,11 +178,22 @@ function M.setup()
       comparators = {
         cmp.config.compare.score,
         cmp.config.compare.recently_used,
+        cmp.config.compare.exact,
+        function(entry1, entry2)
+          local _, entry1_under = entry1.completion_item.label:find "^_+"
+          local _, entry2_under = entry2.completion_item.label:find "^_+"
+          entry1_under = entry1_under or 0
+          entry2_under = entry2_under or 0
+          if entry1_under > entry2_under then
+            return false
+          elseif entry1_under < entry2_under then
+            return true
+          end
+        end,
+        require "cmp-under-comparator".under,
         ---@diagnostic disable-next-line: assign-type-mismatch
         cmp.config.compare.locality,
-        require "cmp-under-comparator".under,
         deprioritize_snippet,
-        cmp.config.compare.exact,
         cmp.config.compare.offset,
         cmp.config.compare.kind,
         cmp.config.compare.sort_text,

@@ -117,7 +117,29 @@ return {
         end,
         desc = "Delete Buffer",
       },
-      { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
+      {
+        "<leader>bD",
+        function()
+          require("mini.bufremove").delete(0, true)
+        end,
+        desc = "Delete Buffer (Force)",
+      },
     },
   },
+  {
+  'norcalli/nvim-colorizer.lua',
+  ft = {
+    'lua',
+    'css',
+    'html',
+    'sass',
+    'less',
+    'typescriptreact',
+    'conf',
+    'vim',
+  },
+  config = function()
+    require('colorizer').setup()
+  end,
+}
 }

@@ -1,30 +1,5 @@
 local M = {}
 
-local function getLsps()
-  local lspNames = "["
-  for _, client in pairs(vim.lsp.get_active_clients()) do
-    lspNames = lspNames .. client.name .. ", "
-  end
-
-  return string.sub(lspNames, 1, string.len(lspNames) - 2) .. "]"
-end
-
-local function getTotalLines()
-  return vim.fn.line("$")
-end
-
-local function search_result()
-  if vim.v.hlsearch == 0 then
-    return ''
-  end
-  local last_search = vim.fn.getreg('/')
-  if not last_search or last_search == '' then
-    return ''
-  end
-  local searchcount = vim.fn.searchcount { maxcount = 9999 }
-  return last_search .. '(' .. searchcount.current .. '/' .. searchcount.total .. ')'
-end
-
 local function get_words()
   if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
     if vim.fn.wordcount().visual_words == 1 then
@@ -51,41 +26,26 @@ local function filename()
   end
 end
 
-local function lsp_status()
-  local lsp = vim.lsp.util.get_diagnostics_count(0, [[Error]])
-  local icon = ''
-  if lsp > 0 then
-    icon = ' '
-  end
-  return icon .. 'LSP'
-end
-
 function M.setup()
   require("lualine").setup({
     options = {
       theme = require("config.defaults").config.colorscheme,
-      section_separators = "",
-      component_separators = "",
+      component_separators = { left = "|", right = "|" },
+      section_separators = { left = "", right = "" },
+      globalstatus = true,
+      refresh = {
+        statusline = 100,
+      },
     },
     sections = {
       lualine_a = {
-        {
-          "mode",
-          color = {
-            gui = "bold",
-          },
-        },
+        { "fancy_mode", width = 3 }
       },
       lualine_b = {
-        "branch",
-        "diff",
-        lsp_status,
-        {
-          "diagnostics",
-          sources = {
-            "nvim_lsp",
-          },
-        },
+        { "fancy_branch" },
+        { "fancy_diff" },
+        { "fancy_lsp_servers" },
+        { "fancy_diagnostics" },
       },
       lualine_c = {
         {
@@ -102,24 +62,19 @@ function M.setup()
         },
       },
       lualine_x = {
-        getLsps,
-        search_result
+        { "fancy_cwd", substitute_home = true }
       },
       lualine_y = {
-        "filetype",
-        -- "encoding",
-        -- "fileformat",
+        { "fancy_filetype", ts_icon = "" },
         get_words,
         {
           require("lazy.status").updates,
           cond = require("lazy.status").has_updates,
           color = { fg = "#ff9e64" },
         },
-        {
-          "location",
-          color = { fg = "#ff9e64" },
-        },
-        getTotalLines
+        { "fancy_searchcount" },
+        { "fancy_macro" },
+        { "fancy_location" },
       },
       lualine_z = { "progress" },
     },

@@ -24,14 +24,19 @@ local opts = {
   },
 }
 
+local color_scheme = require("config.defaults").config.colorscheme
+
 require("lazy").setup({
   spec = {
     { import = "plugins" },
     { import = "plugins.lsp" },
-    { import = "plugins.colorschemes" },
+    -- ColorScheme
+    { import = "plugins.colorschemes." .. color_scheme },
     -- StatusLine Select One
     -- { import = "plugins.extras.statusline.lualine" },
+    -- { import = "plugins.extras.statusline.luafancy" },
     { import = "plugins.extras.statusline.galaxyline" },
+    -- Added required configs
     -- { import = "plugins.extras.lsp" },
     -- { import = "plugins.extras.dashboard" },
   },

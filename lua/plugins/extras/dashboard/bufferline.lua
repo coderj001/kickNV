@@ -39,7 +39,8 @@ return {
             return true
           end
         end,
-        -- highlight = require("catppuccin.groups.integrations.bufferline").get(),
+        highlight = (require("config.defaults").config.colorscheme == "catppuccin") and
+        require("catppuccin.groups.integrations.bufferline").get() or nil,
       },
     },
   },

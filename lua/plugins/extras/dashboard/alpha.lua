@@ -4,7 +4,7 @@ return {
   config = function()
     local alpha                       = require("alpha")
     local dashboard                   = require("alpha.themes.dashboard")
-    -- dashboard.section.header.val      = require("config.default").options.figlet_name
+    dashboard.section.header.val      = require("config.defaults").config.figlet_name
 
     dashboard.section.buttons.val     = {
       dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),

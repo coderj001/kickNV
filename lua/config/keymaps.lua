@@ -34,3 +34,17 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- Clear search with <leader><Enter>
 map({ "i", "n" }, "<leader><Enter>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+
+function load_extra_options()
+  local function bind_extra_cmd(options)
+    for optionCount = 1, #options do vim.cmd(options[optionCount]) end
+  end
+  local options = {
+    "filetype plugin on", "filetype indent on", "cabbr Q q", "cabbr Q! q!",
+    "cabbr W! w!", "cabbr W w", "cabbr WA wa", "cabbr Wa wa", "cabbr Wq wq",
+    "cabbr WQ wq", "cabbr Qa qa", "cabbr QA qa"
+  }
+  bind_extra_cmd(options)
+end
+
+load_extra_options()

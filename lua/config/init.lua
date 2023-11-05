@@ -2,4 +2,5 @@ require("config.options")
 require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
-vim.cmd[[colorscheme catppuccin]]
+local color_scheme = require("config.defaults").config.colorscheme
+vim.cmd("colorscheme " .. color_scheme)

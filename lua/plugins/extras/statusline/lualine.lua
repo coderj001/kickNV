@@ -1,7 +1,7 @@
 if true then
   return {
     "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
+    event = "UIEnter",
     dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
       require("utils.lualine").setup()

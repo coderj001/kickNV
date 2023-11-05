@@ -263,7 +263,7 @@ gl.section.left = {
 		DiagnosticHint = {
 			provider = diagnostic.get_diagnostic_hint,
 			condition = function() return conditions.break_width(55) end,
-			highlight = { colors.blue, colors.bg },
+			highlight = { colors.violet, colors.bg },
 			icon = " 󰌵 ",
 		},
 	},
@@ -279,7 +279,7 @@ gl.section.right = {
 	-- LSP Client ----------------------------------------------------------------
 	{
 		LspStartSep = {
-			provider = function() return "  " end,
+			provider = function() return "     " end,
 			highlight = { colors.yellow, colors.bg },
 			separator = "",
 			separator_highlight = { colors.bg },

@@ -116,6 +116,21 @@ local vcmd = s("cmd", {
 })
 table.insert(snippets, vcmd)
 
+
+local mSetupSnippet = s("msetup", fmt([[
+local M = {{}}
+
+function M.setup()
+  {}
+end
+
+return M
+]], {
+	i(1, "-- write"),
+}))
+
+table.insert(snippets, mSetupSnippet)
+
 -- End Refactoring --
 
 

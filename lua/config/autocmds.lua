@@ -2,13 +2,13 @@ local augroup = vim.api.nvim_create_augroup -- Create/get autocommand group
 local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
 
 
-augroup('MyCustomNeogitEvents', { clear = true })
-autocmd('User', {
-  pattern = 'NeogitPushComplete',
-  group = 'MyCustomNeogitEvents',
-  callback = require('neogit').close,
-})
-
+-- augroup('MyCustomNeogitEvents', { clear = true })
+-- autocmd('User', {
+--   pattern = 'NeogitPushComplete',
+--   group = 'MyCustomNeogitEvents',
+--   callback = require('neogit').close,
+-- })
+--
 
 -- Remove whitespace on save
 autocmd('BufWritePre', {

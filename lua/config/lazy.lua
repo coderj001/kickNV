@@ -29,7 +29,9 @@ require("lazy").setup({
     { import = "plugins" },
     { import = "plugins.lsp" },
     { import = "plugins.colorschemes" },
-    -- { import = "plugins.extras.coding" },
+    -- StatusLine Select One
+    -- { import = "plugins.extras.statusline.lualine" },
+    { import = "plugins.extras.statusline.galaxyline" },
     -- { import = "plugins.extras.lsp" },
     -- { import = "plugins.extras.dashboard" },
   },

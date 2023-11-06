@@ -28,6 +28,7 @@ return {
         "docker_compose_language_service",
         "dockerls",
         "yamlls",
+        "gopls"
       },
       automatic_installation = true,
     })

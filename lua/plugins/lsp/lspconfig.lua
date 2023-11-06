@@ -182,6 +182,12 @@ return {
       on_attach = on_attach,
     })
 
+    -- configure golang server
+    lspconfig["gopls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Turn on lsp status information
     require("fidget").setup()
   end,

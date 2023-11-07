@@ -1,5 +1,6 @@
 return {
   'gelguy/wilder.nvim',
+  event = "VimEnter",
   config = function()
     local wilder = require("wilder")
     wilder.setup({

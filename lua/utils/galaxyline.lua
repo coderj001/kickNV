@@ -333,7 +333,7 @@ gl.section.right = {
 		Indentation = {
 			provider = function()
 				local indentation_type = "Tabs:"
-				if vim.api.nvim_buf_get_option(0, "expandtab") then indentation_type = "Spaces:" end
+				if vim.api.nvim_buf_get_option(0, "expandtab") then indentation_type = " Spaces:" end
 				return indentation_type .. vim.o.ts
 			end,
 			condition = conditions.break_width,

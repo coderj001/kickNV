@@ -2,20 +2,21 @@ local M = {}
 
 M.config = {
   figlet_name = {
-		[[			 __   .__        __    ___________   ____ 			]],
-		[[			|  | _|__| ____ |  | __\      \   \ /   / 			]],
-		[[			|  |/ /  |/ ___\|  |/ //   |   \   Y   /  			]],
-		[[			|    <|  \  \___|    </    |    \     /   			]],
-		[[			|__|_ \__|\___  >__|_ \____|__  /\___/    			]],
-		[[			     \/       \/     \/       \/          			]],
-	},
+    [[			 __   .__        __    ___________   ____ 			]],
+    [[			|  | _|__| ____ |  | __\      \   \ /   / 			]],
+    [[			|  |/ /  |/ ___\|  |/ //   |   \   Y   /  			]],
+    [[			|    <|  \  \___|    </    |    \     /   			]],
+    [[			|__|_ \__|\___  >__|_ \____|__  /\___/    			]],
+    [[			     \/       \/     \/       \/          			]],
+  },
   themes = {
-		"tokyonight",
-		"catppuccin",
-		"kanagawa",
-		"nightfox",
-	},
-  colorscheme = "nightfox",
+    "tokyonight",
+    "catppuccin",
+    "kanagawa",
+    "nightfox",
+    "night-owl",
+  },
+  colorscheme = "catppuccin",
   transparent_background = true
 }
 

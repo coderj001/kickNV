@@ -13,8 +13,8 @@ local rep = require("luasnip.extras").rep
 
 local snippets, autosnippets = {}, {} --}}}
 
-local group = vim.api.nvim_create_augroup("Javascript Snippets", { clear = true })
-local file_pattern = "*.js"
+local group = vim.api.nvim_create_augroup("GoLang Snippets", { clear = true })
+local file_pattern = "*.go"
 
 local function cs(trigger, nodes, opts) --{{{
   local snippet = s(trigger, nodes)
@@ -88,6 +88,22 @@ cs(                                  -- Go gin example snippet
       i(1, "main"),
       i(2, "Hello World"),
       i(3, "port number"),
+    }
+  )
+)
+
+cs(
+  "gorm:sqlite",
+  fmt([[
+  // import "github.com/jinzhu/gorm"
+	// import _ "github.com/jinzhu/gorm/dialects/sqlite"
+	db, err := gorm.Open("sqlite3", "{}.db")
+	if err != nil {{
+		panic("Failed to connect database")
+	}}
+  ]],
+    {
+      i(1, "db_name")
     }
   )
 )

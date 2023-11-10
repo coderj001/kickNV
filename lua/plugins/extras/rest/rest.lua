@@ -4,6 +4,12 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim"
   },
+  ft = "http",
+  keys = {
+    { "<leader>rn", function() require("rest-nvim").run() end,     desc = "Run request" },
+    { "<leader>rl", function() require("rest-nvim").last() end,    desc = "Run request last" },
+    { "<leader>rp", function() require("rest-nvim").run(true) end, desc = "Run request last" },
+  },
   config = function()
     local status, restnv = pcall(require, "rest-nvim")
     if (not status) then
@@ -11,7 +17,7 @@ return {
       return
     end
     restnv.setup({
-      result_split_horizontal = false,
+      result_split_horizontal = true,
       highlight = { enabled = true, timeout = 150 },
       result = {
         show_url = true,
@@ -25,19 +31,6 @@ return {
         }
       },
       jump_to_request = true,
-    })
-    local rest_nvim = require('rest-nvim')
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "http",
-      callback = function()
-        local buff = tonumber(vim.fn.expand("<abuf>"), 10)
-        vim.keymap.set("n", "<leader>rn", rest_nvim.run,
-          { noremap = true, buffer = buff })
-        vim.keymap.set("n", "<leader>rl", rest_nvim.last,
-          { noremap = true, buffer = buff })
-        vim.keymap.set("n", "<leader>rp", function() rest_nvim.run(true) end,
-          { noremap = true, buffer = buff })
-      end
     })
   end
 }

@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     unzip \
     nodejs \
-    npm \ 
+    npm \
     python3 \
     python3-pip
 

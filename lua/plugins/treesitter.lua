@@ -94,6 +94,7 @@ return {
           "tsx",
           "css",
           "scss",
+          "http",
           "dockerfile",
         },
         sync_install = false,

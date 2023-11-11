@@ -190,7 +190,7 @@ function M.setup()
             return true
           end
         end,
-        require "cmp-under-comparator".under,
+        -- require "cmp-under-comparator".under,
         ---@diagnostic disable-next-line: assign-type-mismatch
         cmp.config.compare.locality,
         deprioritize_snippet,

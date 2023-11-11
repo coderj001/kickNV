@@ -62,11 +62,10 @@ function M.setup()
         },
       },
       lualine_x = {
-        { "fancy_cwd", substitute_home = true }
+        get_words,
       },
       lualine_y = {
         { "fancy_filetype", ts_icon = "" },
-        get_words,
         {
           require("lazy.status").updates,
           cond = require("lazy.status").has_updates,

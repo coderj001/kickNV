@@ -67,20 +67,17 @@ function M.setup()
         override_file_sorter = true,
         case_mode = 'smart_case',
       },
-      agrolens = {
-        theme = 'ivy'
-      },
       live_grep_args = {
-        auto_quoting = true,
+        auto_quoting = false,
       },
-
     },
     pickers = {
       buffers = {
         prompt_title = '✨ Search Buffers ✨',
         mappings = {
           n = {
-            ['d'] = require('telescope.actions').delete_buffer,
+            ['q'] = require('telescope.actions').close,
+            ['x'] = require('telescope.actions').delete_buffer,
             ['<tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_next,
             ['<s-tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_previous,
             ['v'] = require('telescope.actions').file_vsplit,
@@ -92,13 +89,13 @@ function M.setup()
         preview_title = false,
         initial_mode = "normal"
       }
-    }
+    },
   }
   pcall(telescope.load_extension, 'fzf')
   -- pcall(telescope.load_extension, 'undo')
   pcall(telescope.load_extension, 'notify')
   pcall(telescope.load_extension, 'emoji')
-  pcall(telescope.load_extension, 'agrolens')
+  pcall(telescope.load_extension, 'luasnip')
 end
 
 function M.edit_neovim()

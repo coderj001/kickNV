@@ -31,13 +31,15 @@ return {
       {
         "<leader>sw",
         mode = { "n" },
-        function() require("telescope.builtin").grep_string() end,
+        function()
+          require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ postfix = false })
+        end,
         desc = "[S]earch current  [W]ord",
       },
       {
         "<leader>sg",
         mode = { "n" },
-        function() require("telescope.builtin").live_grep() end,
+        function() require("telescope").extensions.live_grep_args.live_grep_args() end,
         desc = "[S]earch by [G]rep",
       },
       {
@@ -63,14 +65,6 @@ return {
           })
         end,
         desc = "Switch Buffers",
-      },
-      {
-        "<leader>sk",
-        function()
-          require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ postfix = false })
-        end,
-        desc = "Grep keyword under cursor (root dir)",
-        mode = { "n" },
       },
       {
         "<leader>/",
@@ -114,3 +108,4 @@ return {
     },
   },
 }
+

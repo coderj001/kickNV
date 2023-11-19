@@ -16,7 +16,7 @@ end
 -----------------------------------------------------------
 
 opt.mouse       = 'a'                         -- Enable mouse mode
-opt.clipboard   = "unnamedplus"               -- Copy/paste to system clipboard
+-- opt.clipboard   = "unnamedplus"               -- Copy/paste to system clipboard
 opt.swapfile    = false                       -- Don't use swapfile
 opt.completeopt = 'menuone,noinsert,noselect' -- Autocomplete options
 
@@ -60,6 +60,7 @@ opt.fillchars      = {
   diff = "╱",
   eob = " ",
 }
+opt.list           = true
 opt.listchars      = {
   tab = ">>>",
   trail = "·",
@@ -67,6 +68,7 @@ opt.listchars      = {
   extends = "→",
   eol = "↲",
   nbsp = "␣",
+  leadmultispace = "│ "
 }
 opt.ignorecase     = true
 opt.smartcase      = true
@@ -78,7 +80,7 @@ opt.undofile       = true
 opt.undolevels     = 500
 opt.wildmode       = "longest:full,full" -- Command-line completion mode
 opt.winminwidth    = 5                   -- Minimum window width
-opt.wrap           = true               -- Disable line wrap
+opt.wrap           = true                -- Disable line wrap
 
 -----------------------------------------------------------
 -- Memory, CPU
@@ -102,3 +104,4 @@ opt.ruler = false
 g.mapleader = " "
 g.maplocalleader = "\\"
 g.markdown_recommended_style = 0
+g.skip_ts_context_commentstring_module = true

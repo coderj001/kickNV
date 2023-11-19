@@ -42,6 +42,9 @@ require("lazy").setup({
     { import = "plugins.extras.dashboard.bufferline" },
     { import = "plugins.extras.wilder" },
     { import = "plugins.extras.figlet" },
+    { import = "plugins.extras.tmux" },
+    { import = "plugins.extras.harpoon" },
+    { import = "plugins.extras.coding.refactoring" },
   },
   defaults = {
     lazy = false,

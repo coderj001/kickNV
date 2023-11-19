@@ -16,7 +16,7 @@ M.config = {
     "nightfox",
     "night-owl",
   },
-  colorscheme = "catppuccin",
+  colorscheme = "nightfox",
   transparent_background = true
 }
 

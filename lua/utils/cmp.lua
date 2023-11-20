@@ -179,6 +179,7 @@ function M.setup()
         cmp.config.compare.score,
         cmp.config.compare.recently_used,
         cmp.config.compare.exact,
+        require "cmp-under-comparator".under,
         function(entry1, entry2)
           local _, entry1_under = entry1.completion_item.label:find "^_+"
           local _, entry2_under = entry2.completion_item.label:find "^_+"
@@ -190,7 +191,6 @@ function M.setup()
             return true
           end
         end,
-        -- require "cmp-under-comparator".under,
         ---@diagnostic disable-next-line: assign-type-mismatch
         cmp.config.compare.locality,
         deprioritize_snippet,

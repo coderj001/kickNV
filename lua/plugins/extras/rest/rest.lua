@@ -17,7 +17,7 @@ return {
       return
     end
     restnv.setup({
-      result_split_horizontal = true,
+      result_split_horizontal = false,
       highlight = { enabled = true, timeout = 150 },
       result = {
         show_url = true,

@@ -28,7 +28,9 @@ return {
         "docker_compose_language_service",
         "dockerls",
         "yamlls",
-        "gopls"
+        "gopls",
+        "jsonls",
+        "terraformls"
       },
       automatic_installation = true,
     })

@@ -30,6 +30,8 @@ return {
         "yamlls",
         "gopls",
         "pylsp"
+        "jsonls",
+        "terraformls"
       },
       automatic_installation = true,
     })

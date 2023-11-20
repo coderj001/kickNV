@@ -188,12 +188,19 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure golang server
     lspconfig["pylsp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    lspconfig["jsonls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
 
+    lspconfig["terraformls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
     -- Turn on lsp status information
     require("fidget").setup()
   end,

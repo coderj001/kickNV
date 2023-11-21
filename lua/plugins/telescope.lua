@@ -23,6 +23,12 @@ return {
         "[?] Find recently opened files"
       },
       {
+        "<leader>sd",
+        mode = { "n" },
+        function() require("telescope.builtin").lsp_document_symbols() end,
+        desc = "[S]earch LSP [D]fination",
+      },
+      {
         "<leader>sf",
         mode = { "n" },
         function() require("telescope.builtin").find_files() end,

@@ -1,5 +1,6 @@
 return {
   "nvim-cmp",
+  event = { "BufEnter", "BufRead" },
   dependencies = {
     {
       "Exafunction/codeium.nvim",

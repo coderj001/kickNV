@@ -66,9 +66,9 @@ local function cs(trigger, nodes, opts) --{{{
   end
 
   table.insert(target_table, snippet) -- insert snippet into appropriate table
-end                                  --}}}
+end                                   --}}}
 
-cs(                                  -- Go gin example snippet
+cs(                                   -- Go gin example snippet
   "ginexample",
   fmt(
     [[
@@ -106,6 +106,41 @@ cs(
       i(1, "db_name")
     }
   )
+)
+
+cs("readfile",
+  fmt([[
+  file, err := os.Open({})
+	if err != nil {{
+		fmt.Printf("Error Opening The File: %v\n", err)
+	}}
+	defer file.Close()
+
+  // import "bufio"
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {{
+		fmt.Println(scanner.Text())
+	}}
+
+	if err = scanner.Err(); err != nil {{
+		fmt.Printf("Error Reading File: %v\n", err)
+	}}
+  ]], {
+    i(1, "filename")
+  })
+)
+
+cs("jsonread",
+  fmt([[
+    // import "encoding/json"
+    err := json.Unmarshal([]byte({}), &{}); if err != nil {{
+      {}
+    }}
+  ]], {
+    i(1, "json"),
+    i(2, "object"),
+    i(3, "panic()"),
+  })
 )
 
 

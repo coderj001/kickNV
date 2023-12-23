@@ -68,7 +68,8 @@ opt.listchars      = {
   extends = "→",
   eol = "↲",
   nbsp = "␣",
-  leadmultispace = "│ "
+  -- leadmultispace = "│ "
+  leadmultispace = " "
 }
 opt.ignorecase     = true
 opt.smartcase      = true

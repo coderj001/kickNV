@@ -31,7 +31,8 @@ return {
         "gopls",
         "pylsp",
         "jsonls",
-        "terraformls"
+        "terraformls",
+        "tailwindcss"
       },
       automatic_installation = true,
     })

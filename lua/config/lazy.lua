@@ -43,6 +43,7 @@ require("lazy").setup({
     { import = "plugins.extras.wilder" },
     { import = "plugins.extras.figlet" },
     { import = "plugins.extras.tmux" },
+    { import = "plugins.extras.scalpel" },
     { import = "plugins.extras.harpoon" },
     { import = "plugins.extras.coding.refactoring" },
   },

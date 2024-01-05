@@ -111,19 +111,26 @@ return {
     },
   },
   {
-  'norcalli/nvim-colorizer.lua',
-  ft = {
-    'lua',
-    'css',
-    'html',
-    'sass',
-    'less',
-    'typescriptreact',
-    'conf',
-    'vim',
+    'norcalli/nvim-colorizer.lua',
+    ft = {
+      'lua',
+      'css',
+      'html',
+      'sass',
+      'less',
+      'typescriptreact',
+      'conf',
+      'vim',
+    },
+    config = function()
+      require('colorizer').setup()
+    end,
   },
-  config = function()
-    require('colorizer').setup()
-  end,
-}
+  {
+    'mattn/emmet-vim',
+    keys = {
+      { '<leader>y', ':Emmet ', desc = 'Emmet' },
+    },
+    cmd = 'Emmet',
+  },
 }

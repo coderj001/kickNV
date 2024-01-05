@@ -96,6 +96,7 @@ function M.setup()
   pcall(telescope.load_extension, 'notify')
   pcall(telescope.load_extension, 'emoji')
   pcall(telescope.load_extension, 'luasnip')
+  pcall(telescope.load_extension, 'harpoon')
 end
 
 function M.edit_neovim()

@@ -60,7 +60,7 @@ opt.fillchars      = {
   diff = "╱",
   eob = " ",
 }
-opt.list           = true
+opt.list           = false
 opt.listchars      = {
   tab = ">>>",
   trail = "·",

@@ -1,13 +1,13 @@
 local M = {}
 
-local status_cmp, cmp = pcall(require, "cmp")
-if (not status_cmp) then
+local cmp_status_ok, cmp = pcall(require, "cmp")
+if (not cmp_status_ok) then
   vim.notify("error loading cmp")
   return
 end
 
-local status_luasnip, luasnip = pcall(require, "luasnip")
-if (not status_luasnip) then
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if (not snip_status_ok) then
   vim.notify("error loading luasnip")
   return
 end
@@ -184,7 +184,13 @@ function M.setup()
         },
       }
     },
-    preselect = cmp.PreselectMode.Item,
+    -- preselect = cmp.PreselectMode.Item,
+    preselect = cmp.PreselectMode.None,
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)                 -- For `luasnip` users.
+      end,
+    },
     sorting = {
       priority_weight = 2,
       comparators = {

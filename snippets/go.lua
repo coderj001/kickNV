@@ -108,5 +108,40 @@ cs(
   )
 )
 
+cs("readfile",
+  fmt([[
+  file, err := os.Open({})
+	if err != nil {{
+		fmt.Printf("Error Opening The File: %v\n", err)
+	}}
+	defer file.Close()
+
+  // import "bufio"
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {{
+		fmt.Println(scanner.Text())
+	}}
+
+	if err = scanner.Err(); err != nil {{
+		fmt.Printf("Error Reading File: %v\n", err)
+	}}
+  ]], {
+    i(1, "filename")
+  })
+)
+
+cs("jsonread",
+  fmt([[
+    // import "encoding/json"
+    err := json.Unmarshal([]byte({}), &{}); if err != nil {{
+      {}
+    }}
+  ]], {
+    i(1, "json"),
+    i(2, "object"),
+    i(3, "panic()"),
+  })
+)
+
 
 return snippets, autosnippets

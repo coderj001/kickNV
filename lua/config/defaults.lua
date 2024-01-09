@@ -15,8 +15,9 @@ M.config = {
     "kanagawa",
     "nightfox",
     "night-owl",
+    "dracula",
   },
-  colorscheme = "nightfox",
+  colorscheme = "dracula",
   transparent_background = true
 }
 

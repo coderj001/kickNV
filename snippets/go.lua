@@ -66,9 +66,9 @@ local function cs(trigger, nodes, opts) --{{{
   end
 
   table.insert(target_table, snippet) -- insert snippet into appropriate table
-end                                  --}}}
+end                                   --}}}
 
-cs(                                  -- Go gin example snippet
+cs(                                   -- Go gin example snippet
   "ginexample",
   fmt(
     [[

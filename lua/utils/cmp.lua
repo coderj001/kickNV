@@ -47,11 +47,6 @@ end
 
 function M.setup()
   cmp.setup {
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
-    },
     mapping = cmp.mapping.preset.insert {
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -188,7 +183,7 @@ function M.setup()
     preselect = cmp.PreselectMode.None,
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body)                 -- For `luasnip` users.
+        luasnip.lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
     sorting = {
@@ -204,6 +199,7 @@ function M.setup()
           end
         end,
         cmp.config.compare.recently_used,
+        cmp.config.compare.score,
         function(entry1, entry2) -- sort by compare kind (Variable, Function etc)
           local kind1 = modified_kind(entry1:get_kind())
           local kind2 = modified_kind(entry2:get_kind())
@@ -211,7 +207,6 @@ function M.setup()
             return kind1 - kind2 < 0
           end
         end,
-        cmp.config.compare.score,
         cmp.config.compare.order,
         -- require "cmp-under-comparator".under,
         function(entry1, entry2)

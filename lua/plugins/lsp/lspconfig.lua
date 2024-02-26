@@ -207,6 +207,12 @@ return {
       on_attach = on_attach,
       filetypes = { "html", "typescriptreact", "javascriptreact" },
     })
+
+    lspconfig["clangd"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "html", "typescriptreact", "javascriptreact" },
+    })
     -- Turn on lsp status information
     require("fidget").setup()
   end,

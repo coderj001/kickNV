@@ -32,7 +32,8 @@ return {
         "pylsp",
         "jsonls",
         "terraformls",
-        "tailwindcss"
+        "tailwindcss",
+        "clangd"
       },
       automatic_installation = true,
     })

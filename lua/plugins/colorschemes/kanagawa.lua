@@ -10,7 +10,7 @@ if true then
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
         typeStyle = {},
-        transparent = false,
+        transparent = true,
         theme = "dragon",
         colors = {
           palette = {},
@@ -44,7 +44,7 @@ if true then
           }
         end,
         background = {
-          dark = "dragon",
+          dark = "wave",
         },
       })
     end

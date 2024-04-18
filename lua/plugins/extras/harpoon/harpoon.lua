@@ -19,19 +19,19 @@ if true then
     end,
     keys = {
       {
-        "<leader>hx",
+        "<leader>x",
         mode = { "n" },
         function() require("harpoon.mark").add_file() end,
         desc = "[h]arpoon [x]mark",
       },
       {
-        "<leader>hn",
+        "<leader>hj",
         mode = { "n" },
         function() require("harpoon.ui").nav_next() end,
         desc = "[h]arpoon [n]ext",
       },
       {
-        "<leader>hp",
+        "<leader>hk",
         mode = { "n" },
         function() require("harpoon.ui").nav_prev() end,
         desc = "[h]arpoon [p]rev",

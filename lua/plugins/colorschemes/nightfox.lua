@@ -27,6 +27,22 @@ if true then
             search = false,
           },
         },
+        custom_highlights = function(colors)
+        return {
+            TelescopeSelection = {},
+            TelescopePromptCounter = {},
+            TelescopePromptPrefix = {},
+            TelescopePromptNormal = {},
+            TelescopeResultsNormal = {},
+            TelescopePreviewNormal = {},
+            TelescopePromptBorder = {},
+            TelescopeResultsBorder = {},
+            TelescopePreviewBorder = {},
+            TelescopePromptTitle = {},
+            TelescopeResultsTitle = {},
+            TelescopePreviewTitle = {},
+        }
+        end
       })
     end
   }

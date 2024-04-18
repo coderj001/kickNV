@@ -7,7 +7,7 @@ if true then
       require("catppuccin").setup({
         flavour = "mocha",
         background = {
-          dark = "mocha",
+          dark = "frappe",
         },
         color_overrides = {
           mocha = {

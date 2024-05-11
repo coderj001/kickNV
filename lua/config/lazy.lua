@@ -39,9 +39,9 @@ require("lazy").setup({
     -- { import = "plugins.extras.statusline.galaxyline" },
     -- Added required configs
     -- { import = "plugins.extras.lsp" },
-    { import = "plugins.extras.wilder" },
+    -- { import = "plugins.extras.wilder" },
     { import = "plugins.extras.tmux" },
-    { import = "plugins.extras.scalpel" },
+    -- { import = "plugins.extras.scalpel" },
     { import = "plugins.extras.harpoon" },
     { import = "plugins.extras.coding.refactoring" },
     { import = "plugins.extras.coding.codeium" },

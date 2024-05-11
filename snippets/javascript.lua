@@ -185,6 +185,8 @@ while ({}) {{
 )                                                                  --}}}
 cs("cl", { t("console.log("), i(1, ""), t(")") }, { "jcl", "jj" }) -- console.log
 
+cs("constr", {t("const "), i(1, "variable"), t("= require('"), i(2, "moduleName"), t("')")})
+
 -- End Refactoring --
 
 return snippets, autosnippets

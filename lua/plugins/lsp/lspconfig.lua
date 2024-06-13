@@ -188,7 +188,7 @@ return {
       on_attach = on_attach,
     })
 
-    lspconfig["pylsp"].setup({
+    lspconfig["pyright"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -211,7 +211,6 @@ return {
     lspconfig["clangd"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact" },
     })
     -- Turn on lsp status information
     require("fidget").setup()

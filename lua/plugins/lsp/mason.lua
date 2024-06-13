@@ -29,7 +29,7 @@ return {
         "dockerls",
         "yamlls",
         "gopls",
-        "pylsp",
+        "pyright",
         "jsonls",
         "terraformls",
         "tailwindcss",

@@ -16,8 +16,11 @@ M.config = {
     "nightfox",
     "night-owl",
     "dracula",
+    "embark",
+    "witch"
   },
-  colorscheme = "dracula",
+  colorscheme = "nightfox",
+  substitute_colorscheme = "carbonfox",
   transparent_background = true
 }
 

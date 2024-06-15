@@ -3,7 +3,13 @@ require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
 local color_scheme = require("config.defaults").config.colorscheme
-vim.cmd("colorscheme " .. color_scheme)
+local substitute_color_scheme = require("config.defaults").config.substitute_colorscheme
+if substitute_color_scheme then
+  vim.cmd("colorscheme " .. substitute_color_scheme)
+else
+  vim.cmd("colorscheme " .. color_scheme)
+end
+
 if not vim.fn.exists('$TMUX') then
   if vim.fn.has('nvim') == 1 then
     -- For Neovim 0.1.3 and 0.1.4
@@ -15,4 +21,3 @@ if not vim.fn.exists('$TMUX') then
     vim.opt.termguicolors = true
   end
 end
-

@@ -6,43 +6,67 @@ if true then
     config = function()
       require('nightfox').setup({
         options = {
-          -- Compiled file's destination location
           compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-          compile_file_suffix = "_compiled", -- Compiled file suffix
+          compile_file_suffix = "_compiled",
           transparent = require("config.defaults").config.transparent_background,
-          terminal_colors = true,            -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-          dim_inactive = false,              -- Non focused panes set to alternative background
-          styles = {                         -- Style to be applied to different syntax groups
-            comments = "NONE",               -- Value is any valid attr-list value `:help attr-list`
-            functions = "NONE",
-            keywords = "NONE",
+          terminal_colors = true,
+          dim_inactive = true,
+          styles = {
+            comments = "italic",
+            functions = "italic,bold",
+            keywords = "bold",
             numbers = "NONE",
             strings = "NONE",
-            types = "NONE",
-            variables = "NONE",
+            types = "italic,bold",
+            variables = "altfont",
           },
-          inverse = { -- Inverse highlight for different types
-            match_paren = false,
-            visual = false,
-            search = false,
+          inverse = {
+            match_paren = true,
+            visual = true,
+            search = true,
           },
         },
         custom_highlights = function(colors)
-        return {
-            TelescopeSelection = {},
-            TelescopePromptCounter = {},
-            TelescopePromptPrefix = {},
-            TelescopePromptNormal = {},
-            TelescopeResultsNormal = {},
-            TelescopePreviewNormal = {},
-            TelescopePromptBorder = {},
-            TelescopeResultsBorder = {},
-            TelescopePreviewBorder = {},
-            TelescopePromptTitle = {},
-            TelescopeResultsTitle = {},
-            TelescopePreviewTitle = {},
-        }
-        end
+          return {
+            TelescopeSelection = { bg = "NONE", fg = colors.fg_gutter },
+            TelescopePromptCounter = { fg = colors.fg_gutter },
+            TelescopePromptPrefix = { fg = colors.red },
+            TelescopePromptNormal = { bg = "NONE" },
+            TelescopeResultsNormal = { bg = "NONE" },
+            TelescopePreviewNormal = { bg = "NONE" },
+            TelescopePromptBorder = { bg = "NONE", fg = colors.bg_highlight },
+            TelescopeResultsBorder = { bg = "NONE", fg = colors.bg_dark },
+            TelescopePreviewBorder = { bg = "NONE", fg = colors.bg_dark },
+            TelescopePromptTitle = { fg = colors.bg_highlight, bg = colors.red },
+            TelescopeResultsTitle = { fg = colors.bg_dark, bg = "NONE" },
+            TelescopePreviewTitle = { fg = colors.bg_dark, bg = "NONE" }
+          }
+        end,
+        palette = {
+          carbonfox = {}
+        },
+        specs = {
+          all = {
+            inactive = "NONE",
+            syntax = {
+              keyword = "magenta",
+
+              conditional = "magenta.bright",
+              number = "orange.dim",
+            },
+            git = {
+              changed = "#f4a261",
+            },
+          },
+        },
+        groups = {
+          all = {
+            NormalNC   = { fg = "NONE", bg = "inactive" },
+            ["@feild"] = { fg = "palette.yellow" },
+            Whitespace = { link = "Comment" },
+            IncSearch  = { fg = "NONE" },
+          },
+        },
       })
     end
   }

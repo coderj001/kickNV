@@ -49,6 +49,14 @@ return {
         desc = "[S]earch by [G]rep",
       },
       {
+        "<leader>sg",
+        function()
+          require("telescope-live-grep-args.shortcuts").grep_visual_selection({ postfix = false })
+        end,
+        desc = "[S]earch selected by [G]rep ",
+        mode = { "v" },
+      },
+      {
         "<leader>st",
         mode = { "n" },
         function() require("telescope.builtin").tags() end,
@@ -77,14 +85,6 @@ return {
         mode = { "n" },
         function() require("utils.telescope").current_buffer_fuzzy_find() end,
         desc = "[/] Fuzzily search in current buffer",
-      },
-      {
-        "<leader>/",
-        function()
-          require("telescope-live-grep-args.shortcuts").grep_visual_selection({ postfix = false })
-        end,
-        desc = "Grep (root dir)",
-        mode = { "v" },
       },
     },
     config = function()

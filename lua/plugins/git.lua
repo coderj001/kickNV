@@ -1,6 +1,12 @@
 return {
-  {
+    {
     "lewis6991/gitsigns.nvim",
+    event = {
+      "CmdlineEnter",
+      "InsertEnter",
+      "CursorHold",
+      "CursorMoved",
+    },
     keys = {
       {
         "<leader>hs",
@@ -112,14 +118,23 @@ return {
       if (not status) then return end
 
       gitsigns.setup {
-        -- signs = {
-        --   add          = { text = '┃' },
-        --   change       = { text = '┃' },
-        --   delete       = { text = '_' },
-        --   topdelete    = { text = '‾' },
-        --   changedelete = { text = '~' },
-        --   untracked    = { text = '┆' },
-        -- },
+        signs = {
+          add = {
+            text = "▎",
+          },
+          delete = {
+            text = "_",
+          },
+          change = {
+            text = "▎",
+          },
+          changedelete = {
+            text = "▎",
+          },
+          topdelete = {
+            text = '‾',
+          },
+        },
         numhl = false,
         linehl = false,
         watch_gitdir = {

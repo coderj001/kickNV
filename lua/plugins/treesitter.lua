@@ -27,7 +27,12 @@ return {
           'ISwapNodeWith',
         },
         keys = {
-          { "<leader>k", mode = { "n" }, ":ISwap<CR>", desc = "Swap variables" },
+          {
+            "<leader>k",
+            mode = { "n" },
+            ":ISwap<CR>",
+            desc = "Swap variables",
+          },
         },
       },
       {
@@ -35,7 +40,12 @@ return {
         event = "BufWinEnter",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         keys = {
-          { "<leader>j", mode = { "n" }, function() require("treesj").toggle() end, desc = "Toggle Split or Join" },
+          {
+            "<leader>j",
+            mode = { "n" },
+            function() require("treesj").toggle() end,
+            desc = "Toggle Split or Join",
+          },
         },
         config = function()
           require('treesj').setup({

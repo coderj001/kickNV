@@ -16,6 +16,7 @@ return {
 
     local opts = { noremap = true, silent = true }
     local on_attach = function(client, bufnr)
+      require'lsp-file-operations'.default_capabilities()
       opts.buffer = bufnr
       opts.desc = "Show LSP references"
       keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references

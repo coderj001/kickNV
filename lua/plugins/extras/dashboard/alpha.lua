@@ -9,8 +9,8 @@ return {
     dashboard.section.buttons.val     = {
       dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
       dashboard.button("LDR  ?", "  Recently Opened Files", ":Telescope oldfiles<CR>"),
-      dashboard.button("LDR  n", "  File Explorer", ":NvimTreeOpen<CR>"),
-      dashboard.button("LDR sf", "🔍 Search Files", ":Telescope find_files<CR>"),
+      dashboard.button("LDR  n", "  File Explorer", ":NvimTreeOpen<CR>"),
+      dashboard.button("LDR sf", "  Search Files", ":Telescope find_files<CR>"),
       dashboard.button("LDR sg", "  Search Grep", ":Telescope live_grep<CR>"),
       dashboard.button("q", "󰅙  Quit NVIM", ":qa<CR>"),
     }

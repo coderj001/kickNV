@@ -14,8 +14,26 @@ return {
       show_hidden = true,
       natural_order = true,
       is_always_hidden = function(name, _)
-        return  name == ".." or name == ".git" or name == ".DS_Store" or name:match("^%.")
+        return name == ".." or name == ".git" or name == ".DS_Store" or name:match("^%.")
       end
+    },
+    keymaps = {
+      ["<C-c>"] = false,
+      ["q"] = "actions.close",
+      [">"] = "actions.toggle_hidden",
+      ["<C-y>"] = "actions.copy_entry_path",
+      ["gd"] = {
+        desc = "Toggle detail view",
+        callback = function()
+          local oil = require("oil")
+          local config = require("oil.config")
+          if #config.columns == 1 then
+            oil.set_columns({ "icon", "permissions", "size", "mtime" })
+          else
+            oil.set_columns({ "icon" })
+          end
+        end,
+      },
     },
     columns = {
       "icon",

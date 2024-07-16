@@ -69,6 +69,18 @@ return {
         desc = "[S]earch [S]ymbols",
       },
       {
+        "<leader>sq",
+        mode = { "n" },
+        function() require("telescope.builtin").quickfix() end,
+        desc = "[S]earch [Q]uickfix",
+      },
+      {
+        "<leader>sr",
+        mode = { "n" },
+        function() require("telescope.builtin").registers() end,
+        desc = "[S]earch [R]egister",
+      },
+      {
         "<leader><Space>",
         mode = { "n" },
         function()

@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-function
 if vim.g.vscode then
   print("VSCode")
   -- VSCode
@@ -34,7 +35,7 @@ if vim.g.vscode then
   vim.cmd("command! -complete=file -nargs=? New call v:lua.split('h', '__vscode_new__')")
   vim.cmd("command! -complete=file -nargs=? Vnew call v:lua.split('v', '__vscode_new__')")
   vim.cmd(
-  "command! -bang Only if <q-bang> == '!' | call v:lua.closeOtherEditors() | else | call VSCodeNotify('workbench.action.joinAllGroups') | endif")
+    "command! -bang Only if <q-bang> == '!' | call v:lua.closeOtherEditors() | else | call VSCodeNotify('workbench.action.joinAllGroups') | endif")
 
   vim.api.nvim_set_keymap('n', '<C-w>s', ':call v:lua.split("h")<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('x', '<C-w>s', ':call v:lua.split("h")<CR>', { noremap = true, silent = true })

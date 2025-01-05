@@ -20,7 +20,7 @@ return {
   },
 
   opts = {
-    model = "phi3:mini",
+    model = "llama3",
     url = "http://127.0.0.1:11434",
     serve = {
       on_start = false,
@@ -33,7 +33,7 @@ return {
       Sample_Prompt = {
         prompt = "This is a sample prompt that receives $input and $sel(ection), among others.",
         input_label = "> ",
-        model = "mistral",
+        model = "mistral-nemo",
         action = "display",
       }
     }

@@ -12,7 +12,7 @@ return {
         cond = vim.fn.executable "make" == 1,
       },
       "nvim-telescope/telescope-live-grep-args.nvim",
-      "nvim-telescope/telescope-symbols.nvim",
+      -- "nvim-telescope/telescope-symbols.nvim",
     },
     keys = {
       {
@@ -22,12 +22,12 @@ return {
         desc =
         "[?] Find recently opened files"
       },
-      {
-        "<leader>sd",
-        mode = { "n" },
-        function() require("telescope.builtin").lsp_document_symbols() end,
-        desc = "[S]earch LSP [D]fination",
-      },
+      -- {
+      --   "<leader>sd",
+      --   mode = { "n" },
+      --   function() require("telescope.builtin").lsp_document_symbols() end,
+      --   desc = "[S]earch LSP [D]fination",
+      -- },
       {
         "<leader>sf",
         mode = { "n" },

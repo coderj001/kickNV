@@ -39,6 +39,7 @@ vim.api.nvim_create_user_command('Nu', function()
   })
 end, {})
 
+keymap({"n", "x", "o"}, "s", "<Plug>(easymotion-overwin-f2)")
 
 vim.api.nvim_set_keymap('n', '<C-j>', '<cmd>lua require("vscode").action("workbench.action.navigateDown")<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('x', '<C-j>', '<cmd>lua require("vscode").action("workbench.action.navigateDown")<CR>', {noremap = true, silent = true})

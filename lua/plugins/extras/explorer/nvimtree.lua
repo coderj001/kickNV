@@ -8,13 +8,4 @@ return {
   config = function()
     require("utils.nvimtree").setup()
   end,
-  dependencies = {
-    {
-      "antosha417/nvim-lsp-file-operations",
-      config = function()
-        require("lsp-file-operations").setup()
-      end
-    },
-    "simonmclean/triptych.nvim"
-  }
 }

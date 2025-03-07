@@ -17,7 +17,7 @@ function M.setup()
         "--glob=!node_modules/",
         "--glob=!.venv/",
       },
-      prompt_prefix = "🔍 ",
+      prompt_prefix = " ",
       selection_caret = " ",
       layout_strategy = "horizontal",
       layout_config = {

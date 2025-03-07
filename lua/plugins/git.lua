@@ -181,8 +181,12 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     keys = {
-      { "<leader>l", mode = { "n" }, "<CMD>Neogit kind=vsplit<CR>", desc = "NeoGit UI" },
-      { "<leader>L", mode = { "n" }, "<CMD>Neogit commit<CR>",      desc = "NeoGit UI Commmit" },
+      {
+        "<leader>l",
+        mode = { "n" },
+        "<CMD>Neogit kind=vsplit<CR>",
+        desc = "NeoGit UI",
+      },
     },
     config = function()
       require('neogit').setup {

@@ -63,7 +63,7 @@ end
 function M.setup()
   require("lualine").setup({
     options = {
-      theme = require("config.defaults").config.colorscheme,
+      theme = require("config.defaults").config.substitute_colorscheme,
       section_separators = "",
       component_separators = "",
     },

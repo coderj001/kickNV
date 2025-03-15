@@ -218,4 +218,7 @@ return {
       "JoosepAlviste/nvim-ts-context-commentstring"
     }
   },
+  {
+    "yaocccc/nvim-hlchunk"
+  }
 }

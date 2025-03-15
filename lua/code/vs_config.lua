@@ -60,14 +60,14 @@ local fold = {
    toggle = function()
      vim.fn.VSCodeNotify("editor.toggleFold")
    end,
- 
+
    all = function()
      vim.fn.VSCodeNotify("editor.foldAll")
    end,
    openAll = function()
      vim.fn.VSCodeNotify("editor.unfoldAll")
    end,
- 
+
    close = function()
      vim.fn.VSCodeNotify("editor.fold")
    end,
@@ -77,11 +77,11 @@ local fold = {
    openRecursive = function()
      vim.fn.VSCodeNotify("editor.unfoldRecursively")
    end,
- 
+
    blockComment = function()
      vim.fn.VSCodeNotify("editor.foldAllBlockComments")
    end,
- 
+
    allMarkerRegion = function()
      vim.fn.VSCodeNotify("editor.foldAllMarkerRegions")
    end,
@@ -89,7 +89,7 @@ local fold = {
      vim.fn.VSCodeNotify("editor.unfoldAllMarkerRegions")
    end,
  }
- 
+
 
 
  --folding

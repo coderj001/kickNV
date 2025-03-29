@@ -79,13 +79,74 @@ return {
   {
     'echasnovski/mini.nvim',
     version = false,
+    event = 'VeryLazy',
     config = function()
+      -- Setup mini.pairs (auto brackets)
       require('mini.pairs').setup()
+
+      -- Setup mini.surround (for surrounding text)
       require('mini.surround').setup()
-      require('mini.comment').setup()
+
+      -- Setup mini.ai with enhanced text objects
+      require('mini.ai').setup({
+        n_lines = 500,
+        custom_textobjects = {
+          o = require('mini.ai').gen_spec.treesitter({
+            a = {
+              "@block.outer",
+              "@conditional.outer",
+              "@loop.outer",
+            },
+            i = {
+              "@block.inner",
+              "@conditional.inner",
+              "@loop.inner",
+            },
+          }, {}),
+          f = require('mini.ai').gen_spec.treesitter(
+            {
+              a = "@function.outer",
+              i = "@function.inner",
+            },
+            {}
+          ),
+          c = require('mini.ai').gen_spec.treesitter(
+            {
+              a = "@class.outer",
+              i = "@class.inner",
+            },
+            {}
+          ),
+        },
+      })
+
+      -- Setup mini.indentscope (shows indent scope)
       require('mini.indentscope').setup({
         symbol = '│',
         options = { try_as_border = true },
+      })
+
+      -- Setup mini.clue for keybinding hints
+      require('mini.clue').setup({
+        triggers = {
+          -- Leader triggers
+          { mode = 'n', keys = '<Leader>' },
+          { mode = 'x', keys = '<Leader>' },
+
+          -- Window commands
+          { mode = 'n', keys = '<C-w>' },
+
+          -- Common key triggers
+          { mode = 'n', keys = 'g' },
+          { mode = 'n', keys = 'z' },
+          { mode = 'n', keys = "'" },
+          { mode = 'n', keys = '`' },
+          { mode = 'n', keys = '"' },
+        },
+        window = {
+          delay = 300,
+          config = { border = 'rounded' },
+        },
       })
     end,
   },

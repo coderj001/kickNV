@@ -1,7 +1,5 @@
 return {
-  "jiangmiao/auto-pairs",
-  { "tpope/vim-surround", event = "BufEnter" },
-  { "tpope/vim-repeat",   event = "BufEnter" },
+  { "tpope/vim-repeat", event = "BufEnter" },
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -79,35 +77,17 @@ return {
     lazy = false
   },
   {
-    "echasnovski/mini.bufremove",
-    event = "BufEnter",
-    keys = {
-      {
-        "<leader>bd",
-        function()
-          local bd = require("mini.bufremove").delete
-          if vim.bo.modified then
-            local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
-            if choice == 1 then -- Yes
-              vim.cmd.write()
-              bd(0)
-            elseif choice == 2 then -- No
-              bd(0, true)
-            end
-          else
-            bd(0)
-          end
-        end,
-        desc = "Delete Buffer",
-      },
-      {
-        "<leader>bD",
-        function()
-          require("mini.bufremove").delete(0, true)
-        end,
-        desc = "Delete Buffer (Force)",
-      },
-    },
+    'echasnovski/mini.nvim',
+    version = false,
+    config = function()
+      require('mini.pairs').setup()
+      require('mini.surround').setup()
+      require('mini.comment').setup()
+      require('mini.indentscope').setup({
+        symbol = '│',
+        options = { try_as_border = true },
+      })
+    end,
   },
   {
     'norcalli/nvim-colorizer.lua',
@@ -132,4 +112,32 @@ return {
     },
     cmd = 'Emmet',
   },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("noice").setup({
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+          bottom_search = true,         -- use a classic bottom cmdline for search
+          command_palette = true,       -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false,       -- add a border to hover docs and signature help
+        },
+      })
+    end
+  }
 }

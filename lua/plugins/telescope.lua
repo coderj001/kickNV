@@ -22,6 +22,11 @@ return {
         desc =
         "[?] Find recently opened files"
       },
+      {
+        "<leader>sn",
+        function() require("utils.telescope").find_neovim_config() end,
+        desc = "[S]earch [N]eovim config"
+      },
       -- {
       --   "<leader>sd",
       --   mode = { "n" },
@@ -38,14 +43,16 @@ return {
         "<leader>sw",
         mode = { "n" },
         function()
-          require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ postfix = false })
+          require("utils.telescope").grep_current_word()
         end,
         desc = "[S]earch current  [W]ord",
       },
       {
         "<leader>sg",
         mode = { "n" },
-        function() require("telescope").extensions.live_grep_args.live_grep_args() end,
+        function()
+          require("telescope").extensions.live_grep_args.live_grep_args()
+        end,
         desc = "[S]earch by [G]rep",
       },
       {
@@ -97,6 +104,11 @@ return {
         mode = { "n" },
         function() require("utils.telescope").current_buffer_fuzzy_find() end,
         desc = "[/] Fuzzily search in current buffer",
+      },
+      {
+        "<leader>so",
+        function() require("utils.telescope").live_grep_open_files() end,
+        desc = "[S]earch in [O]pen files"
       },
     },
     config = function()

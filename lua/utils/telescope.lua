@@ -29,6 +29,9 @@ function M.setup()
         width = 0.87,
         preview_cutoff = 120,
       },
+      results_title = false,
+      prompt_title = false,
+      preview_title = false,
       entry_prefix = "  ",
       initial_mode = "insert",
       path_display = { "truncate" },
@@ -72,9 +75,17 @@ function M.setup()
       },
     },
     pickers = {
+      live_grep = {
+        additional_args = function()
+          return { "--hidden" }
+        end,
+      },
       buffers = {
         prompt_title = '✨ Search Buffers ✨',
         mappings = {
+          i = {
+            ["<c-d>"] = "delete_buffer",
+          },
           n = {
             ['q'] = require('telescope.actions').close,
             ['x'] = require('telescope.actions').delete_buffer,
@@ -128,6 +139,36 @@ function M.treesitter()
       prompt_title = 'Treesitter Symbols'
     }
   }
+end
+
+-- Find files in your config directory
+function M.find_neovim_config()
+  require('telescope.builtin').find_files({
+    prompt_title = "Neovim Config",
+    cwd = vim.fn.stdpath("config"),
+  })
+end
+
+-- Search string under cursor with Telescope
+function M.grep_current_word()
+  local word = vim.fn.expand("<cword>")
+  require('telescope.builtin').grep_string({
+    search = word,
+    prompt_title = "Search for '" .. word .. "'",
+  })
+end
+
+-- Find recent files sorted by frequency and recency
+function M.frecency()
+  require('telescope').extensions.frecency.frecency()
+end
+
+-- Global search with previews
+function M.live_grep_open_files()
+  require('telescope.builtin').live_grep({
+    grep_open_files = true,
+    prompt_title = 'Live Grep in Open Files',
+  })
 end
 
 return M

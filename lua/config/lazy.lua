@@ -34,9 +34,9 @@ require("lazy").setup({
     -- ColorScheme
     { import = "plugins.colorschemes." .. color_scheme },
     -- StatusLine Select One
-    -- { import = "plugins.extras.statusline.lualine" },
+    { import = "plugins.extras.statusline.lualine" },
     -- { import = "plugins.extras.statusline.luafancy" },
-    { import = "plugins.extras.statusline.feline" },
+    -- { import = "plugins.extras.statusline.feline" },
     -- { import = "plugins.extras.statusline.galaxyline" },
     -- Added required configs
     -- { import = "plugins.extras.lsp" },

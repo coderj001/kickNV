@@ -51,6 +51,7 @@ function M.setup()
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
@@ -108,71 +109,107 @@ function M.setup()
     sources = {
       {
         name = 'nvim_lsp',
-        icon = lsp_symbol,
+        priority = 1000,
         group_index = 1,
-        max_item_count = 10,
-        entry_filter = function(entry)
-          return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
-        end
+        max_item_count = 15,
       },
-      { name = 'luasnip',    icon = luasnip_symbol,    group_index = 1, max_item_count = 8 },
-      { name = 'treesitter', icon = treesitter_symbol, group_index = 2, max_item_count = 4, keyword_length = 2 },
-      { name = 'buffer',     icon = buffer_symbol,     group_index = 2, max_item_count = 3 },
-      { name = 'rg',         icon = rg_symbol,         group_index = 2, max_item_count = 3 },
-      { name = 'tags',       icon = tags_symbol,       group_index = 2, max_item_count = 2 },
-      { name = 'path',       icon = path_symbol,       group_index = 2, max_item_count = 2 },
-      { name = 'tmux',       icon = tmux_symbol,       group_index = 2, max_item_count = 3 },
-      { name = 'codeium',    icon = codeium_symbol,    group_index = 1, max_item_count = 3 },
+      {
+        name = 'luasnip',
+        priority = 750,
+        max_item_count = 5,
+      },
+      {
+        name = 'buffer',
+        priority = 500,
+        max_item_count = 5,
+        keyword_length = 3,
+        option = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end
+        },
+      },
+      { name = 'path',       priority = 250 },
+      { name = 'nvim_lua',   priority = 750, ft = 'lua' },
+      { name = 'codeium',    priority = 800, max_item_count = 3 }, -- Keep this high if you like AI suggestions
+      { name = 'treesitter', priority = 600, keyword_length = 2 },
+      { name = 'tmux',       priority = 400, keyword_length = 3 },
+      { name = 'rg',         priority = 300, keyword_length = 3 },
+      { name = 'tags',       priority = 300, keyword_length = 3 },
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
       format = function(entry, vim_item)
         local kind_icons = {
-          Text = "",
-          Method = "m",
-          Function = "",
-          Constructor = "",
-          Field = "",
-          Variable = "",
-          Class = "",
-          Interface = "",
-          Module = "",
-          Property = "",
-          Unit = "",
-          Value = "",
-          Enum = "",
-          Keyword = "",
-          Snippet = "",
-          Color = "",
-          File = "",
-          Reference = "",
-          Folder = "",
-          EnumMember = "",
-          Constant = "",
-          Struct = "",
-          Event = "",
-          Operator = "",
-          TypeParameter = ""
+          Text = "󰉿",
+          Method = "󰆧",
+          Function = "󰊕",
+          Constructor = "",
+          Field = "󰜢",
+          Variable = "󰀫",
+          Class = "󰠱",
+          Interface = "",
+          Module = "",
+          Property = "󰜢",
+          Unit = "󰑭",
+          Value = "󰎠",
+          Enum = "",
+          Keyword = "󰌋",
+          Snippet = "",
+          Color = "󰏘",
+          File = "󰈙",
+          Reference = "󰈇",
+          Folder = "󰉋",
+          EnumMember = "",
+          Constant = "󰏿",
+          Struct = "󰙅",
+          Event = "",
+          Operator = "󰆕",
+          TypeParameter = "",
+          Codeium = "󰚩",
+          Treesitter = "",
         }
-        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-        vim_item.menu = ({
-          nvim_lsp = "[LSP]",
-          luasnip = "[LuaSnip]",
-          treesitter = "[Treesitter]",
-          buffer = "[Buffer]",
-          rg = "[Rg]",
-          tags = "[Tags]",
-          path = "[Path]",
-          tmux = "[Tmux]",
-          codeium = "[CODEIUM]",
-        })[entry.source.name]
+        local source_icons = {
+          nvim_lsp = "󰒍",
+          luasnip = "󰩫",
+          buffer = "󰦪",
+          path = "󰉋",
+          nvim_lua = "",
+          treesitter = "",
+          codeium = "󰚩",
+          tmux = "󰓩",
+          rg = "󰈇",
+          tags = "󰓻",
+        }
+        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or "", vim_item.kind)
+        local source_name = entry.source.name
+        vim_item.menu = string.format(' %s', source_icons[source_name] or source_name)
+
+        if source_name == 'codeium' then
+          vim_item.kind = string.format('%s Codeium', kind_icons.Codeium)
+        end
+
         return vim_item
       end,
     },
     max_limit = 9,
+    completion = {
+      completeopt = "menu,menuone,noinsert",
+      keyword_length = 1,
+      keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+      col_offset = -3,
+      get_trigger_characters = function(trigger_characters)
+        return trigger_characters
+      end,
+    },
     window = {
       completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+      documentation = {
+        border = "rounded",
+        winhighlight = "Normal:CmpDocNormal,FloatBorder:CmpDocBorder,CursorLine:CmpDocSel,Search:None",
+        max_width = 80,
+        max_height = 12,
+      },
       experimental = {
         ghost_text = {
           hl_group = "CmpGhostText",
@@ -240,8 +277,6 @@ function M.setup()
   }
 
   luasnip.config.set_config({
-    region_check_events = "InsertEnter",
-    delete_check_events = "TextChanged,InsertLeave",
     history = true,
     updateevents = "TextChanged,TextChangedI",
     enable_autosnippets = true,
@@ -249,6 +284,11 @@ function M.setup()
       [require("luasnip.util.types").choiceNode] = {
         active = {
           virt_text = { { "●", "GruvboxOrange" } },
+        },
+      },
+      [require("luasnip.util.types").insertNode] = {
+        active = {
+          virt_text = { { "●", "GruvboxBlue" } },
         },
       },
     },
@@ -264,7 +304,7 @@ function M.setup()
   -- Load custom javascript
   require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets/typescript" } }
   -- Load custom snippets
-  require('luasnip.loaders.from_lua').load({ paths = { "./snippets" } })
+  require("luasnip.loaders.from_lua").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets/" })
 end
 
 return M

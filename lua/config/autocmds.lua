@@ -39,3 +39,19 @@ vim.cmd([[command! LuaEditSnipFunc :lua LuaEditSnipFunc()]])
 function LuaEditSnipFunc()
   require('luasnip.loaders.from_lua').edit_snippet_files()
 end
+
+-- Add this to your autocmds file
+local cmp_augroup = vim.api.nvim_create_augroup("custom_cmp", { clear = true })
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = cmp_augroup,
+  callback = function()
+    -- Set better colors for completion
+    vim.api.nvim_set_hl(0, "CmpNormal", { link = "NormalFloat" })
+    vim.api.nvim_set_hl(0, "CmpBorder", { link = "FloatBorder" })
+    vim.api.nvim_set_hl(0, "CmpSel", { link = "PmenuSel" })
+    vim.api.nvim_set_hl(0, "CmpDocNormal", { link = "NormalFloat" })
+    vim.api.nvim_set_hl(0, "CmpDocBorder", { link = "FloatBorder" })
+    vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", italic = true })
+  end,
+})
+vim.cmd("doautocmd ColorScheme")

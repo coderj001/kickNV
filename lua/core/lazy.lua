@@ -26,6 +26,22 @@ end
   if core.plugin_groups.git then
     table.insert(plugin_specs, { import = "plugins.git" })
   end
+
+  -- Mini
+  table.insert(plugin_specs, {
+    "echasnovski/mini.nvim",
+    version = false,
+    event = "VeryLazy",
+    config = function ()
+      if core.plugin_groups.mini.core then
+        require("plugins.mini.pairs").setup()
+        require("plugins.mini.surround").setup()
+        require("plugins.mini.ai").setup()
+        require("plugins.mini.indentscope").setup()
+        require("plugins.mini.clue").setup()
+      end
+    end
+    })
   
   require("lazy").setup(plugin_specs, {
     install = { colorscheme = { "nightfox", "tokyonight" } },

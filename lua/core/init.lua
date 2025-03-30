@@ -11,7 +11,11 @@ M.plugin_groups = {
   git = true,            -- Git integrations
   tools = true,          -- Additional tools
   debug = false,         -- Debugging plugins (load on demand)
-  mini = false,          -- mini plugins
+  mini = {
+    core = true,
+    ui = false,
+    files = false,
+  },          
 }
 
 function M.setup()

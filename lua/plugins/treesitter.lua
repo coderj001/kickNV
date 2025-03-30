@@ -13,15 +13,14 @@ return {
     },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
       "JoosepAlviste/nvim-ts-context-commentstring",
       {
         "mizlan/iswap.nvim",
         event = "BufWinEnter",
         cmd = {
-          'ISwap',
           'ISwapWith',
+          'ISwap',
           'ISwapNode',
           'ISwapNodeWith',
         },
@@ -129,11 +128,6 @@ return {
             scope_incremental = '<c-s>',
             node_decremental = '<c-backspace>',
           },
-        },
-        rainbow = {
-          enable = true,
-          extendend_mode = true,
-          max_file_lines = 1000,
         },
         context_commentstring = {
           enable = true,

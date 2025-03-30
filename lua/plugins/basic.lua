@@ -1,11 +1,32 @@
 return {
-  { "tpope/vim-repeat", event = "BufEnter" },
+  { "tpope/vim-surround", event = "BufEnter" },
+  { "tpope/vim-repeat",   event = "BufEnter" },
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()
       require("better_escape").setup {}
     end
+  },
+  {
+    "rcarriga/nvim-notify",
+    priority = 1000,
+    event = {
+      "CursorMoved",
+      "CursorHold",
+      "InsertEnter",
+      "CmdlineEnter",
+    },
+    config = function()
+      local status, notify = pcall(require, "notify")
+      if (not status) then return end
+      notify.setup({
+        background_colour = "#000000",
+        top_down = false,
+      })
+      vim.notify = notify
+    end,
+    lazy = false
   },
   {
     -- Lastplace
@@ -57,26 +78,6 @@ return {
     end
   },
   {
-    "rcarriga/nvim-notify",
-    priority = 1000,
-    event = {
-      "CursorMoved",
-      "CursorHold",
-      "InsertEnter",
-      "CmdlineEnter",
-    },
-    config = function()
-      local status, notify = pcall(require, "notify")
-      if (not status) then return end
-      notify.setup({
-        background_colour = "#000000",
-        top_down = false,
-      })
-      vim.notify = notify
-    end,
-    lazy = false
-  },
-  {
     'norcalli/nvim-colorizer.lua',
     ft = {
       'lua',
@@ -92,19 +93,18 @@ return {
       require('colorizer').setup()
     end,
   },
-  {
-    'mattn/emmet-vim',
-    keys = {
-      { '<leader>y', ':Emmet ', desc = 'Emmet' },
-    },
-    cmd = 'Emmet',
-  },
+  -- {
+  --   'mattn/emmet-vim',
+  --   keys = {
+  --     { '<leader>y', ':Emmet ', desc = 'Emmet' },
+  --   },
+  --   cmd = 'Emmet',
+  -- },
   {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
     config = function()
       require("noice").setup({
@@ -118,11 +118,11 @@ return {
         },
         -- you can enable a preset for easier configuration
         presets = {
-          bottom_search = true,         -- use a classic bottom cmdline for search
-          command_palette = true,       -- position the cmdline and popupmenu together
-          long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = false,       -- add a border to hover docs and signature help
+          bottom_search         = true,  -- use a classic bottom cmdline for search
+          command_palette       = true,  -- position the cmdline and popupmenu together
+          long_message_to_split = true,  -- long messages will be sent to a split
+          inc_rename            = false, -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border        = false, -- add a border to hover docs and signature help
         },
       })
     end

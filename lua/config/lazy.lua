@@ -41,6 +41,7 @@ require("lazy").setup({
     -- Added required configs
     -- { import = "plugins.extras.lsp" },
     -- { import = "plugins.extras.wilder" },
+    { import = "plugins.mini" },
     { import = "plugins.extras.tmux" },
     -- { import = "plugins.extras.scalpel" },
     { import = "plugins.extras.harpoon" },

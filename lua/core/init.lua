@@ -2,7 +2,7 @@ local M = {}
 
 -- Define plugin groups that can be enabled/disabled
 M.plugin_groups = {
-  core = true,           -- Essential plugins that should always be loaded
+  basic = true,           -- Essential plugins that should always be loaded
   ui = true,             -- UI enhancements
   lsp = true,            -- Language servers and diagnostics
   completion = true,     -- Completion plugins
@@ -15,6 +15,7 @@ M.plugin_groups = {
     core = true,
     ui = false,
     files = false,
+    animation = false,
   },          
 }
 

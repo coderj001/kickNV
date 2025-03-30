@@ -27,6 +27,11 @@ end
     table.insert(plugin_specs, { import = "plugins.git" })
   end
 
+  -- Basic
+  if core.plugin_groups.basic then
+    table.insert(plugin_specs, { import = "plugins.basic" })
+  end
+
   -- Mini
   table.insert(plugin_specs, {
     "echasnovski/mini.nvim",
@@ -37,8 +42,10 @@ end
         require("plugins.mini.pairs").setup()
         require("plugins.mini.surround").setup()
         require("plugins.mini.ai").setup()
-        require("plugins.mini.indentscope").setup()
         require("plugins.mini.clue").setup()
+      end
+      if core.plugin_groups.mini.animation then
+        require("plugins.mini.indentscope").setup()
       end
     end
     })

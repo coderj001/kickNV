@@ -47,6 +47,7 @@ require("lazy").setup({
     { import = "plugins.extras.harpoon" },
     { import = "plugins.extras.coding.refactoring" },
     { import = "plugins.extras.coding.codeium" },
+    { import = "plugins.extras.gen.gen" },
   },
   defaults = {
     lazy = false,

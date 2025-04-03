@@ -4,8 +4,8 @@ local M = {}
 M.plugin_groups = {
   basic = true, -- Essential plugins that should always be loaded
   ui = {
-    install = "github",
-    colorscheme = "github_dark",
+    install = "nightfox",
+    colorscheme = "carbonfox",
     fallback_colorscheme = "darkblue",
     transparent_background = true,
   },                 -- UI enhancements
@@ -18,14 +18,18 @@ M.plugin_groups = {
   debug = false,     -- Debugging plugins (load on demand)
   mini = {
     core = true,
-    animation = true,
+    animation = false,
     notify = true,
     pick = true,
     files = true,
     extra = true,
-    ui = false,
+    ui = true,
+    move = true,
   },
   statusline = 'lualine',
+  -- autocomplete
+  cmp = true,
+  blink = false,
 }
 
 function M.setup()

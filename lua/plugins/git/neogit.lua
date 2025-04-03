@@ -15,11 +15,10 @@ return {
       enabled = true,
       event = "BufRead",
     },
-    "nvim-telescope/telescope.nvim",
   },
   keys = {
     {
-      "<leader>l",
+      "<leader>m",
       mode = { "n" },
       "<CMD>Neogit kind=vsplit<CR>",
       desc = "NeoGit UI",

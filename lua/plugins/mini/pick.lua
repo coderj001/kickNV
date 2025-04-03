@@ -54,11 +54,15 @@ function M.setup()
   -- file picker
   map("n", "<leader>sf", ":Pick files<cr>", { noremap = true, silent = true, desc = "Search files" })
   map("n", "<leader>sg", ":Pick git_files<cr>", { noremap = true, silent = true, desc = "Search git" })
+  map("n", "<leader>se", ":Pick explorer<cr>", { noremap = true, silent = true, desc = "Search in Explorer" })
+  map("n", "<leader>sm", ":Pick hipatterns<cr>", { noremap = true, silent = true, desc = "Search for Markers" })
   map("n", "<leader><leader>", ":Pick buffers<cr>", { noremap = true, silent = true, desc = "Buffers" })
   map("n", "<leader>,", ":Pick resume<cr>", { noremap = true, silent = true, desc = "Resume" })
+  map("n", "<leader>:", ":Pick commands<cr>", { noremap = true, silent = true, desc = "Commands" })
   map("n", "<leader>?", ":Pick oldfiles<cr>", { noremap = true, silent = true, desc = "Oldfiles" })
   map("n", "<leader>g", ":Pick grep<cr>", { noremap = true, silent = true, desc = "Grep" })
   map("n", "<leader>/", ":Pick grep_live<cr>", { noremap = true, silent = true, desc = "Live Grep" })
+  map("n", "<leader>y", ":Pick registers<cr>", { noremap = true, silent = true, desc = "Register" })
 end
 
 return M

@@ -15,10 +15,13 @@ end
 -- General
 -----------------------------------------------------------
 
-opt.mouse       = 'a'                         -- Enable mouse mode
+opt.mouse    = 'a'      -- Enable mouse mode
 -- opt.clipboard   = "unnamedplus"               -- Copy/paste to system clipboard
-opt.swapfile    = false                       -- Don't use swapfile
-opt.completeopt = 'menuone,noinsert,noselect' -- Autocomplete options
+opt.swapfile = false    -- Don't use swapfile
+-- opt.completeopt = 'menuone,noinsert,noselect' -- Autocomplete options
+opt.complete:remove({ 't', 'i' })
+
+
 
 
 

@@ -4,4 +4,5 @@ return {
   { import = "plugins.basic.escape" },
   { import = "plugins.basic.noice" },
   { import = "plugins.basic.quicker" },
+  { import = "plugins.basic.tmux" },
 }

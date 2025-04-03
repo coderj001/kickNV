@@ -42,11 +42,35 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.colorschemes." .. core.plugin_groups.ui.install })
   end
 
+  -- Cmp
+  if core.plugin_groups.cmp then
+    table.insert(plugin_specs, { import = "plugins.cmp" })
+  end
+
+  -- blink
+  if core.plugin_groups.blink then
+    table.insert(plugin_specs, { import = "plugins.blink" })
+  end
+
+  if core.plugin_groups.treesitter then
+    table.insert(plugin_specs, { import = "plugins.treesitter" })
+  end
+
+
+
   -- Mini
   table.insert(plugin_specs, {
     "echasnovski/mini.nvim",
+    name = "mini",
     version = false,
     event = "VeryLazy",
+    init = function()
+      package.preload["nvim-web-devicons"] = function()
+        package.loaded["nvim-web-devicons"] = {}
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    end,
     config = function()
       if core.plugin_groups.mini.core then
         require("plugins.mini.pairs").setup()
@@ -55,14 +79,21 @@ function M.setup()
         require("plugins.mini.bracketed").setup()
         require("plugins.mini.hipatterns").setup()
         require("plugins.mini.comment").setup()
-        require("plugins.mini.icons").setup()
         require("plugins.mini.splitjoin").setup()
         -- require("plugins.mini.surround").setup()
         -- require("plugins.mini.ai").setup()
       end
+      if core.plugin_groups.mini.ui then
+        require("plugins.mini.colors").setup()
+        require("plugins.mini.icons").setup()
+      end
       if core.plugin_groups.mini.animation then
         require("plugins.mini.indentscope").setup()
         require("plugins.mini.animate").setup()
+      end
+      if core.plugin_groups.mini.move then
+        require("plugins.mini.jump").setup()
+        require("plugins.mini.jump2d").setup()
       end
       if core.plugin_groups.mini.pick then
         require("plugins.mini.pick").setup()

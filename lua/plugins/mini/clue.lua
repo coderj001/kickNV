@@ -18,6 +18,8 @@ function M.setup()
       { mode = 'n', keys = "'" },
       { mode = 'n', keys = '`' },
       { mode = 'n', keys = '"' },
+      { mode = 'n', keys = ']' },
+      { mode = 'n', keys = '[' },
     },
     window = {
       delay = 300,

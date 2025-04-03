@@ -40,12 +40,19 @@ end
     config = function ()
       if core.plugin_groups.mini.core then
         require("plugins.mini.pairs").setup()
-        require("plugins.mini.surround").setup()
-        require("plugins.mini.ai").setup()
         require("plugins.mini.clue").setup()
+        require("plugins.mini.move").setup()
+        require("plugins.mini.bracketed").setup()
+        require("plugins.mini.hipatterns").setup()
+        -- require("plugins.mini.surround").setup()
+        -- require("plugins.mini.ai").setup()
       end
       if core.plugin_groups.mini.animation then
         require("plugins.mini.indentscope").setup()
+        require("plugins.mini.animate").setup()
+      end
+      if core.plugin_groups.mini.pick then
+        require("plugins.mini.pick").setup()
       end
     end
     })

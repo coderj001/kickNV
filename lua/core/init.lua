@@ -13,15 +13,16 @@ M.plugin_groups = {
   debug = false,         -- Debugging plugins (load on demand)
   mini = {
     core = true,
+    animation = true,
+    pick = true,
     ui = false,
     files = false,
-    animation = false,
   },          
 }
 
 function M.setup()
   require("core.options")
-  -- require("core.keymaps")
+  require("core.keymaps")
   -- require("core.autocmds")
   
   -- Initialize plugin manager

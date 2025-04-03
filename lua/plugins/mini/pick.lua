@@ -52,11 +52,11 @@ function M.setup()
     },
   })
   -- file picker
-  map("n", "<leader>sf", ":Pick files<cr>", opts)
-  map("n", "<leader><leader>", ":Pick buffers<cr>", opts)
-  map("n", "<leader>,", ":Pick resume<cr>", opts)
-  map("n", "<leader>g", ":Pick grep<cr>", opts)
-  map("n", "<leader>/", ":Pick live_grep<cr>", opts)
+  map("n", "<leader>sf", ":Pick files<cr>", { noremap = true, silent = true, desc = "Search files" })
+  map("n", "<leader><leader>", ":Pick buffers<cr>", { noremap = true, silent = true, desc = "Buffers" })
+  map("n", "<leader>,", ":Pick resume<cr>", { noremap = true, silent = true, desc = "Resume" })
+  map("n", "<leader>g", ":Pick grep<cr>", { noremap = true, silent = true, desc = "Grep" })
+  map("n", "<leader>/", ":Pick grep_live<cr>", { noremap = true, silent = true, desc = "Live Grep" })
 end
 
 return M

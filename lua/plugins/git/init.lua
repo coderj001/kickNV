@@ -1,4 +1,4 @@
 return {
-  {import = "plugins.git.neogit"},
-  {import = "plugins.git.gitsigns"},
+  { import = "plugins.git.neogit" },
+  { import = "plugins.git.gitsigns" },
 }

@@ -25,7 +25,7 @@ map("n", "<C-Left>", "<cmd>vertical resize +2<cr>", { desc = "Increase window wi
 map({ "i", "n" }, "<leader><Enter>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
 -- Save file
-map("n", "<leader>w", "<cmd>w<cr>", opts)
+map("n", "<leader>w", "<cmd>w<cr>", { noremap = true, silent = true, desc = "Save file" })
 
 function load_extra_options()
   local function bind_extra_cmd(options)
@@ -40,4 +40,3 @@ function load_extra_options()
 end
 
 load_extra_options()
-

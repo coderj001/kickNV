@@ -32,6 +32,16 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.basic" })
   end
 
+  -- Statusline
+  if core.plugin_groups.statusline then
+    table.insert(plugin_specs, { import = "plugins.statusline" })
+  end
+
+  -- Colorscheme
+  if core.plugin_groups.ui.colorscheme then
+    table.insert(plugin_specs, { import = "plugins.colorschemes." .. core.plugin_groups.ui.install })
+  end
+
   -- Mini
   table.insert(plugin_specs, {
     "echasnovski/mini.nvim",
@@ -44,6 +54,9 @@ function M.setup()
         require("plugins.mini.move").setup()
         require("plugins.mini.bracketed").setup()
         require("plugins.mini.hipatterns").setup()
+        require("plugins.mini.comment").setup()
+        require("plugins.mini.icons").setup()
+        require("plugins.mini.splitjoin").setup()
         -- require("plugins.mini.surround").setup()
         -- require("plugins.mini.ai").setup()
       end
@@ -59,6 +72,9 @@ function M.setup()
       end
       if core.plugin_groups.mini.files then
         require("plugins.mini.files").setup()
+      end
+      if core.plugin_groups.mini.extra then
+        require("plugins.mini.extra").setup()
       end
     end
   })

@@ -1,5 +1,5 @@
 if true then
-  result {
+  return {
     "oxfist/night-owl.nvim",
     as = "night-owl",
     enabled = true,

@@ -1,12 +1,12 @@
 local M = {}
 
 function M.setup()
-  local config = require("config")
+  local core = require("core")
 
   -- Get colorscheme from config with fallback
-  local colorscheme = config.get("ui.colorscheme", "nightfox")
-  local fallback_colorscheme = config.get("ui.fallback_colorscheme", "habamax")
-  local transparent = config.get("ui.transparent_background", false)
+  local colorscheme = core.plugin_groups.ui.colorscheme
+  local fallback_colorscheme = core.plugin_groups.ui.fallback_colorscheme
+  local transparent = core.plugin_groups.ui.transparent_background
 
   -- Set up highlight groups for transparent background if enabled
   if transparent then
@@ -74,12 +74,6 @@ function M.setup_highlight_overrides()
       end
     end,
   })
-
-  -- Apply user-defined highlight overrides
-  local user_highlights = require("config").get("ui.highlights", {})
-  for group, opts in pairs(user_highlights) do
-    vim.api.nvim_set_hl(0, group, opts)
-  end
 end
 
 return M

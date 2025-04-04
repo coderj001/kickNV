@@ -56,6 +56,10 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.treesitter" })
   end
 
+  if core.plugin_groups.nvimtree then
+    table.insert(plugin_specs, { import = "plugins.nvimtree" })
+  end
+
 
 
   -- Mini
@@ -72,6 +76,7 @@ function M.setup()
       end
     end,
     config = function()
+      -- mini: core
       if core.plugin_groups.mini.core then
         require("plugins.mini.pairs").setup()
         require("plugins.mini.clue").setup()
@@ -80,29 +85,37 @@ function M.setup()
         require("plugins.mini.hipatterns").setup()
         require("plugins.mini.comment").setup()
         require("plugins.mini.splitjoin").setup()
-        -- require("plugins.mini.surround").setup()
-        -- require("plugins.mini.ai").setup()
       end
+      -- mini: ui
       if core.plugin_groups.mini.ui then
-        require("plugins.mini.colors").setup()
+        -- require("plugins.mini.colors").setup()
         require("plugins.mini.icons").setup()
       end
+      -- mini: animate
       if core.plugin_groups.mini.animation then
         require("plugins.mini.indentscope").setup()
         require("plugins.mini.animate").setup()
       end
+      -- mini: move
       if core.plugin_groups.mini.move then
         require("plugins.mini.jump").setup()
         require("plugins.mini.jump2d").setup()
       end
+      -- mini: pick
       if core.plugin_groups.mini.pick then
         require("plugins.mini.pick").setup()
       end
+      -- mini: notify
       if core.plugin_groups.mini.notify then
         require("plugins.mini.notify").setup()
       end
+      -- mini: files
       if core.plugin_groups.mini.files then
         require("plugins.mini.files").setup()
+      end
+      if core.plugin_groups.mini.ai_move then
+        require("plugins.mini.surround").setup()
+        require("plugins.mini.ai").setup()
       end
       if core.plugin_groups.mini.extra then
         require("plugins.mini.extra").setup()

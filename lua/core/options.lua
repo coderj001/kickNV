@@ -15,9 +15,9 @@ end
 -- General
 -----------------------------------------------------------
 
-opt.mouse    = 'a'      -- Enable mouse mode
+opt.mouse    = 'a'   -- Enable mouse mode
 -- opt.clipboard   = "unnamedplus"               -- Copy/paste to system clipboard
-opt.swapfile = false    -- Don't use swapfile
+opt.swapfile = false -- Don't use swapfile
 -- opt.completeopt = 'menuone,noinsert,noselect' -- Autocomplete options
 opt.complete:remove({ 't', 'i' })
 
@@ -89,11 +89,11 @@ opt.wrap           = true                -- Disable line wrap
 -----------------------------------------------------------
 -- Memory, CPU
 -----------------------------------------------------------
-opt.hidden         = true -- Enable background buffers
-opt.history        = 100  -- Remember N lines in history
-opt.lazyredraw     = true -- Faster scrolling
-opt.synmaxcol      = 240  -- Max column for syntax highlight
-opt.updatetime     = 250  -- ms to wait for trigger an event
+opt.hidden         = true  -- Enable background buffers
+opt.history        = 100   -- Remember N lines in history
+opt.lazyredraw     = false -- Faster scrolling
+opt.synmaxcol      = 240   -- Max column for syntax highlight
+opt.updatetime     = 250   -- ms to wait for trigger an event
 
 -- Disable nvim intro
 opt.shortmess:append "sI"

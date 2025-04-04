@@ -5,4 +5,7 @@ return {
   { import = "plugins.basic.noice" },
   { import = "plugins.basic.quicker" },
   { import = "plugins.basic.tmux" },
+  { import = "plugins.basic.repeat" },
+  { import = "plugins.basic.surround" },
+  { import = "plugins.basic.gx" },
 }

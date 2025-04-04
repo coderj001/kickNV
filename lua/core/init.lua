@@ -4,8 +4,8 @@ local M = {}
 M.plugin_groups = {
   basic = true, -- Essential plugins that should always be loaded
   ui = {
-    install = "nightfox",
-    colorscheme = "carbonfox",
+    install = "catppuccin",
+    colorscheme = "catppuccin-mocha",
     fallback_colorscheme = "darkblue",
     transparent_background = true,
   },                 -- UI enhancements
@@ -25,17 +25,19 @@ M.plugin_groups = {
     extra = true,
     ui = true,
     move = true,
+    ai_move = true,
   },
   statusline = 'lualine',
   -- autocomplete
   cmp = true,
   blink = false,
+  -- Explorer
+  nvimtree = true,
 }
 
 function M.setup()
   require("core.options")
   require("core.keymaps")
-  -- require("core.autocmds")
 
   -- Initialize plugin manager
   require("core.lazy").setup()

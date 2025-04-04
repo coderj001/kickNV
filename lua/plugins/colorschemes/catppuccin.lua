@@ -39,11 +39,11 @@ if true then
             crust = "#151819",
           },
         },
-        transparent_background = require("config.defaults").config.transparent_background,
+        transparent_background = require('core').plugin_groups.ui.transparent_background,
         show_end_of_buffer = false,
         term_colors = true,
         dim_inactive = {
-          enabled = false,
+          enabled = true,
           shade = "light",
           percentage = 0.10,
         },

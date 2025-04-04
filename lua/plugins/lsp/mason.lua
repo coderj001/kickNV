@@ -33,7 +33,7 @@ return {
         "jsonls",
         "terraformls",
         "tailwindcss",
-        "clangd"
+        "clangd",
       },
       automatic_installation = true,
     })

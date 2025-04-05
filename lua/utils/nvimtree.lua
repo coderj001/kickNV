@@ -5,24 +5,17 @@ function M.setup()
   -- Load nvim-tree plugin
   if (not status) then return end
   nvimtree.setup {
-    -- Set options for nvim-tree
-    disable_netrw       = false, -- Disable netrw
-    hijack_netrw        = false, -- Hijack netrw window on startup
-    update_focused_file = {
-      enable     = true,         -- Update the focused file in the tree when you change files
-      update_cwd = true,         -- Update the current working directory of the tree
-    },
-    view                = {
+    view     = {
       cursorline = true,
-      width = 24,     -- Set the width of the tree view
-      side = 'right', -- Put the tree view on the left side of the editor
+      width = 24,
+      side = 'right',
     },
-    actions             = {
+    actions  = {
       open_file = {
         resize_window = true,
       }
     },
-    filters             = {
+    filters  = {
       dotfiles = true,
       exclude = {
         'node_modules',
@@ -31,10 +24,9 @@ function M.setup()
         '.env',
       },
     },
-    renderer            = {
+    renderer = {
       add_trailing   = true,
       group_empty    = true,
-      highlight_git  = true,
       indent_width   = 1,
       indent_markers = {
         enable = true,
@@ -49,7 +41,7 @@ function M.setup()
         },
       },
     },
-    log                 = {
+    log      = {
       enable = true,
       truncate = true,
       types = {
@@ -64,19 +56,6 @@ function M.setup()
       },
     },
   }
-end
-
-function M.my_on_attach(bufnr)
-  local api = require "nvim-tree.api"
-
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
-  api.config.mappings.default_on_attach(bufnr)
-
-  vim.keymap.set('n', '<C-n>', api.tree.change_root_to_parent, opts('Up'))
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 end
 
 return M

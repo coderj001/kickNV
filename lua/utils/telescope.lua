@@ -76,6 +76,7 @@ function M.setup()
     },
     pickers = {
       live_grep = {
+        prompt_title = '✨ Search Regx ✨',
         additional_args = function()
           return { "--hidden" }
         end,
@@ -96,6 +97,7 @@ function M.setup()
             ['<cr>'] = require('telescope.actions').file_edit,
           },
         },
+        theme = "dropdown",
         sort_mru = true,
         preview_title = false,
         initial_mode = "normal"
@@ -103,9 +105,6 @@ function M.setup()
     },
   }
   pcall(telescope.load_extension, 'fzf')
-  -- pcall(telescope.load_extension, 'undo')
-  pcall(telescope.load_extension, 'notify')
-  pcall(telescope.load_extension, 'emoji')
   pcall(telescope.load_extension, 'luasnip')
   pcall(telescope.load_extension, 'harpoon')
 end

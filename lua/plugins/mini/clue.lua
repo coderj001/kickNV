@@ -13,6 +13,11 @@ function M.setup()
       { mode = 'n', keys = '<C-w>' },
 
       -- Common key triggers
+      { mode = 'n', keys = 's' },
+      { mode = 'n', keys = 'd' },
+      { mode = 'n', keys = 'y' },
+      { mode = 'n', keys = 'c' },
+      { mode = 'n', keys = 'v' },
       { mode = 'n', keys = 'g' },
       { mode = 'n', keys = 'z' },
       { mode = 'n', keys = "'" },

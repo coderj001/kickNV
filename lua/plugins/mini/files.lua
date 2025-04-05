@@ -7,11 +7,7 @@ function M.setup()
   mini_files.setup({
     -- Customization options
     options = {
-      -- Whether to use floating window
       use_as_default_explorer = true,
-
-      -- Disable netrw (recommended when using mini.files as default)
-      -- Set to false if you still want to use netrw sometimes
       windows = {
         -- Floating window settings
         preview = true,
@@ -19,7 +15,6 @@ function M.setup()
         width_preview = 40,
       },
 
-      -- Mappings used inside file explorer window
       mappings = {
         close       = 'q',
         go_in       = 'l',

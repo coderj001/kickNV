@@ -60,13 +60,29 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.nvimtree" })
   end
 
+  if core.plugin_groups.telescope then
+    table.insert(plugin_specs, { import = "plugins.telescope" })
+    table.insert(plugin_specs, { import = "plugins.telescope.harpoon" })
+  end
+
+  if core.plugin_groups.flash then
+    table.insert(plugin_specs, { import = "plugins.flash" })
+  end
+
+  if core.plugin_groups.bqf then
+    table.insert(plugin_specs, { import = "plugins.bqf" })
+  end
+
+  if core.plugin_groups.trouble then
+    table.insert(plugin_specs, { import = "plugins.trouble" })
+  end
 
 
   -- Mini
   table.insert(plugin_specs, {
     "echasnovski/mini.nvim",
     name = "mini",
-    version = false,
+    version = "*",
     event = "VeryLazy",
     init = function()
       package.preload["nvim-web-devicons"] = function()
@@ -85,6 +101,7 @@ function M.setup()
         require("plugins.mini.hipatterns").setup()
         require("plugins.mini.comment").setup()
         require("plugins.mini.splitjoin").setup()
+        require("plugins.mini.operators").setup()
       end
       -- mini: ui
       if core.plugin_groups.mini.ui then
@@ -96,10 +113,12 @@ function M.setup()
         require("plugins.mini.indentscope").setup()
         require("plugins.mini.animate").setup()
       end
-      -- mini: move
-      if core.plugin_groups.mini.move then
-        require("plugins.mini.jump").setup()
-        require("plugins.mini.jump2d").setup()
+      if not core.plugin_groups.flash then
+        -- mini: move
+        if core.plugin_groups.mini.move then
+          require("plugins.mini.jump").setup()
+          require("plugins.mini.jump2d").setup()
+        end
       end
       -- mini: pick
       if core.plugin_groups.mini.pick then

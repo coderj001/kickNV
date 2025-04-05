@@ -25,7 +25,6 @@ local function modified_kind(kind)
   return modified_priority[kind] or kind
 end
 
-
 local lsp_symbol = "✳"
 local luasnip_symbol = "⇨"
 local treesitter_symbol = ""

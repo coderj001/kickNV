@@ -20,7 +20,7 @@ M.plugin_groups = {
     core = true,
     animation = false,
     notify = true,
-    pick = true,
+    pick = false,
     files = true,
     extra = true,
     ui = true,
@@ -33,6 +33,10 @@ M.plugin_groups = {
   blink = false,
   -- Explorer
   nvimtree = true,
+  telescope = true,
+  flash = true,
+  bqf = true,
+  trouble = true
 }
 
 function M.setup()

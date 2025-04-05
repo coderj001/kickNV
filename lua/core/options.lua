@@ -85,6 +85,7 @@ opt.undolevels     = 500
 opt.wildmode       = "longest:full,full" -- Command-line completion mode
 opt.winminwidth    = 5                   -- Minimum window width
 opt.wrap           = true                -- Disable line wrap
+opt.mouse          = ""
 
 -----------------------------------------------------------
 -- Memory, CPU

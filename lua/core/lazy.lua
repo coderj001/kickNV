@@ -94,15 +94,15 @@ function M.setup()
     config = function()
       -- mini: core
       if core.plugin_groups.mini.core then
-        require("plugins.mini.pairs").setup()
-        require("plugins.mini.clue").setup()
-        require("plugins.mini.move").setup()
-        require("plugins.mini.bracketed").setup()
-        require("plugins.mini.hipatterns").setup()
-        require("plugins.mini.comment").setup()
-        require("plugins.mini.splitjoin").setup()
-        require("plugins.mini.operators").setup()
         require("plugins.mini.align").setup()
+        require("plugins.mini.bracketed").setup()
+        require("plugins.mini.clue").setup()
+        require("plugins.mini.comment").setup()
+        require("plugins.mini.hipatterns").setup()
+        require("plugins.mini.move").setup()
+        require("plugins.mini.operators").setup()
+        require("plugins.mini.pairs").setup()
+        require("plugins.mini.splitjoin").setup()
       end
       -- mini: ui
       if core.plugin_groups.mini.ui then

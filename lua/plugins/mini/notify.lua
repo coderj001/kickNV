@@ -15,7 +15,7 @@ function M.setup()
     window = {
       history = true,
       max_height_per_notify = 5,
-      max_width_share = 0.382,
+      max_width_share = 0.482,
       winblend = 25,
     },
   })

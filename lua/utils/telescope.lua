@@ -107,6 +107,9 @@ function M.setup()
   pcall(telescope.load_extension, 'fzf')
   pcall(telescope.load_extension, 'luasnip')
   pcall(telescope.load_extension, 'harpoon')
+  if require('core').plugin_groups.noice then
+    pcall(telescope.load_extension, 'harpoon')
+  end
 end
 
 function M.edit_neovim()

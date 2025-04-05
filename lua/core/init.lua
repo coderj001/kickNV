@@ -14,8 +14,6 @@ M.plugin_groups = {
   treesitter = true, -- Treesitter and related plugins
   editor = true,     -- Editor enhancements
   git = true,        -- Git integrations
-  tools = true,      -- Additional tools
-  debug = false,     -- Debugging plugins (load on demand)
   mini = {
     core = true,
     animation = false,
@@ -36,7 +34,8 @@ M.plugin_groups = {
   telescope = true,
   flash = true,
   bqf = true,
-  trouble = true
+  trouble = true,
+  noice = true
 }
 
 function M.setup()

@@ -4,7 +4,7 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local expr_opts = { expr = true, silent = true }
 
-keymap("n", "<leader>aa", ":hide<cr>", opts)
+keymap("n", "<leader>aa", ":hide<cr>", { silent = true, noremap = true, desc = "hide" })
 
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)

@@ -102,6 +102,7 @@ function M.setup()
         require("plugins.mini.comment").setup()
         require("plugins.mini.splitjoin").setup()
         require("plugins.mini.operators").setup()
+        require("plugins.mini.align").setup()
       end
       -- mini: ui
       if core.plugin_groups.mini.ui then
@@ -156,4 +157,5 @@ function M.setup()
   })
 end
 
+-- cde abc
 return M

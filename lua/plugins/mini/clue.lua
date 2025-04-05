@@ -12,7 +12,7 @@ function M.setup()
       -- Window commands
       { mode = 'n', keys = '<C-w>' },
 
-      -- Common key triggers
+      -- Common key trggers
       { mode = 'n', keys = 's' },
       { mode = 'n', keys = 'd' },
       { mode = 'n', keys = 'y' },
@@ -26,7 +26,7 @@ function M.setup()
       { mode = 'n', keys = ']' },
       { mode = 'n', keys = '[' },
     },
-    window = {
+    wndow = {
       delay = 300,
       config = { border = 'rounded' },
     },

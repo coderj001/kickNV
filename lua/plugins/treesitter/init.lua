@@ -4,7 +4,7 @@ return {
     name = "treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter-context",
+      -- "nvim-treesitter/nvim-treesitter-context",
       {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufWinEnter",
@@ -12,6 +12,24 @@ return {
         config = function()
           require("utils.indent_blankline").setup()
         end
+      },
+      {
+        "mizlan/iswap.nvim",
+        event = "BufWinEnter",
+        cmd = {
+          'ISwapWith',
+          'ISwap',
+          'ISwapNode',
+          'ISwapNodeWith',
+        },
+        keys = {
+          {
+            "<leader>k",
+            mode = { "n" },
+            ":ISwap<CR>",
+            desc = "Swap variables",
+          },
+        },
       },
     },
     cmd = {
@@ -94,9 +112,9 @@ return {
             enable = true,
           }
         },
-        context = {
-          enable = true,
-        }
+        -- context = {
+        --   enable = true,
+        -- }
       }
     end,
   },

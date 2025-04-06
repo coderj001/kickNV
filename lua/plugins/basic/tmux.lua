@@ -1,18 +1,30 @@
--- tmux navigation for nvim
-if true then
-  return {
-    "alexghergh/nvim-tmux-navigation",
-    event = "VeryLazy",
+return {
+  {
+    'aserowy/tmux.nvim',
     config = function()
-      require "nvim-tmux-navigation".setup {
-        disable_when_zoomed = true,
-        keybindings = {
-          left = "<C-h>",
-          down = "<C-j>",
-          up = "<C-k>",
-          right = "<C-l>",
+      return require('tmux').setup {
+        resize = {
+          enable_default_keybindings = true,
         },
       }
-    end
-  }
-end
+    end,
+  },
+  {
+    'christoomey/vim-tmux-navigator',
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+      'TmuxNavigatorProcessList',
+    },
+    keys = {
+      { '<c-h>',  '<cmd><C-U>TmuxNavigateLeft<cr>' },
+      { '<c-j>',  '<cmd><C-U>TmuxNavigateDown<cr>' },
+      { '<c-k>',  '<cmd><C-U>TmuxNavigateUp<cr>' },
+      { '<c-l>',  '<cmd><C-U>TmuxNavigateRight<cr>' },
+      { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+    },
+  },
+}

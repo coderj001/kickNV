@@ -2,9 +2,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     name = "treesitter",
+    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      -- "nvim-treesitter/nvim-treesitter-context",
       {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufWinEnter",
@@ -111,10 +111,7 @@ return {
           select = {
             enable = true,
           }
-        },
-        -- context = {
-        --   enable = true,
-        -- }
+        }
       }
     end,
   },

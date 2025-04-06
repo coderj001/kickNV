@@ -3,7 +3,7 @@ if true then
     "nvim-lualine/lualine.nvim",
     name = "lualine",
     event = "UIEnter",
-    dependencies = { "kyazdani42/nvim-web-devicons" },
+    -- dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
       require("utils.lualine").setup()
     end

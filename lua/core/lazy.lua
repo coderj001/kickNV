@@ -134,8 +134,8 @@ function M.setup()
         require("plugins.mini.files").setup()
       end
       if core.plugin_groups.mini.ai_move then
-        require("plugins.mini.surround").setup()
         require("plugins.mini.ai").setup()
+        require("plugins.mini.surround").setup()
       end
       if core.plugin_groups.mini.extra then
         require("plugins.mini.extra").setup()
@@ -144,13 +144,17 @@ function M.setup()
   })
 
   require("lazy").setup(plugin_specs, {
-    install = { colorscheme = { "nightfox", "tokyonight" } },
+    install = { colorscheme = {} },
     checker = { enabled = true, notify = false },
-    change_detection = { notify = false },
+    change_detection = { notify = true },
     performance = {
       rtp = {
         disabled_plugins = {
-          "gzip", "tarPlugin", "tohtml", "tutor", "zipPlugin",
+          "gzip",
+          "tarPlugin",
+          "tohtml",
+          "tutor",
+          "zipPlugin",
         }
       }
     }

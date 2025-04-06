@@ -27,8 +27,8 @@ M.plugin_groups = {
   },
   statusline = 'lualine',
   -- autocomplete
-  cmp = true,
-  blink = false,
+  cmp = false,
+  blink = true,
   -- Explorer
   nvimtree = true,
   telescope = true,

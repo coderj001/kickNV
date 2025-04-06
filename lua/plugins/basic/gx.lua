@@ -1,4 +1,4 @@
-if true then
+if false then
   return {
     "chrishrb/gx.nvim",
     keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
@@ -10,4 +10,6 @@ if true then
     config = true,
     submodules = false,
   }
+else
+  return {}
 end

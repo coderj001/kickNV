@@ -25,6 +25,6 @@ return {
     }
   },
   config = function()
-    require("utils.cmp").setup()
+    require("plugins.cmp").setup()
   end
 }

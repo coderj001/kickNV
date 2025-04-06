@@ -8,7 +8,7 @@ function M.setup()
     lsp_progress = {
       enable = true,
       level = 'INFO',
-      duration_last = 1000,
+      duration_last = 500,
     },
 
     -- Window settings

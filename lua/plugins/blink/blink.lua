@@ -4,6 +4,7 @@ return {
   dependencies = {
     "rafamadriz/friendly-snippets",
     "Kaiser-Yang/blink-cmp-dictionary",
+    "mikavilpas/blink-ripgrep.nvim",
     {
       'L3MON4D3/LuaSnip',
       version = 'v2.*',
@@ -14,18 +15,11 @@ return {
           return
         end
         vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]])
-
-        -- Extra snippets
-        -- Load snippets
         require("luasnip.loaders.from_vscode").lazy_load()
         require("luasnip.loaders.from_snipmate").lazy_load()
-
-        -- Load custom javascript
         require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets/typescript" } }
-        -- Load custom snippets
         require("luasnip.loaders.from_lua").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets/" })
       end
-
     },
   },
   event = { "LspAttach" },
@@ -33,9 +27,7 @@ return {
   version = "1.*",
   opts = function(_, opts)
     opts.enabled = function()
-      -- Get the current buffer's filetype
       local filetype = vim.bo[0].filetype
-      -- Disable for Telescope buffers
       if filetype == "TelescopePrompt" or filetype == "minifiles" or filetype == "snacks_picker_input" then
         return false
       end
@@ -43,14 +35,21 @@ return {
     end
 
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-      default = { "lsp", "path", "snippets", "buffer", "dictionary" },
+      default = {
+        "lsp",
+        "path",
+        "snippets",
+        "buffer",
+        "ripgrep",
+        "dictionary"
+      },
       providers = {
         lsp = {
           name = "lsp",
           enabled = true,
           module = "blink.cmp.sources.lsp",
-          min_keyword_length = 2,
-          score_offset = 90, -- the higher the number, the higher the priority
+          min_keyword_length = 1,
+          score_offset = 90, -- NOTE: the higher the number, the higher the priority
         },
         path = {
           name = "Path",
@@ -72,7 +71,7 @@ return {
           max_items = 5,
           module = "blink.cmp.sources.snippets",
           min_keyword_length = 2,
-          score_offset = 85,
+          score_offset = 88,
         },
         buffer = {
           name = "Buffer",
@@ -80,7 +79,7 @@ return {
           max_items = 3,
           module = "blink.cmp.sources.buffer",
           min_keyword_length = 2,
-          score_offset = 15,
+          score_offset = 45,
         },
         dictionary = {
           module = "blink-cmp-dictionary",
@@ -89,15 +88,65 @@ return {
           enabled = true,
           max_items = 8,
           min_keyword_length = 3,
-        }
+        },
+        ripgrep = {
+          module = "blink-ripgrep",
+          name = "Ripgrep",
+          score_offset = 20,
+          opts = {
+            prefix_min_len = 3,
+            context_size = 5,
+            max_filesize = "1M",
+            project_root_marker = { ".git", "package.json", ".root" },
+            project_root_fallback = true,
+            search_casing = "--ignore-case",
+            fallback_to_regex_highlighting = true,
+            ignore_paths = {},
+            additional_paths = {},
+            toggles = {
+              on_off = nil,
+            },
+            future_features = {
+              backend = {
+                use = "ripgrep",
+              },
+            },
+          },
+          transform_items = function(_, items)
+            for _, item in ipairs(items) do
+              item.labelDetails = {
+                description = "(rg)",
+              }
+            end
+            return items
+          end,
+        },
       }
     })
     opts.snippets = {
       preset = "luasnip",
     }
+    opts.cmdline = {
+      enabled = true,
+    }
     opts.completion = {
+      keyword = {
+        range = 'prefix',
+      },
+      trigger = {
+        show_on_keyword = true,
+        prefetch_on_insert = true,
+        show_in_snippet = true,
+        show_on_trigger_character = true,
+        show_on_blocked_trigger_characters = { '.', ' ', '\n', '\t' },
+        show_on_x_blocked_trigger_characters = { "'", '"', '(' },
+        show_on_insert_on_trigger_character = true,
+      },
       menu = {
         border = "single",
+        draw = {
+          treesitter = { 'lsp' }
+        }
       },
       documentation = {
         auto_show = true,
@@ -118,6 +167,12 @@ return {
       ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-l>"] = { "accept" },
       ["<C-d>"] = { "hide", "fallback" },
+      ["<C-g>"] = {
+        function()
+          -- invoke manually, requires blink >v0.8.0
+          require("blink-cmp").show({ providers = { "ripgrep" } })
+        end,
+      },
     }
     return opts
   end,

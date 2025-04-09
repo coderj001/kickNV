@@ -5,6 +5,8 @@ local opts = { noremap = true, silent = true }
 local expr_opts = { expr = true, silent = true }
 
 keymap("n", "<leader>aa", ":hide<cr>", { silent = true, noremap = true, desc = "hide" })
+keymap("n", "q", "<CMD>cclose<CR>", { noremap = true, silent = true, desc = "quit quickfix" })
+
 
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)

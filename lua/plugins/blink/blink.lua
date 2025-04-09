@@ -19,6 +19,7 @@ return {
         require("luasnip.loaders.from_snipmate").lazy_load()
         require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets/typescript" } }
         require("luasnip.loaders.from_lua").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets/" })
+        require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets/scissors/" })
       end
     },
   },
@@ -71,7 +72,7 @@ return {
           max_items = 5,
           module = "blink.cmp.sources.snippets",
           min_keyword_length = 2,
-          score_offset = 88,
+          score_offset = 95,
         },
         buffer = {
           name = "Buffer",
@@ -92,7 +93,7 @@ return {
         ripgrep = {
           module = "blink-ripgrep",
           name = "Ripgrep",
-          score_offset = 20,
+          score_offset = 40,
           opts = {
             prefix_min_len = 3,
             context_size = 5,

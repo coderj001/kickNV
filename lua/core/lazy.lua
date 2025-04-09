@@ -50,6 +50,7 @@ function M.setup()
   -- blink
   if core.plugin_groups.blink then
     table.insert(plugin_specs, { import = "plugins.blink" })
+    table.insert(plugin_specs, { import = "plugins.scissors" })
   end
 
   if core.plugin_groups.treesitter then

@@ -11,14 +11,16 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   opt.shortmess:append({ C = true })
 end
 
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
 -----------------------------------------------------------
 -- General
 -----------------------------------------------------------
 
-opt.mouse       = 'a'                         -- Enable mouse mode
+opt.mouse        = ''                          -- Enable mouse mode
 -- opt.clipboard   = "unnamedplus"               -- Copy/paste to system clipboard
-opt.swapfile    = false                       -- Don't use swapfile
-opt.completeopt = 'menuone,noinsert,noselect' -- Autocomplete options
+opt.swapfile     = false                       -- Don't use swapfile
+opt.completeopt  = 'menuone,noinsert,noselect' -- Autocomplete options
 opt.complete:remove({ 't', 'i' })
 
 

@@ -24,7 +24,7 @@ return {
       hijack_unnamed_buffer_when_opening = true,
       auto_reload_on_write = true,
       diagnostics = {
-        enable = false,
+        enable = true,
       },
       hijack_directories = {
         enable = true,
@@ -49,7 +49,7 @@ return {
       renderer = {
         full_name = false,
         indent_markers = {
-          enable = false,
+          enable = true,
         },
         root_folder_label = ':t',
       },

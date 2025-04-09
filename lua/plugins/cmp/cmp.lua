@@ -1,7 +1,6 @@
--- Auto Completion: Cmp
-
 return {
   "hrsh7th/nvim-cmp",
+  name = "cmp",
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
@@ -26,6 +25,6 @@ return {
     }
   },
   config = function()
-    require("utils.cmp").setup()
+    require("plugins.cmp").setup()
   end
 }

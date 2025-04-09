@@ -2,7 +2,7 @@ local M = {}
 
 local function getLsps()
   local lspNames = "["
-  for _, client in pairs(vim.lsp.get_active_clients()) do
+  for _, client in pairs(vim.lsp.get_clients()) do
     lspNames = lspNames .. client.name .. ", "
   end
 
@@ -63,7 +63,7 @@ end
 function M.setup()
   require("lualine").setup({
     options = {
-      theme = require("config.defaults").config.substitute_colorscheme,
+      theme = require("core").plugin_groups.ui.colorscheme,
       section_separators = "",
       component_separators = "",
     },

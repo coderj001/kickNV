@@ -1,8 +1,9 @@
+---@diagnostic disable: different-requires
 return {
   {
     "nvim-telescope/telescope.nvim",
     event = { "VimEnter" },
-    cmd = { "Telescope" },
+    cmd = "Telescope",
     version = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -12,9 +13,15 @@ return {
         cond = vim.fn.executable "make" == 1,
       },
       "nvim-telescope/telescope-live-grep-args.nvim",
-      -- "nvim-telescope/telescope-symbols.nvim",
     },
     keys = {
+      {
+        "<leader>.",
+        mode = { "n" },
+        function() require("telescope.builtin").resume() end,
+        desc =
+        "[.] Resume"
+      },
       {
         "<leader>?",
         mode = { "n" },
@@ -25,19 +32,13 @@ return {
       {
         "<leader>sn",
         function() require("utils.telescope").find_neovim_config() end,
-        desc = "[S]earch [N]eovim config"
+        desc = "[s]earch [n]eovim config"
       },
-      -- {
-      --   "<leader>sd",
-      --   mode = { "n" },
-      --   function() require("telescope.builtin").lsp_document_symbols() end,
-      --   desc = "[S]earch LSP [D]fination",
-      -- },
       {
         "<leader>sf",
         mode = { "n" },
         function() require("telescope.builtin").find_files() end,
-        desc = "[S]earch [F]iles",
+        desc = "[s]earch [f]iles",
       },
       {
         "<leader>sw",
@@ -45,47 +46,41 @@ return {
         function()
           require("utils.telescope").grep_current_word()
         end,
-        desc = "[S]earch current  [W]ord",
+        desc = "[s]earch current  [w]ord",
       },
       {
-        "<leader>sg",
+        "<leader>/",
         mode = { "n" },
         function()
           require("telescope").extensions.live_grep_args.live_grep_args()
         end,
-        desc = "[S]earch by [G]rep",
+        desc = "[s]earch by [/]Grep",
       },
       {
         "<leader>sg",
         function()
           require("telescope-live-grep-args.shortcuts").grep_visual_selection({ postfix = false })
         end,
-        desc = "[S]earch selected by [G]rep ",
+        desc = "[s]earch selected by [/]grep ",
         mode = { "v" },
       },
       {
         "<leader>st",
         mode = { "n" },
         function() require("telescope.builtin").tags() end,
-        desc = "[S]earch by [T]ags",
-      },
-      {
-        "<leader>ss",
-        mode = { "n" },
-        function() require("telescope.builtin").symbols() end,
-        desc = "[S]earch [S]ymbols",
+        desc = "[s]earch by [t]ags",
       },
       {
         "<leader>sq",
         mode = { "n" },
         function() require("telescope.builtin").quickfix() end,
-        desc = "[S]earch [Q]uickfix",
+        desc = "[s]earch [q]uickfix",
       },
       {
         "<leader>sr",
         mode = { "n" },
         function() require("telescope.builtin").registers() end,
-        desc = "[S]earch [R]egister",
+        desc = "[s]earch [r]egister",
       },
       {
         "<leader><Space>",
@@ -100,55 +95,33 @@ return {
         desc = "Switch Buffers",
       },
       {
-        "<leader>/",
-        mode = { "n" },
-        function() require("utils.telescope").current_buffer_fuzzy_find() end,
-        desc = "[/] Fuzzily search in current buffer",
+        "<leader>sg",
+        function() require("utils.telescope").live_grep_open_files() end,
+        desc = "[s]earch in [g]open files"
       },
       {
-        "<leader>so",
-        function() require("utils.telescope").live_grep_open_files() end,
-        desc = "[S]earch in [O]pen files"
+        "<leader>sgc",
+        ":Telescope git_commits<cr>",
+        desc = "[s]earch [g]it [c]ommits"
+      },
+      {
+        "<leader>sgb",
+        ":Telescope git_branches<cr>",
+        desc = "[s]earch [g]it [b]ranches"
+      },
+      {
+        "<leader>sgs",
+        ":Telescope git_status<cr>",
+        desc = "[s]earch [g]it [s]atus"
+      },
+      {
+        "<leader>fx",
+        ":Telescope lsp_references<cr>",
+        desc = "[f]ind [X]references"
       },
     },
     config = function()
       require("utils.telescope").setup()
     end
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    keys = {
-      {
-        "s",
-        mode = { "n", "x", "o" },
-        function() require("flash").jump() end,
-        desc = "Flash",
-      },
-      {
-        "S",
-        mode = { "n", "x", "o" },
-        function() require("flash").treesitter() end,
-        desc = "Flash Treesitter",
-      },
-      {
-        "r",
-        mode = "o",
-        function() require("flash").remote() end,
-        desc = "Remote Flash",
-      },
-      {
-        "R",
-        mode = { "o", "x" },
-        function() require("flash").treesitter_search() end,
-        desc = "Treesitter Search",
-      },
-      {
-        "<c-s>",
-        mode = { "c" },
-        function() require("flash").toggle() end,
-        desc = "Toggle Flash Search",
-      },
-    },
-  },
+  }
 }

@@ -8,7 +8,7 @@ if true then
         options = {
           compile_path = vim.fn.stdpath("cache") .. "/nightfox",
           compile_file_suffix = "_compiled",
-          transparent = require("config.defaults").config.transparent_background,
+          transparent = require("core").plugin_groups.ui.transparent_background,
           terminal_colors = true,
           dim_inactive = true,
           styles = {

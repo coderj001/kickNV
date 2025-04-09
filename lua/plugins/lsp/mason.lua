@@ -21,19 +21,19 @@ return {
 
     mason_lspconfig.setup({
       ensure_installed = {
-        "ts_ls",
-        "html",
+        "clangd",
         "cssls",
-        "lua_ls",
         "docker_compose_language_service",
         "dockerls",
-        "yamlls",
         "gopls",
-        "pyright",
+        "html",
         "jsonls",
-        "terraformls",
+        "lua_ls",
+        "pyright",
         "tailwindcss",
-        "clangd",
+        "terraformls",
+        "ts_ls",
+        "yamlls",
       },
       automatic_installation = true,
     })

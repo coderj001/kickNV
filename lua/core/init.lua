@@ -4,8 +4,8 @@ local M = {}
 M.plugin_groups = {
   basic = true, -- Essential plugins that should always be loaded
   ui = {
-    install = "catppuccin",
-    colorscheme = "catppuccin-mocha",
+    install = "cyberdream",
+    colorscheme = "cyberdream",
     fallback_colorscheme = "darkblue",
     transparent_background = true,
   },                 -- UI enhancements
@@ -17,6 +17,7 @@ M.plugin_groups = {
   mini = {
     core = true,
     animation = false,
+    indentscope = true,
     notify = true,
     pick = false,
     files = true,
@@ -29,6 +30,7 @@ M.plugin_groups = {
   -- autocomplete
   cmp = false,
   blink = true,
+  scissors = true,
   -- Explorer
   nvimtree = true,
   telescope = true,

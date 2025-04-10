@@ -27,12 +27,14 @@ end
 
 -- Function to set up transparent background
 function M.setup_transparent_background()
-  local transparent_groups = {
-    "Normal", "NormalNC", "Comment", "Constant", "Special", "Identifier",
-    "Statement", "PreProc", "Type", "Underlined", "Todo", "String", "Function",
-    "Conditional", "Repeat", "Operator", "Structure", "LineNr", "NonText",
-    "SignColumn", "CursorLineNr", "EndOfBuffer", "NormalFloat", "FloatBorder",
-  }
+  -- local transparent_groups = {
+  -- "Normal", "NormalNC", "Comment", "Constant", "Special", "Identifier",
+  -- "Statement", "PreProc", "Type", "Underlined", "Todo", "String", "Function",
+  -- "Conditional", "Repeat", "Operator", "Structure", "LineNr", "NonText",
+  -- "SignColumn", "CursorLineNr", "EndOfBuffer", "NormalFloat", "FloatBorder",
+  -- }
+
+  local transparent_groups = {}
 
   -- Create autocmd to set transparent background after colorscheme changes
   vim.api.nvim_create_autocmd("ColorScheme", {

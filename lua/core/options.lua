@@ -12,6 +12,7 @@ if vim.fn.has("nvim-0.9.0") == 1 then
 end
 
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+opt.fillchars = { horiz = '━', horizup = '┻', horizdown = '┳', vert = '┃', vertleft = '┫', vertright = '┣', verthoriz = '╋', }
 
 -----------------------------------------------------------
 -- General

@@ -7,7 +7,7 @@ if true then
       require("tokyonight").setup({
         style = "night",
         light_style = "day",
-        transparent = require("config.defaults").config.transparent_background,
+        transparent = require("core").plugin_groups.ui.transparent_background,
         terminal_colors = true,
         styles = {
           comments = { italic = true },

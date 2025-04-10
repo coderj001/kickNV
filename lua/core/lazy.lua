@@ -47,9 +47,13 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.cmp" })
   end
 
-  -- blink
+  -- Blink
   if core.plugin_groups.blink then
     table.insert(plugin_specs, { import = "plugins.blink" })
+  end
+
+  -- Sicissors
+  if core.plugin_groups.scissors then
     table.insert(plugin_specs, { import = "plugins.scissors" })
   end
 
@@ -110,9 +114,12 @@ function M.setup()
         -- require("plugins.mini.colors").setup()
         require("plugins.mini.icons").setup()
       end
+      -- mini: indentscope
+      if core.plugin_groups.mini.indentscope then
+        require("plugins.mini.indentscope").setup()
+      end
       -- mini: animate
       if core.plugin_groups.mini.animation then
-        require("plugins.mini.indentscope").setup()
         require("plugins.mini.animate").setup()
       end
       if not core.plugin_groups.flash then

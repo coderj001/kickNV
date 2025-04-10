@@ -5,14 +5,14 @@ return {
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "BufWinEnter",
-        main = "ibl",
-        config = function()
-          require("utils.indent_blankline").setup()
-        end
-      },
+      -- {
+      --   "lukas-reineke/indent-blankline.nvim",
+      --   event = "BufWinEnter",
+      --   main = "ibl",
+      --   config = function()
+      --     require("utils.indent_blankline").setup()
+      --   end
+      -- },
       {
         "mizlan/iswap.nvim",
         event = "BufWinEnter",
@@ -93,7 +93,7 @@ return {
         sync_install = false,
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = false,
+          additional_vim_regex_highlighting = true,
           disable = function(lang, buf)
             local max_filesize = 100 * 1024 -- 100 KB
             ---@diagnostic disable-next-line: undefined-global

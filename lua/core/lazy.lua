@@ -108,6 +108,7 @@ function M.setup()
         require("plugins.mini.operators").setup()
         require("plugins.mini.pairs").setup()
         require("plugins.mini.splitjoin").setup()
+        require("plugins.mini.bufremove").setup()
       end
       -- mini: ui
       if core.plugin_groups.mini.ui then

@@ -1,0 +1,10 @@
+{
+  "ifr": {
+    "prefix": "ifr",
+    "body": [
+      "if err := ${1:function()}; err != nil {",
+      "\t${2:print}",
+      "}"
+    ]
+  }
+}

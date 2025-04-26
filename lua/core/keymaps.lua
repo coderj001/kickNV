@@ -25,7 +25,7 @@ map("n", "<C-Right>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window w
 map("n", "<C-Left>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
 
 -- Clear search with <leader><Enter>
-map({ "i", "n" }, "<leader><Enter>", ":nohlsearch<cr>", { desc = "clear hlsearch" })
+keymap("n", "<leader><CR>", ":nohl<cr>", { silent = true, noremap = true, desc = "Clear highlight" })
 
 -- Save file
 map("n", "<leader>w", "<cmd>w<cr>", { noremap = true, silent = true, desc = "Save file" })

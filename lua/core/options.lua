@@ -34,6 +34,8 @@ opt.undofile       = true -- Save undo history
 opt.ignorecase     = true -- Case insensitive searching UNLESS /C or capital in search
 opt.smartcase      = true -- Decrease update time
 opt.termguicolors  = true -- Set colorscheme
+opt.signcolumn = 'yes'
+
 
 opt.foldexpr       = "nvim_treesitter#foldexpr()"
 opt.foldmethod     = "expr"

@@ -46,7 +46,7 @@ return {
         function()
           require("utils.telescope").grep_current_word()
         end,
-        desc = "[s]earch current  [w]ord",
+        desc = "[s]earch current [w]ord",
       },
       {
         "<leader>/",
@@ -117,7 +117,12 @@ return {
       {
         "<leader>fx",
         ":Telescope lsp_references<cr>",
-        desc = "[f]ind [X]references"
+        desc = "[f]ind [x]references"
+      },
+      {
+        "<leader>fs",
+        ":Telescope lsp_document_symbols<cr>",
+        desc = "[f]ind [s]ymbols"
       },
     },
     config = function()

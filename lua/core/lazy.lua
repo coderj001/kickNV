@@ -82,6 +82,9 @@ function M.setup()
     table.insert(plugin_specs, { import = "plugins.trouble" })
   end
 
+  if core.plugin_groups.cursor then
+    table.insert(plugin_specs, { import = "plugins.cursor" })
+  end
 
   -- Mini
   table.insert(plugin_specs, {

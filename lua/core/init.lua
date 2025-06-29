@@ -4,8 +4,8 @@ local M = {}
 M.plugin_groups = {
   basic = true, -- Essential plugins that should always be loaded
   ui = {
-    install = "cyberdream",
-    colorscheme = "cyberdream",
+    install = "github",
+    colorscheme = "github_dark",
     fallback_colorscheme = "darkblue",
     transparent_background = true,
   },                 -- UI enhancements
@@ -37,7 +37,8 @@ M.plugin_groups = {
   flash = true,
   bqf = true,
   trouble = true,
-  noice = true
+  noice = true,
+  cursor = true,
 }
 
 function M.setup()

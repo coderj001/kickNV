@@ -31,7 +31,7 @@ return {
         "pyright",
         "ts_ls",
         "yamlls",
-        "ruby_lsp",
+        -- "ruby_lsp",
       },
       automatic_installation = true,
     })

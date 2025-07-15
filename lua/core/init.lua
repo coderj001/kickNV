@@ -39,6 +39,7 @@ M.plugin_groups = {
   trouble = true,
   noice = true,
   cursor = true,
+  rest = true
 }
 
 function M.setup()

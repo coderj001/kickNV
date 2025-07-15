@@ -1,1 +1,1 @@
-{"co":{"body":"cout << ${1:\"output\"};","prefix":"co"},"end":{"prefix":"end","body":"cout << endl;"}}
+{"main":{"prefix":"main","body":["int main() {","    ${1:}","}"]},"inc":{"prefix":"inc","body":"#include <${1:iostream}>"},"end":{"body":"cout << endl;","prefix":"end"},"co":{"prefix":"co","body":"cout << ${1:\"output\"};"}}

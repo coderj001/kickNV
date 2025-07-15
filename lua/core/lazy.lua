@@ -85,6 +85,10 @@ function M.setup()
   if core.plugin_groups.cursor then
     table.insert(plugin_specs, { import = "plugins.cursor" })
   end
+  
+  if core.plugin_groups.rest then
+    table.insert(plugin_specs, { import = "plugins.rest" })
+  end
 
   -- Mini
   table.insert(plugin_specs, {

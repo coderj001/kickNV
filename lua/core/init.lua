@@ -4,8 +4,8 @@ local M = {}
 M.plugin_groups = {
   basic = true, -- Essential plugins that should always be loaded
   ui = {
-    install = "github",
-    colorscheme = "github_dark",
+    install = "techbase",
+    colorscheme = "techbase",
     fallback_colorscheme = "darkblue",
     transparent_background = true,
   },                 -- UI enhancements

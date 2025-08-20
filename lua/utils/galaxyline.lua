@@ -1,8 +1,82 @@
--- https://github.com/glepnir/galaxyline.nvim/tree/main/lua
+---@mod galaxyline Galaxy Line configuration
+---@brief [[
+--- Configuration for the galaxyline status line plugin.
+--- Provides a highly customized status line with git integration,
+--- LSP diagnostics, and file information.
+---@brief ]]
 
 local gl = require("galaxyline")
+local diagnostic = require("galaxyline.provider_diagnostic")
 
--- { == Colors ==> ============================================================
+-- { == Helper Functions ==> ================================================== 
+---@section Helper functions and utilities
+--- This section contains utility functions and conditions used throughout the statusline
+--- configuration. These include conditions for checking window width, filetype existence,
+--- and other helper functions.
+
+local conditions = {
+  gl = require("galaxyline.condition"),
+  has_file_type = function()
+    if not vim.bo.filetype or vim.bo.filetype == "" then return false end
+    return true
+  end,
+  ---@param win_width? number
+  break_width = function(win_width)
+    win_width = win_width or 50
+    if vim.fn.winwidth(0) / 2 > win_width then return true end
+    return false
+  end,
+}
+
+-- Format icons for different file formats
+local format_icons = { dos = "", mac = "", unix = "" }
+
+-- Map of special buffer types to their display names
+local BufferTypeMap = {
+  ["alpha"] = "󰍂 Alpha",
+  ["Mundo"] = "Mundo History",
+  ["MundoDiff"] = "Mundo Diff",
+  ["NvimTree"] = " Tree",
+  ["neo-tree"] = " Tree",
+  ["fugitive"] = " Fugitive",
+  ["fugitiveblame"] = " Fugitive Blame",
+  ["help"] = "󰋗 Help",
+  ["minimap"] = "Minimap",
+  ["qf"] = "󰁨 Quick Fix",
+  ["tabman"] = "Tab Manager",
+  ["tagbar"] = "Tagbar",
+  ["FTerm"] = "Terminal",
+  ["neoterm"] = " NeoTerm",
+  ["toggleterm"] = " ToggleTerm",
+  ["git"] = " Git",
+  ["NeogitStatus"] = " Neogit Status",
+  ["NeogitPopup"] = " Neogit Popup",
+  ["NeogitCommitMessage"] = "󰍣 Neogit Commit",
+  ["DiffviewFiles"] = " Diff View",
+  ["dapui_scopes"] = "󱁯 Dap Scope",
+  ["dapui_breakpoints"] = " Dap Breakpoints",
+  ["dapui_stacks"] = " Dap Stacks",
+  ["dapui_watches"] = "󰙔 Dap Watch",
+  ["dap-repl"] = " Dap REPL",
+  ["Outline"] = " SymbolOutline",
+  ["fern"] = " Fern FM",
+  ["filetree"] = " Tree",
+}
+
+-- We run into some issues with tint. Toggling it off/on apparently fixes them
+local function pseudo_toggle_tint()
+  local tint_ok, tint = pcall(require, "tint")
+  if tint_ok then
+    tint.toggle()
+    tint.toggle()
+  end
+end
+
+-- { == Theme Configuration ==> ==============================================
+---@section Theme configuration
+--- This section handles theme-specific color configurations.
+--- It detects the current colorscheme and sets appropriate colors for the statusline.
+--- Currently supports default, tokyonight and catppuccin-mocha themes.
 
 local colors = require("galaxyline.theme").default
 
@@ -41,28 +115,7 @@ if vim.g.colors_name == "catppuccin-mocha" then
 end
 -- <== }
 
--- { == Sections ==> ==========================================================
-
-local diagnostic = require("galaxyline.provider_diagnostic")
-
-local conditions = {
-  gl = require("galaxyline.condition"),
-  has_file_type = function()
-    if not vim.bo.filetype or vim.bo.filetype == "" then return false end
-    return true
-  end,
-  ---@param win_width? number
-  break_width = function(win_width)
-    win_width = win_width or 50
-    if vim.fn.winwidth(0) / 2 > win_width then return true end
-    return false
-  end,
-}
-
-local format_icons = { dos = "", mac = "", unix = "" }
-
--- Seperators
--- pixels { big = {    }, small = {   } }
+-- { == Component Sections ==> =============================================
 
 gl.section.left = {
   -- Mode ----------------------------------------------------------------------
@@ -366,59 +419,6 @@ gl.section.right = {
   },
 }
 
-gl.short_line_list = {
-  "alpha",
-  "LuaTree",
-  "vista",
-  "dbui",
-  "startify",
-  "term",
-  "nerdtree",
-  "fugitive",
-  "fugitiveblame",
-  "plug",
-  "NvimTree",
-  "neo-tree",
-  "DiffviewFiles",
-  "Outline",
-  "neoterm",
-  "fern",
-  "toggleterm",
-  "filetree",
-  "explorer",
-}
-
-local BufferTypeMap = {
-  ["alpha"] = "󰍂 Alpha",
-  ["Mundo"] = "Mundo History",
-  ["MundoDiff"] = "Mundo Diff",
-  ["NvimTree"] = " Tree",
-  ["neo-tree"] = " Tree",
-  ["fugitive"] = " Fugitive",
-  ["fugitiveblame"] = " Fugitive Blame",
-  ["help"] = "󰋗 Help",
-  ["minimap"] = "Minimap",
-  ["qf"] = "󰁨 Quick Fix",
-  ["tabman"] = "Tab Manager",
-  ["tagbar"] = "Tagbar",
-  ["FTerm"] = "Terminal",
-  ["neoterm"] = " NeoTerm",
-  ["toggleterm"] = " ToggleTerm",
-  ["git"] = " Git",
-  ["NeogitStatus"] = " Neogit Status",
-  ["NeogitPopup"] = " Neogit Popup",
-  ["NeogitCommitMessage"] = "󰍣 Neogit Commit",
-  ["DiffviewFiles"] = " Diff View",
-  ["dapui_scopes"] = "󱁯 Dap Scope",
-  ["dapui_breakpoints"] = " Dap Breakpoints",
-  ["dapui_stacks"] = " Dap Stacks",
-  ["dapui_watches"] = "󰙔 Dap Watch",
-  ["dap-repl"] = " Dap REPL",
-  ["Outline"] = " SymbolOutline",
-  ["fern"] = " Fern FM",
-  ["filetree"] = " Tree",
-}
-
 gl.section.short_line_left = {
   {
     ShortLineBlankSpace = {
@@ -461,24 +461,37 @@ gl.section.short_line_left = {
   },
 }
 
--- { == Load Setup ==> ========================================================
+-- { == Setup ==> ========================================================
+---@section Setup and initialization
+--- Initializes the statusline configuration including special buffers list,
+--- autogroup creation, and component initialization.
+
+gl.short_line_list = {
+  "alpha",
+  "LuaTree",
+  "vista",
+  "dbui",
+  "startify",
+  "term",
+  "nerdtree",
+  "fugitive",
+  "fugitiveblame",
+  "plug",
+  "NvimTree",
+  "neo-tree",
+  "DiffviewFiles",
+  "Outline",
+  "neoterm",
+  "fern",
+  "toggleterm",
+  "filetree",
+  "explorer",
+}
 
 gl.galaxyline_augroup()
--- <== }
 
--- { == Events ==> ============================================================
-
--- We run into some issues with tint. Toggling it off/on apparently fixes them, while refreshing does not
-local tint_ok, tint = pcall(require, "tint")
-
-local function pseudo_toggle_tint()
-  if tint_ok then
-    tint.toggle()
-    tint.toggle()
-  end
-end
+-- Initialize components
 pseudo_toggle_tint()
-
 local timer = vim.loop.new_timer()
 
--- <== }
+return gl

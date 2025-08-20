@@ -8,7 +8,7 @@
 local gl = require("galaxyline")
 local diagnostic = require("galaxyline.provider_diagnostic")
 
--- { == Helper Functions ==> ================================================== 
+-- { == Helper Functions ==> ==================================================
 ---@section Helper functions and utilities
 --- This section contains utility functions and conditions used throughout the statusline
 --- configuration. These include conditions for checking window width, filetype existence,
@@ -492,6 +492,5 @@ gl.galaxyline_augroup()
 
 -- Initialize components
 pseudo_toggle_tint()
-local timer = vim.loop.new_timer()
 
 return gl

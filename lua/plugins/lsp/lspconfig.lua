@@ -1,58 +1,90 @@
+---@mod lspconfig LSP Configuration
+---@brief [[
+--- Configures Language Server Protocol (LSP) integration using lsp-zero.
+--- Sets up Mason for LSP server management and configures keymaps.
+---@brief ]]
+
+---@class KeymapOptions
+---@field buffer number Buffer number
+
+---Setup LSP keymaps for the current buffer
+---@param event table Event data containing buffer number
+local function setup_keymaps(event)
+  local opts = { buffer = event.buf }
+  local keymap = {
+    ['K'] = vim.lsp.buf.hover,
+    ['gd'] = vim.lsp.buf.definition,
+    ['gD'] = vim.lsp.buf.declaration,
+    ['<leader>gi'] = vim.lsp.buf.implementation,
+    ['<leader>go'] = vim.lsp.buf.type_definition,
+    ['<leader>gr'] = vim.lsp.buf.references,
+    ['<leader>gg'] = vim.lsp.buf.rename,
+    ['<leader>ca'] = vim.lsp.buf.code_action,
+  }
+
+  for key, func in pairs(keymap) do
+    vim.keymap.set('n', key, func, opts)
+  end
+end
+
+---Get LSP capabilities
+---@return table capabilities LSP capabilities
+local function get_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  
+  if require('core').plugin_groups.blink then
+    capabilities = vim.tbl_deep_extend('force', capabilities,
+      require('blink.cmp').get_lsp_capabilities({
+        textDocument = {
+          foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true
+          }
+        }
+      })
+    )
+  end
+  
+  return capabilities
+end
+
 return {
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
     dependencies = {
-      -- LSP Support
       { 'neovim/nvim-lspconfig' },
       { 'williamboman/mason.nvim' },
       { 'williamboman/mason-lspconfig.nvim' },
     },
     config = function()
       local lsp_zero = require('lsp-zero')
-      if require('core').plugin_groups.blink then
-        local capabilities = require('blink.cmp').get_lsp_capabilities(
-          {
-            textDocument = {
-              foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-              }
-            }
-          }
-        )
-        -- require("lspconfig").lua_ls.setup { capabilities = capabilities }
-        require("lspconfig").lua_ls.setup({
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" }, -- <-- Add this
-              },
+      
+      -- Configure Lua LSP
+      require("lspconfig").lua_ls.setup({
+        capabilities = get_capabilities(),
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" }
+            },
+            workspace = {
+              checkThirdParty = false,
+            },
+            telemetry = {
+              enable = false,
             },
           },
-        })
-      end
-
-      -- lsp_zero.on_attach(function(client, bufnr)
-      --   lsp_zero.default_keymaps({ buffer = bufnr })
-      -- end)
-
-      vim.api.nvim_create_autocmd('LspAttach', {
-        desc = 'LSP actions',
-        callback = function(event)
-          local opts = { buffer = event.buf }
-
-          vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-          vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-          vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-          vim.keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-          vim.keymap.set('n', '<leader>go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-          vim.keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-          vim.keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          -- vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-        end,
+        },
       })
 
+      -- Setup LSP keymaps
+      vim.api.nvim_create_autocmd('LspAttach', {
+        desc = 'LSP actions',
+        callback = setup_keymaps
+      })
+
+      -- Initialize Mason and LSP servers
       require('mason').setup({})
       require('mason-lspconfig').setup({
         handlers = {

@@ -27,9 +27,11 @@ local function filename()
 end
 
 function M.setup()
+  local ok, theme = pcall(require, "lualine.themes." .. require("core.init").plugin_groups.ui.colorscheme)
+
   require("lualine").setup({
     options = {
-      theme = require("config.defaults").config.colorscheme,
+      theme = ok and theme or "auto", -- fallback if theme not found/compatible
       component_separators = { left = "|", right = "|" },
       section_separators = { left = "", right = "" },
       globalstatus = true,

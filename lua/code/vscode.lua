@@ -26,7 +26,6 @@ keymap("n", "<Esc>", "<Esc>:nohl<CR>", opts)
 require "vscode".action("editor.action.formatDocument")
 
 
-
 vim.api.nvim_set_keymap('n', '<C-j>', '<cmd>lua require("vscode").action("workbench.action.navigateDown")<CR>',
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<C-j>', '<cmd>lua require("vscode").action("workbench.action.navigateDown")<CR>',

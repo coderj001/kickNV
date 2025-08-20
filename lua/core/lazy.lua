@@ -2,6 +2,7 @@ local M = {}
 
 function M.setup()
   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
   if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
       "git",
@@ -12,6 +13,7 @@ function M.setup()
       lazypath,
     })
   end
+
   vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
   local core = require("core")

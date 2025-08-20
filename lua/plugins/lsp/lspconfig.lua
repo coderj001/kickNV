@@ -21,7 +21,16 @@ return {
             }
           }
         )
-        require("lspconfig").lua_ls.setup { capabilities = capabilities }
+        -- require("lspconfig").lua_ls.setup { capabilities = capabilities }
+        require("lspconfig").lua_ls.setup({
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" }, -- <-- Add this
+              },
+            },
+          },
+        })
       end
 
       -- lsp_zero.on_attach(function(client, bufnr)

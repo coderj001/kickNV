@@ -1,14 +1,13 @@
 return {
   "williamboman/mason.nvim",
   dependencies = {
-    "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   config = function()
     local mason = require("mason")
-    local mason_lspconfig = require("mason-lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
 
+    -- Enhanced Mason setup
     mason.setup({
       ui = {
         icons = {
@@ -16,24 +15,63 @@ return {
           package_pending = "➜",
           package_uninstalled = "✗",
         },
+        border = "rounded", -- Add rounded borders for better UI
+        width = 0.8,
+        height = 0.9,
       },
+      -- Improve installation performance
+      max_concurrent_installers = 4,
     })
 
-    mason_lspconfig.setup({
+    -- Additional tools (formatters, linters, debuggers)
+    mason_tool_installer.setup({
       ensure_installed = {
-        "clangd",
-        "cssls",
-        "docker_compose_language_service",
-        "dockerls",
-        "html",
-        "jsonls",
-        "lua_ls",
-        "pyright",
-        "ts_ls",
-        "yamlls",
-        -- "ruby_lsp",
+        -- Formatters
+        "prettier",     -- js, ts, html, css, json, yaml
+        "stylua",       -- lua formatter
+        "black",        -- python formatter
+        "isort",        -- python import sorter
+        "clang-format", -- c/cpp formatter
+
+        -- Linters
+        "eslint_d",     -- js/ts linter
+        "pylint",       -- python linter
+        "cpplint",      -- c++ linter
+        "yamllint",     -- yaml linter
+        "jsonlint",     -- json linter
+        "markdownlint", -- markdown linter
+
+        -- Debuggers
+        "debugpy",          -- python debugger
+        "js-debug-adapter", -- js/ts debugger
+
+        -- Additional tools
+        "dockerfile-language-server",
+        "taplo", -- toml language server
       },
-      automatic_installation = true,
+      -- Auto-update tools
+      auto_update = false,
+      -- Run on start to ensure tools are installed
+      run_on_start = true,
+    })
+
+    -- Event handlers for better integration
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MasonToolsStartingInstall",
+      callback = function()
+        vim.schedule(function()
+          print("Mason is installing tools...")
+        end)
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MasonToolsUpdateCompleted",
+      callback = function(e)
+        vim.schedule(function()
+          print(string.format("Mason tools update completed. Updated: %s", table.concat(e.data, ", ")))
+        end)
+      end,
     })
   end,
 }

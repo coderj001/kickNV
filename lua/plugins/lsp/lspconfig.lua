@@ -31,7 +31,7 @@ end
 ---@return table capabilities LSP capabilities
 local function get_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  
+
   if require('core').plugin_groups.blink then
     capabilities = vim.tbl_deep_extend('force', capabilities,
       require('blink.cmp').get_lsp_capabilities({
@@ -44,7 +44,7 @@ local function get_capabilities()
       })
     )
   end
-  
+
   return capabilities
 end
 
@@ -59,38 +59,49 @@ return {
     },
     config = function()
       local lsp_zero = require('lsp-zero')
-      
-      -- Configure Lua LSP
-      require("lspconfig").lua_ls.setup({
-        capabilities = get_capabilities(),
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" }
-            },
-            workspace = {
-              checkThirdParty = false,
-            },
-            telemetry = {
-              enable = false,
-            },
-          },
-        },
-      })
 
       -- Setup LSP keymaps
-      vim.api.nvim_create_autocmd('LspAttach', {
-        desc = 'LSP actions',
-        callback = setup_keymaps
-      })
+      lsp_zero.on_attach(function(client, bufnr)
+        setup_keymaps({ buf = bufnr })
+      end)
 
       -- Initialize Mason and LSP servers
       require('mason').setup({})
       require('mason-lspconfig').setup({
+        ensure_installed = {
+          "clangd",
+          "cssls",
+          "docker_compose_language_service",
+          "dockerls",
+          "html",
+          "jsonls",
+          "lua_ls",
+          "pyright",
+          "ts_ls",
+          "yamlls",
+        },
         handlers = {
           lsp_zero.default_setup,
-        }
+          lua_ls = function()
+            require("lspconfig").lua_ls.setup({
+              capabilities = get_capabilities(),
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = { "vim" },
+                  },
+                  workspace = {
+                    checkThirdParty = false,
+                  },
+                  telemetry = {
+                    enable = false,
+                  },
+                },
+              },
+            })
+          end,
+        },
       })
-    end
-  }
+    end,
+  },
 }

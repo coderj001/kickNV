@@ -1,35 +1,39 @@
-return {
-  "NeogitOrg/neogit",
-  event = {
-    "CmdlineEnter",
-    "InsertEnter",
-    "CursorHold",
-    "CursorMoved",
-    "VimEnter",
-  },
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    {
-      "sindrets/diffview.nvim",
-      lazy = true,
-      enabled = true,
-      event = "BufRead",
+if require('core.init').plugin_groups.neogit then
+  return {
+    'NeogitOrg/neogit',
+    event = {
+      'CmdlineEnter',
+      'InsertEnter',
+      'CursorHold',
+      'CursorMoved',
+      'VimEnter',
     },
-  },
-  keys = {
-    {
-      "<leader>m",
-      mode = { "n" },
-      "<CMD>Neogit kind=vsplit<CR>",
-      desc = "NeoGit UI",
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      {
+        'sindrets/diffview.nvim',
+        lazy = true,
+        enabled = true,
+        event = 'BufRead',
+      },
     },
-  },
-  config = function()
-    require('neogit').setup {
-      integrations = {
-        telescope = true,
-        diffview = true,
+    keys = {
+      {
+        '<leader>m',
+        mode = { 'n' },
+        '<CMD>Neogit kind=vsplit<CR>',
+        desc = 'NeoGit UI',
+      },
+    },
+    config = function()
+      require('neogit').setup {
+        integrations = {
+          telescope = true,
+          diffview = true,
+        },
       }
-    }
-  end
-}
+    end,
+  }
+else
+  return {}
+end

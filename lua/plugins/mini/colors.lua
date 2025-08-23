@@ -2,7 +2,7 @@
 local M = {}
 
 function M.setup()
-  require('mini.colors').setup({})
+  require('mini.colors').setup {}
 end
 
 return M

@@ -2,9 +2,9 @@
 local M = {}
 
 function M.setup()
-  local notify = require('mini.notify')
+  local notify = require 'mini.notify'
 
-  notify.setup({
+  notify.setup {
     lsp_progress = {
       enable = true,
       level = 'INFO',
@@ -18,13 +18,13 @@ function M.setup()
       max_width_share = 0.482,
       winblend = 25,
     },
-  })
+  }
 
-  vim.notify = notify.make_notify({
+  vim.notify = notify.make_notify {
     ERROR = { duration = 5000 },
     WARN = { duration = 4000 },
     INFO = { duration = 3000 },
-  })
+  }
 end
 
 return M

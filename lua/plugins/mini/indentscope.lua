@@ -3,7 +3,7 @@ local M = {}
 
 function M.setup()
   -- Migrated from your existing config
-  require('mini.indentscope').setup({
+  require('mini.indentscope').setup {
     symbol = '│',
     options = { try_as_border = true },
     -- Additional options
@@ -16,7 +16,7 @@ function M.setup()
       -- |MiniIndentscope.gen_animation| for builtin options.
       -- animation = --<function: implements constant 20ms between steps>,
     },
-  })
+  }
 end
 
 return M

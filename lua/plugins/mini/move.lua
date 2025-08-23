@@ -3,7 +3,7 @@ local M = {}
 
 function M.setup()
   -- Set up mini.move to replace your existing move text mappings
-  require('mini.move').setup({
+  require('mini.move').setup {
     -- Module mappings. Use `''` (empty string) to disable one.
     mappings = {
       -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
@@ -24,7 +24,7 @@ function M.setup()
       -- Automatically reindent selection during linewise vertical move
       reindent_linewise = true,
     },
-  })
+  }
 end
 
 return M

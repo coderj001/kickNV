@@ -3,7 +3,7 @@ local M = {}
 
 function M.setup()
   -- Migrated from your existing config
-  require('mini.clue').setup({
+  require('mini.clue').setup {
     triggers = {
       -- Leader triggers
       { mode = 'n', keys = '<Leader>' },
@@ -40,7 +40,7 @@ function M.setup()
       require('mini.clue').gen_clues.windows(),
       require('mini.clue').gen_clues.z(),
     },
-  })
+  }
 end
 
 return M

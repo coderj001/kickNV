@@ -2,9 +2,7 @@
 local M = {}
 
 function M.setup()
-  require('mini.extra').setup({})
+  require('mini.extra').setup {}
 end
 
 return M
-
-

@@ -1,4 +1,4 @@
-local ls = require("luasnip") --{{{
+local ls = require 'luasnip' --{{{
 local s = ls.s
 local i = ls.i
 local t = ls.t
@@ -8,13 +8,13 @@ local c = ls.choice_node
 local f = ls.function_node
 local sn = ls.snippet_node
 
-local fmt = require("luasnip.extras.fmt").fmt
-local rep = require("luasnip.extras").rep
+local fmt = require('luasnip.extras.fmt').fmt
+local rep = require('luasnip.extras').rep
 
 local snippets, autosnippets = {}, {} --}}}
 
-local group = vim.api.nvim_create_augroup("GoLang Snippets", { clear = true })
-local file_pattern = "*.go"
+local group = vim.api.nvim_create_augroup('GoLang Snippets', { clear = true })
+local file_pattern = '*.go'
 
 local function cs(trigger, nodes, opts) --{{{
   local snippet = s(trigger, nodes)
@@ -30,19 +30,19 @@ local function cs(trigger, nodes, opts) --{{{
     end
 
     -- if opts is a string
-    if type(opts) == "string" then
-      if opts == "auto" then
+    if type(opts) == 'string' then
+      if opts == 'auto' then
         target_table = autosnippets
       else
-        table.insert(keymaps, { "i", opts })
+        table.insert(keymaps, { 'i', opts })
       end
     end
 
     -- if opts is a table
-    if opts ~= nil and type(opts) == "table" then
+    if opts ~= nil and type(opts) == 'table' then
       for _, keymap in ipairs(opts) do
-        if type(keymap) == "string" then
-          table.insert(keymaps, { "i", keymap })
+        if type(keymap) == 'string' then
+          table.insert(keymaps, { 'i', keymap })
         else
           table.insert(keymaps, keymap)
         end
@@ -50,9 +50,9 @@ local function cs(trigger, nodes, opts) --{{{
     end
 
     -- set autocmd for each keymap
-    if opts ~= "auto" then
+    if opts ~= 'auto' then
       for _, keymap in ipairs(keymaps) do
-        vim.api.nvim_create_autocmd("BufEnter", {
+        vim.api.nvim_create_autocmd('BufEnter', {
           pattern = pattern,
           group = group,
           callback = function()
@@ -66,37 +66,40 @@ local function cs(trigger, nodes, opts) --{{{
   end
 
   table.insert(target_table, snippet) -- insert snippet into appropriate table
-end                                   --}}}
+end --}}}
 
 cs(
-  "co",
-  fmt([[
+  'co',
+  fmt(
+    [[
     cout << {};
   ]],
     {
-      i(1, "message")
+      i(1, 'message'),
     }
   )
 )
 
 cs(
-  "ce",
-  fmt([[
+  'ce',
+  fmt(
+    [[
     cout << {} << endl;
   ]],
     {
-      i(1, "message")
+      i(1, 'message'),
     }
   )
 )
 
 cs(
-  "inc",
-  fmt([[
+  'inc',
+  fmt(
+    [[
     #include <1>
   ]],
     {
-      i(1, "iostream")
+      i(1, 'iostream'),
     }
   )
 )

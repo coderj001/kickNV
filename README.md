@@ -2,7 +2,7 @@
 
 My lua neovim configuration.
 
-### Keybindings to Remember
+###  Keybindings to Remember
 
 ### Surrounding (e.g., with quotes)
 

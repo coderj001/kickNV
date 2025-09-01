@@ -1,10 +1,10 @@
 if true then
   return {
-    "sontungexpt/witch",
+    'sontungexpt/witch',
     priority = 1000,
     lazy = false,
     config = function(_, opts)
-      require("witch").setup {
+      require('witch').setup {
         require('witch').setup {
           theme = {
             enabled = true,
@@ -35,7 +35,7 @@ if true then
           },
           switcher = true,
           more_themes = {},
-        }
+        },
       }
     end,
   }

@@ -1,4 +1,4 @@
-local ls = require("luasnip") --{{{
+local ls = require 'luasnip' --{{{
 local s = ls.s
 local i = ls.i
 local t = ls.t
@@ -8,13 +8,13 @@ local c = ls.choice_node
 local f = ls.function_node
 local sn = ls.snippet_node
 
-local fmt = require("luasnip.extras.fmt").fmt
-local rep = require("luasnip.extras").rep
+local fmt = require('luasnip.extras.fmt').fmt
+local rep = require('luasnip.extras').rep
 
 local snippets, autosnippets = {}, {} --}}}
 
-local group = vim.api.nvim_create_augroup("Javascript Snippets", { clear = true })
-local file_pattern = "*.js"
+local group = vim.api.nvim_create_augroup('Javascript Snippets', { clear = true })
+local file_pattern = '*.js'
 
 local function cs(trigger, nodes, opts) --{{{
   local snippet = s(trigger, nodes)
@@ -30,19 +30,19 @@ local function cs(trigger, nodes, opts) --{{{
     end
 
     -- if opts is a string
-    if type(opts) == "string" then
-      if opts == "auto" then
+    if type(opts) == 'string' then
+      if opts == 'auto' then
         target_table = autosnippets
       else
-        table.insert(keymaps, { "i", opts })
+        table.insert(keymaps, { 'i', opts })
       end
     end
 
     -- if opts is a table
-    if opts ~= nil and type(opts) == "table" then
+    if opts ~= nil and type(opts) == 'table' then
       for _, keymap in ipairs(opts) do
-        if type(keymap) == "string" then
-          table.insert(keymaps, { "i", keymap })
+        if type(keymap) == 'string' then
+          table.insert(keymaps, { 'i', keymap })
         else
           table.insert(keymaps, keymap)
         end
@@ -50,9 +50,9 @@ local function cs(trigger, nodes, opts) --{{{
     end
 
     -- set autocmd for each keymap
-    if opts ~= "auto" then
+    if opts ~= 'auto' then
       for _, keymap in ipairs(keymaps) do
-        vim.api.nvim_create_autocmd("BufEnter", {
+        vim.api.nvim_create_autocmd('BufEnter', {
           pattern = pattern,
           group = group,
           callback = function()
@@ -66,16 +66,16 @@ local function cs(trigger, nodes, opts) --{{{
   end
 
   table.insert(target_table, snippet) -- insert snippet into appropriate table
-end                                  --}}}
+end --}}}
 
 -- Old Style --
 
 local if_fmt_arg = { --{{{
-  i(1, ""),
-  c(2, { i(1, "LHS"), i(1, "10") }),
-  c(3, { i(1, "==="), i(1, "<"), i(1, ">"), i(1, "<="), i(1, ">="), i(1, "!==") }),
-  i(4, "RHS"),
-  i(5, "//TODO:"),
+  i(1, ''),
+  c(2, { i(1, 'LHS'), i(1, '10') }),
+  c(3, { i(1, '==='), i(1, '<'), i(1, '>'), i(1, '<='), i(1, '>='), i(1, '!==') }),
+  i(4, 'RHS'),
+  i(5, '//TODO:'),
 }
 local if_fmt_1 = fmt(
   [[
@@ -93,12 +93,12 @@ local if_fmt_2 = fmt(
 )
 
 local if_snippet = s(
-  { trig = "IF", regTrig = false, hidden = true },
+  { trig = 'IF', regTrig = false, hidden = true },
   c(1, {
     if_fmt_1,
     if_fmt_2,
   })
-)                         --}}}
+) --}}}
 local function_fmt = fmt( --{{{
   [[
 function {}({}) {{
@@ -106,16 +106,16 @@ function {}({}) {{
 }}
     ]],
   {
-    i(1, "myFunc"),
-    c(2, { i(1, "arg"), i(1, "") }),
-    i(3, "//TODO:"),
+    i(1, 'myFunc'),
+    c(2, { i(1, 'arg'), i(1, '') }),
+    i(3, '//TODO:'),
   }
 )
 
-local function_snippet = s({ trig = "f[un]?", regTrig = true, hidden = true }, function_fmt)
-local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
+local function_snippet = s({ trig = 'f[un]?', regTrig = true, hidden = true }, function_fmt)
+local function_snippet_func = s({ trig = 'func' }, vim.deepcopy(function_fmt)) --}}}
 
-local short_hand_if_fmt = fmt(                                                 --{{{
+local short_hand_if_fmt = fmt( --{{{
   [[
 if ({}) {}
 {}
@@ -128,16 +128,16 @@ if ({}) {}
     d(2, function(_, snip)
       return sn(2, t(snip.captures[2]))
     end),
-    i(3, ""),
+    i(3, ''),
   }
 )
-local short_hand_if_statement = s({ trig = "if[>%s](.+)>>(.+)\\", regTrig = true, hidden = true }, short_hand_if_fmt)
+local short_hand_if_statement = s({ trig = 'if[>%s](.+)>>(.+)\\', regTrig = true, hidden = true }, short_hand_if_fmt)
 
-local short_hand_if_statement_return_shortcut = s({ trig = "(if[>%s].+>>)[r<]", regTrig = true, hidden = true }, {
+local short_hand_if_statement_return_shortcut = s({ trig = '(if[>%s].+>>)[r<]', regTrig = true, hidden = true }, {
   f(function(_, snip)
     return snip.captures[1]
   end),
-  t("return "),
+  t 'return ',
 }) --}}}
 table.insert(autosnippets, if_snippet)
 table.insert(autosnippets, short_hand_if_statement)
@@ -148,7 +148,7 @@ table.insert(snippets, function_snippet_func)
 -- Begin Refactoring --
 
 cs(
-  { trig = "for([%w_]+)", regTrig = true, hidden = true },
+  { trig = 'for([%w_]+)', regTrig = true, hidden = true },
   fmt(
     [[
 for (let {} = 0; {} < {}; {}++) {{
@@ -162,15 +162,15 @@ for (let {} = 0; {} < {}; {}++) {{
         return sn(1, i(1, snip.captures[1]))
       end),
       rep(1),
-      c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+      c(2, { i(1, 'num'), sn(1, { i(1, 'arr'), t '.length' }) }),
       rep(1),
-      i(3, "// TODO:"),
+      i(3, '// TODO:'),
       i(4),
     }
   )
 )
 cs( -- [while] JS While Loop snippet{{{
-  "while",
+  'while',
   fmt(
     [[
 while ({}) {{
@@ -178,14 +178,14 @@ while ({}) {{
 }}
   ]],
     {
-      i(1, ""),
-      i(2, "// TODO:"),
+      i(1, ''),
+      i(2, '// TODO:'),
     }
   )
-)                                                                  --}}}
-cs("cl", { t("console.log("), i(1, ""), t(")") }, { "jcl", "jj" }) -- console.log
+) --}}}
+cs('cl', { t 'console.log(', i(1, ''), t ')' }, { 'jcl', 'jj' }) -- console.log
 
-cs("constr", {t("const "), i(1, "variable"), t("= require('"), i(2, "moduleName"), t("')")})
+cs('constr', { t 'const ', i(1, 'variable'), t "= require('", i(2, 'moduleName'), t "')" })
 
 -- End Refactoring --
 

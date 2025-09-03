@@ -1,14 +1,14 @@
 if true then
   return {
-    "LunarVim/bigfile.nvim",
+    'LunarVim/bigfile.nvim',
     opts = {
       features = {
-        "illuminate",
-        "treesitter",
-        "syntax",
-        "matchparen",
-        "vimopts",
+        'illuminate',
+        'treesitter',
+        'syntax',
+        'matchparen',
+        'vimopts',
       },
-    }
+    },
   }
 end

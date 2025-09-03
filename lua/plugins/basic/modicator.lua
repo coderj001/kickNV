@@ -11,7 +11,7 @@ return {
       defaults = {
         bold = true,
         italic = true,
-      }
-    }
-  }
+      },
+    },
+  },
 }

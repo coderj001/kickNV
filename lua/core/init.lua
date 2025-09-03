@@ -40,6 +40,7 @@ M.plugin_groups = {
   noice = true,
   cursor = true,
   rest = true
+  ai = false,
 }
 
 function M.setup()

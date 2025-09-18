@@ -1,7 +1,7 @@
 return {
   'stevearc/oil.nvim',
   event = 'VimEnter',
-  -- dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   keys = {
     {
       '<leader>e',
@@ -26,6 +26,15 @@ return {
       is_always_hidden = function(name, _)
         return name == '..' or name == '.git' or name == '.DS_Store' or name:match '^%.'
       end,
+    },
+    win_options = {
+      list = true,
+      concealcursor = 'nvic',
+    },
+    lsp_file_methods = {
+      enabled = true,
+      timeout_ms = 1000,
+      autosave_changes = false,
     },
     keymaps = {
       ['<C-c>'] = false,
@@ -52,8 +61,7 @@ return {
       'mtime',
     },
     buf_options = {
-      buflisted = false,
-      bufhidden = 'hide',
+      buflisted = true,
     },
   },
 }

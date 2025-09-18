@@ -92,6 +92,14 @@ function M.setup()
     table.insert(plugin_specs, { import = 'plugins.rest' })
   end
 
+  if core.plugin_groups.ai then
+    table.insert(plugin_specs, { import = 'plugins.ai' })
+  end
+
+  if core.plugin_groups.oil then
+    table.insert(plugin_specs, { import = 'plugins.oil' })
+  end
+
   -- Mini
   table.insert(plugin_specs, {
     'echasnovski/mini.nvim',

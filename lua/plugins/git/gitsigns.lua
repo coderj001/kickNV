@@ -1,32 +1,32 @@
 return {
-  "lewis6991/gitsigns.nvim",
+  'lewis6991/gitsigns.nvim',
   event = {
-    "CmdlineEnter",
-    "InsertEnter",
-    "CursorHold",
-    "CursorMoved",
+    'CmdlineEnter',
+    'InsertEnter',
+    'CursorHold',
+    'CursorMoved',
   },
   keys = {
     {
-      "<leader>hs",
+      '<leader>hs',
       function()
-        require("gitsigns").hunk_stage()
+        require('gitsigns').hunk_stage()
       end,
-      desc = "Git Hunk Stage",
-      mode = { "n" },
+      desc = 'Git Hunk Stage',
+      mode = { 'n' },
     },
     {
-      "<leader>hr",
+      '<leader>hr',
       function()
-        require("gitsigns").hunk_reset()
+        require('gitsigns').hunk_reset()
       end,
-      desc = "Git Hunk Reset",
-      mode = { "n" },
+      desc = 'Git Hunk Reset',
+      mode = { 'n' },
     },
     {
       '<leader>hs',
       function()
-        require("gitsigns").stage_hunk { vim.fn.line("."), vim.fn.line("v") }
+        require('gitsigns').stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
       end,
       desc = 'Stage Hunk (Visual)',
       mode = { 'v' },
@@ -34,7 +34,7 @@ return {
     {
       '<leader>hr',
       function()
-        require("gitsigns").reset_hunk { vim.fn.line("."), vim.fn.line("v") }
+        require('gitsigns').reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
       end,
       desc = 'Reset Hunk (Visual)',
       mode = { 'v' },
@@ -42,7 +42,7 @@ return {
     {
       '<leader>hs',
       function()
-        require("gitsigns").stage_buffer()
+        require('gitsigns').stage_buffer()
       end,
       desc = 'Stage Buffer',
       mode = { 'n' },
@@ -50,7 +50,7 @@ return {
     {
       '<leader>hu',
       function()
-        require("gitsigns").undo_stage_hunk()
+        require('gitsigns').undo_stage_hunk()
       end,
       desc = 'Undo Stage Hunk',
       mode = { 'n' },
@@ -58,7 +58,7 @@ return {
     {
       '<leader>hr',
       function()
-        require("gitsigns").reset_buffer()
+        require('gitsigns').reset_buffer()
       end,
       desc = 'Reset Buffer',
       mode = { 'n' },
@@ -66,7 +66,7 @@ return {
     {
       '<leader>hp',
       function()
-        require("gitsigns").preview_hunk()
+        require('gitsigns').preview_hunk()
       end,
       desc = 'Preview Hunk',
       mode = { 'n' },
@@ -74,7 +74,7 @@ return {
     {
       '<leader>hb',
       function()
-        require("gitsigns").blame_line()
+        require('gitsigns').blame_line()
       end,
       desc = 'Blame Line',
       mode = { 'n' },
@@ -82,7 +82,7 @@ return {
     {
       '<leader>tb',
       function()
-        require("gitsigns").toggle_current_line_blame()
+        require('gitsigns').toggle_current_line_blame()
       end,
       desc = 'Toggle Current Line Blame',
       mode = { 'n' },
@@ -90,7 +90,7 @@ return {
     {
       '<leader>hd',
       function()
-        require("gitsigns").diffthis()
+        require('gitsigns').diffthis()
       end,
       desc = 'Diff This',
       mode = { 'v', 'n' },
@@ -98,7 +98,7 @@ return {
     {
       '<leader>hd',
       function()
-        require("gitsigns").diffthis("~")
+        require('gitsigns').diffthis '~'
       end,
       desc = 'Diff This (Visual)',
       mode = { 'n' },
@@ -106,29 +106,39 @@ return {
     {
       '<leader>td',
       function()
-        require("gitsigns").toggle_deleted()
+        require('gitsigns').toggle_deleted()
       end,
       desc = 'Toggle Deleted',
       mode = { 'n' },
     },
   },
+  dependencies = {
+    {
+      'sindrets/diffview.nvim',
+      lazy = true,
+      enabled = true,
+      event = 'BufRead',
+    },
+  },
   config = function()
     local status, gitsigns = pcall(require, 'gitsigns')
-    if (not status) then return end
+    if not status then
+      return
+    end
 
     gitsigns.setup {
       signs = {
         add = {
-          text = "▎",
+          text = '▎',
         },
         delete = {
-          text = "_",
+          text = '_',
         },
         change = {
-          text = "▎",
+          text = '▎',
         },
         changedelete = {
-          text = "▎",
+          text = '▎',
         },
         topdelete = {
           text = '‾',
@@ -142,21 +152,21 @@ return {
       },
       current_line_blame_opts = {
         virt_text = true,
-        virt_text_pos = "eol",
+        virt_text_pos = 'eol',
         delay = 1000,
-        ignore_whitespace = false
+        ignore_whitespace = false,
       },
       sign_priority = 6,
       update_debounce = 100,
       status_formatter = nil,
       max_file_length = 40000,
       preview_config = {
-        border = "shadow",
-        style = "minimal",
-        relative = "cursor",
+        border = 'shadow',
+        style = 'minimal',
+        relative = 'cursor',
         row = 0,
-        col = 1
-      }
+        col = 1,
+      },
     }
-  end
+  end,
 }

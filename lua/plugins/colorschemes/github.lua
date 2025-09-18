@@ -1,7 +1,7 @@
 if true then
   return {
     "projekt0n/github-nvim-theme",
-    name = 'github-theme',
+    name = 'github',
     priority = 1000,
     config = function()
       require('github-theme').setup({

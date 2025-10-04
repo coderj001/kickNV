@@ -1,23 +1,23 @@
 local M = {}
 
-local function getLsps()
-  local lspNames = "["
+local function get_lsps()
+  local lspNames = '['
   for _, client in pairs(vim.lsp.get_clients()) do
-    lspNames = lspNames .. client.name .. ", "
+    lspNames = lspNames .. client.name .. ', '
   end
 
-  return string.sub(lspNames, 1, string.len(lspNames) - 2) .. "]"
+  return string.sub(lspNames, 1, string.len(lspNames) - 2) .. ']'
 end
 
-local function getTotalLines()
-  return vim.fn.line("$")
+local function get_total_lines()
+  return vim.fn.line '$'
 end
 
 local function search_result()
   if vim.v.hlsearch == 0 then
     return ''
   end
-  local last_search = vim.fn.getreg('/')
+  local last_search = vim.fn.getreg '/'
   if not last_search or last_search == '' then
     return ''
   end
@@ -26,28 +26,28 @@ local function search_result()
 end
 
 local function get_words()
-  if vim.bo.filetype == "md" or vim.bo.filetype == "txt" or vim.bo.filetype == "markdown" then
+  if vim.bo.filetype == 'md' or vim.bo.filetype == 'txt' or vim.bo.filetype == 'markdown' then
     if vim.fn.wordcount().visual_words == 1 then
-      return tostring(vim.fn.wordcount().visual_words) .. " word"
+      return tostring(vim.fn.wordcount().visual_words) .. ' word'
     elseif not (vim.fn.wordcount().visual_words == nil) then
-      return tostring(vim.fn.wordcount().visual_words) .. " words"
+      return tostring(vim.fn.wordcount().visual_words) .. ' words'
     else
-      return tostring(vim.fn.wordcount().words) .. " words"
+      return tostring(vim.fn.wordcount().words) .. ' words'
     end
   else
-    return ""
+    return ''
   end
 end
 
 local function filename()
-  local file = vim.fn.expand("%:p")
+  local file = vim.fn.expand '%:p'
   local homedir = vim.loop.os_homedir()
-  local base_dir = homedir .. "/projects"
+  local base_dir = homedir .. '/projects'
   local _, index = string.find(file, base_dir, 1, true)
   if index then
-    return vim.fn.fnamemodify(file, ":~:.")
+    return vim.fn.fnamemodify(file, ':~:.')
   else
-    return vim.fn.expand("%:t")
+    return vim.fn.expand '%:t'
   end
 end
 
@@ -61,36 +61,36 @@ local function lsp_status()
 end
 
 function M.setup()
-  local ok, theme = pcall(require, "lualine.themes." .. require("core.init").plugin_groups.ui.colorscheme)
-  require("lualine").setup({
+  local ok, theme = pcall(require, 'lualine.themes.' .. require('core.init').plugin_groups.ui.colorscheme)
+  require('lualine').setup {
     options = {
-      theme = ok and theme or "auto", -- fallback if theme not found/compatible
-      section_separators = "",
-      component_separators = "",
+      theme = ok and theme or 'auto', -- fallback if theme not found/compatible
+      section_separators = '',
+      component_separators = '',
     },
     sections = {
       lualine_a = {
         {
-          "mode",
+          'mode',
           color = {
-            gui = "bold",
+            gui = 'bold',
           },
         },
       },
       lualine_b = {
-        "branch",
-        "diff",
+        'branch',
+        'diff',
         lsp_status,
         {
-          "diagnostics",
+          'diagnostics',
           sources = {
-            "nvim_lsp",
+            'nvim_lsp',
           },
         },
       },
       lualine_c = {
         {
-          "filename",
+          'filename',
           file_status = true,
           path = 1,
           formatter = filename,
@@ -103,40 +103,40 @@ function M.setup()
         },
       },
       lualine_x = {
-        getLsps,
-        search_result
+        get_lsps,
+        search_result,
       },
       lualine_y = {
-        "filetype",
-        -- "encoding",
-        -- "fileformat",
+        'filetype',
+        "encoding",
+        "fileformat",
         get_words,
         {
-          require("lazy.status").updates,
-          cond = require("lazy.status").has_updates,
-          color = { fg = "#ff9e64" },
+          require('lazy.status').updates,
+          cond = require('lazy.status').has_updates,
+          color = { fg = '#ff9e64' },
         },
         {
-          "location",
-          color = { fg = "#ff9e64" },
+          'location',
+          color = { fg = '#ff9e64' },
         },
-        getTotalLines
+        get_total_lines,
       },
-      lualine_z = { "progress" },
+      lualine_z = { 'progress' },
     },
     inactive_sections = {
       lualine_c = { '%f %y %m' },
       lualine_x = {},
     },
     extensions = {
-      "fzf",
-      "fugitive",
-      "quickfix",
-      "nvim-tree",
-      "man",
-      "lazy"
+      'fzf',
+      'fugitive',
+      'quickfix',
+      'nvim-tree',
+      'man',
+      'lazy',
     },
-  })
+  }
 end
 
 return M

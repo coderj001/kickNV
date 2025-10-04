@@ -27,7 +27,7 @@ function M.setup()
         },
         height = 0.9,
         width = 0.87,
-        preview_cutoff = 120,
+        preview_cutoff = 100,
       },
       results_title = false,
       prompt_title = false,

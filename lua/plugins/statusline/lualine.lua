@@ -38,7 +38,7 @@ local function buffers_count()
       break
     end
   end
-  return string.format('BUF (%d/%d)', current, total)
+  return string.format('(%d/%d)', current, total)
 end
 
 -- LSPs
@@ -123,14 +123,13 @@ local function setup()
         },
       },
       lualine_x = {
-        { lsp_status },
-        { get_lsps },
         { search_result, color = { fg = colors.RED } },
         { buffers_count, color = { fg = colors.ORANGE, gui = 'bold' } },
       },
       lualine_y = {
         { 'filetype', icon_only = true },
-        { 'location', color = { fg = colors.YELLOW, gui = 'bold' } },
+        -- { 'location', color = { fg = colors.YELLOW, gui = 'bold' } },
+        { get_lsps },
       },
       lualine_z = {
         {

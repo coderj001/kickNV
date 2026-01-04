@@ -1,6 +1,7 @@
-FROM ubuntu:latest AS base
+FROM ubuntu:22.04 AS base
 
-RUN apt-get update && apt-get install -y \
+# Install build dependencies and runtime tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
     autoconf \
     automake \
     build-essential \
@@ -16,22 +17,27 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     npm \
     python3 \
-    python3-pip
-
-# Build neovim (and use it as an example codebase)
-RUN git clone https://github.com/neovim/neovim.git
-
-ARG VERSION=master
-RUN cd neovim && git checkout ${VERSION} && make CMAKE_BUILD_TYPE=RelWithDebInfo install
-
-# To support kickstart.nvim
-RUN apt-get install -y \
+    python3-pip \
     fd-find \
     universal-ctags \
-    ripgrep
+    ripgrep \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN npm i -g neovim
+# Build neovim
+ARG VERSION=master
+RUN git clone --depth 1 --branch ${VERSION} https://github.com/neovim/neovim.git /tmp/neovim && \
+    cd /tmp/neovim && \
+    make CMAKE_BUILD_TYPE=RelWithDebInfo install && \
+    cd / && \
+    rm -rf /tmp/neovim
 
-RUN pip install pynvim
+# Install neovim language server providers
+RUN npm i -g neovim && \
+    pip3 install --no-cache-dir pynvim
 
 WORKDIR /root/.config/nvim
+
+# Add labels for metadata
+LABEL maintainer="Neovim Config"
+LABEL description="Docker image with Neovim and common development tools"
+LABEL version="1.0"

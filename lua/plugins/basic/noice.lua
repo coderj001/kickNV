@@ -8,12 +8,8 @@ if require('core').plugin_groups.noice then
     config = function()
       require('noice').setup {
         lsp = {
-          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-          override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true,
-          },
+          -- Disable treesitter markdown overrides to avoid query errors
+          override = {},
         },
         presets = {
           bottom_search = true, -- use a classic bottom cmdline for search

@@ -2,6 +2,12 @@
 
 My lua neovim configuration.
 
+## Documentation
+
+- **[Architecture](docs/ARCHITECTURE.md)** - Overview of the codebase structure
+- **[Plugin Groups](docs/PLUGIN_GROUPS.md)** - Complete reference of all plugin groups
+- **[Customization Guide](docs/CUSTOMIZATION.md)** - How to customize and extend KickNV
+
 ###  Keybindings to Remember
 
 ### Surrounding (e.g., with quotes)

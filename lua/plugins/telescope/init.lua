@@ -107,11 +107,11 @@ return {
         desc = 'Switch Buffers',
       },
       {
-        '<leader><leader>g',
+        '<leader>//',
         function()
           require('utils.telescope').live_grep_open_files()
         end,
-        desc = '[s]earch in [g]open files',
+        desc = '[s]earch in [o]open files',
       },
       {
         '<leader>sgc',

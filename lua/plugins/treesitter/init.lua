@@ -4,7 +4,37 @@ return {
     name = "treesitter",
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        -- Ensure treesitter loads first - critical dependency
+        after = "nvim-treesitter",
+        -- Load lazily on buffer events to ensure treesitter is ready
+        event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
+        -- Wrap the module require to handle initialization errors
+        init = function()
+          -- Preload the module with error handling
+          package.preload['nvim-treesitter-textobjects'] = function()
+            -- Only load if treesitter is available
+            local treesitter_ok = pcall(require, 'nvim-treesitter')
+            if not treesitter_ok then
+              return nil
+            end
+            -- Load textobjects module
+            local ok, textobjects = pcall(require, 'nvim-treesitter-textobjects')
+            if ok then
+              return textobjects
+            end
+            return nil
+          end
+        end,
+        config = function()
+          -- Initialize textobjects after treesitter is ready
+          local ok, textobjects = pcall(require, 'nvim-treesitter-textobjects')
+          if ok and textobjects and textobjects.init then
+            textobjects.init()
+          end
+        end,
+      },
       -- {
       --   "lukas-reineke/indent-blankline.nvim",
       --   event = "BufWinEnter",
@@ -15,7 +45,9 @@ return {
       -- },
       {
         "mizlan/iswap.nvim",
-        event = "BufWinEnter",
+        -- Ensure treesitter loads first by using 'after' and same events
+        after = "nvim-treesitter",
+        event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
         cmd = {
           'ISwapWith',
           'ISwap',
@@ -41,7 +73,8 @@ return {
     },
     init = function(plugin)
       require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
+      -- Note: query_predicates is loaded automatically when treesitter loads
+      -- No need to require it here as it's not available until plugin is loaded
     end,
     build = ":TSUpdate",
     config = function()

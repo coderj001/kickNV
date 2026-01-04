@@ -30,8 +30,6 @@ vim.keymap.set('n', '<leader><CR>', ':nohlsearch<CR>', {
   desc = 'Clear highlight',
 })
 
--- map('n', '<leader><CR>', '<cmd>nohl<cr>', { silent = true, noremap = true, desc = 'Clear highlight' })
-
 -- Save file
 map('n', '<leader>w', '<cmd>w<cr>', { noremap = true, silent = true, desc = 'Save file' })
 

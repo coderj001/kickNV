@@ -1,4 +1,4 @@
-if true then
+if require('core').plugin_groups.trouble then
   return {
     "folke/trouble.nvim",
     opts = {

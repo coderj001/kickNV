@@ -1,7 +1,7 @@
 if true then
   return {
     'jake-stewart/auto-cmdheight.nvim',
-    lazy = true,
+    event = 'VeryLazy',
     opts = {
       max_lines = 5,
       duration = 2,

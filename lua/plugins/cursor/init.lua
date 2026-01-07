@@ -1,6 +1,7 @@
-if true then
+if require('core').plugin_groups.cursor then
   return {
     'sphamba/smear-cursor.nvim',
+    event = 'VeryLazy',
     opts = {
       stiffness = 0.8,
       trailing_stiffness = 0.5,
@@ -12,4 +13,6 @@ if true then
       transparent_bg_fallback_color = '#303030',
     },
   }
+else
+  return {}
 end

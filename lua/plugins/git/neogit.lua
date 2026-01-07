@@ -1,4 +1,4 @@
-if require('core.init').plugin_groups.neogit then
+if require('core').plugin_groups.neogit then
   return {
     'NeogitOrg/neogit',
     event = {

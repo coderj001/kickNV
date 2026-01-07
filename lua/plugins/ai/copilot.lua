@@ -1,4 +1,4 @@
-if require('core.init').plugin_groups.ai then
+if require('core').plugin_groups.ai then
   return {
     'github/copilot.vim',
     cmd = 'Copilot',
@@ -18,4 +18,6 @@ if require('core.init').plugin_groups.ai then
       vim.fn['copilot#OnFileType']()
     end,
   }
+else
+  return {}
 end

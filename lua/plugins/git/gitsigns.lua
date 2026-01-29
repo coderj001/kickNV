@@ -1,10 +1,8 @@
 return {
   'lewis6991/gitsigns.nvim',
   event = {
-    'CmdlineEnter',
-    'InsertEnter',
-    'CursorHold',
-    'CursorMoved',
+    'BufReadPost',
+    'FileChangedShellPost',
   },
   keys = {
     {
@@ -40,7 +38,7 @@ return {
       mode = { 'v' },
     },
     {
-      '<leader>hs',
+      '<leader>hS',
       function()
         require('gitsigns').stage_buffer()
       end,
@@ -56,7 +54,7 @@ return {
       mode = { 'n' },
     },
     {
-      '<leader>hr',
+      '<leader>hR',
       function()
         require('gitsigns').reset_buffer()
       end,
@@ -96,11 +94,11 @@ return {
       mode = { 'v', 'n' },
     },
     {
-      '<leader>hd',
+      '<leader>hD',
       function()
         require('gitsigns').diffthis '~'
       end,
-      desc = 'Diff This (Visual)',
+      desc = 'Diff This (~)',
       mode = { 'n' },
     },
     {
@@ -147,7 +145,7 @@ return {
       numhl = false,
       linehl = false,
       watch_gitdir = {
-        interval = 1000,
+        interval = 2000,
         follow_files = true,
       },
       current_line_blame_opts = {
@@ -157,7 +155,7 @@ return {
         ignore_whitespace = false,
       },
       sign_priority = 6,
-      update_debounce = 100,
+      update_debounce = 200,
       status_formatter = nil,
       max_file_length = 40000,
       preview_config = {

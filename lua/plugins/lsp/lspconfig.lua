@@ -20,6 +20,12 @@ local function setup_keymaps(event)
     ['<leader>gr'] = vim.lsp.buf.references,
     ['<leader>gg'] = vim.lsp.buf.rename,
     ['<leader>ca'] = vim.lsp.buf.code_action,
+    -- Workspace management
+    ['<leader>wa'] = vim.lsp.buf.add_workspace_folder,
+    ['<leader>wr'] = vim.lsp.buf.remove_workspace_folder,
+    ['<leader>wl'] = function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end,
   }
 
   for key, func in pairs(keymap) do

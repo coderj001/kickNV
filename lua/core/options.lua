@@ -84,9 +84,9 @@ opt.smartcase      = true
 
 opt.spelllang      = { "en" }
 opt.scrolloff      = 4 -- Lines of context
-opt.timeoutlen     = 300
+opt.timeoutlen     = 200
 opt.undofile       = true
-opt.undolevels     = 500
+opt.undolevels     = 200   -- Reduced for better memory usage
 opt.wildmode       = "longest:full,full" -- Command-line completion mode
 opt.winminwidth    = 5                   -- Minimum window width
 opt.wrap           = true                -- Disable line wrap
@@ -96,10 +96,10 @@ opt.mouse          = ""
 -- Memory, CPU
 -----------------------------------------------------------
 opt.hidden         = true  -- Enable background buffers
-opt.history        = 100   -- Remember N lines in history
+opt.history        = 50    -- Remember N lines in history (reduced for performance)
 opt.lazyredraw     = false -- Faster scrolling
-opt.synmaxcol      = 240   -- Max column for syntax highlight
-opt.updatetime     = 250   -- ms to wait for trigger an event
+opt.synmaxcol      = 200   -- Max column for syntax highlight (performance optimization)
+opt.updatetime     = 100   -- ms to wait for trigger an event (faster LSP response)
 
 -- Disable nvim intro
 opt.shortmess:append "sI"

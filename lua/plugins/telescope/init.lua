@@ -39,14 +39,6 @@ return {
         desc = '[s]earch [n]eovim config',
       },
       {
-        '<leader>sf',
-        mode = { 'n' },
-        function()
-          require('telescope.builtin').find_files()
-        end,
-        desc = '[s]earch [f]iles',
-      },
-      {
         '<leader>sw',
         mode = { 'n' },
         function()
@@ -95,18 +87,6 @@ return {
         desc = '[s]earch [r]egister',
       },
       {
-        '<leader><Space>',
-        mode = { 'n' },
-        function()
-          require('telescope.builtin').buffers {
-            ignore_current_buffer = true,
-            sort_mru = true,
-            sort_lastused = true,
-          }
-        end,
-        desc = 'Switch Buffers',
-      },
-      {
         '<leader>//',
         function()
           require('utils.telescope').live_grep_open_files()
@@ -137,6 +117,43 @@ return {
         '<leader>fs',
         ':Telescope lsp_document_symbols<cr>',
         desc = '[f]ind [s]ymbols',
+      },
+      -- Quick access patterns
+      {
+        '<leader>ff',
+        function()
+          require('telescope.builtin').find_files()
+        end,
+        desc = '[f]ind [f]iles',
+        mode = { 'n' },
+      },
+      {
+        '<leader>fg',
+        function()
+          require('telescope').extensions.live_grep_args.live_grep_args()
+        end,
+        desc = '[f]ind by [g]rep',
+        mode = { 'n' },
+      },
+      {
+        '<leader>fb',
+        function()
+          require('telescope.builtin').buffers {
+            ignore_current_buffer = true,
+            sort_mru = true,
+            sort_lastused = true,
+          }
+        end,
+        desc = '[f]ind [b]uffers',
+        mode = { 'n' },
+      },
+      {
+        '<leader>fh',
+        function()
+          require('telescope.builtin').help_tags()
+        end,
+        desc = '[f]ind [h]elp',
+        mode = { 'n' },
       },
     },
     config = function()

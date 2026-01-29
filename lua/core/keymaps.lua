@@ -33,6 +33,41 @@ vim.keymap.set('n', '<leader><CR>', ':nohlsearch<CR>', {
 -- Save file
 map('n', '<leader>w', '<cmd>w<cr>', { noremap = true, silent = true, desc = 'Save file' })
 
+-- Buffer navigation
+map('n', '<leader>bn', '<cmd>bnext<cr>', { noremap = true, silent = true, desc = 'Next buffer' })
+map('n', '<leader>bp', '<cmd>bprev<cr>', { noremap = true, silent = true, desc = 'Previous buffer' })
+map('n', '<leader>bd', '<cmd>bd<cr>', { noremap = true, silent = true, desc = 'Delete buffer' })
+map('n', '<leader>bD', '<cmd>bd!<cr>', { noremap = true, silent = true, desc = 'Force delete buffer' })
+
+-- Window navigation (Alt + hjkl)
+map('n', '<A-h>', '<C-w>h', { noremap = true, silent = true, desc = 'Window left' })
+map('n', '<A-j>', '<C-w>j', { noremap = true, silent = true, desc = 'Window down' })
+map('n', '<A-k>', '<C-w>k', { noremap = true, silent = true, desc = 'Window up' })
+map('n', '<A-l>', '<C-w>l', { noremap = true, silent = true, desc = 'Window right' })
+
+-- Window splits
+map('n', '<leader>ws', '<cmd>split<cr>', { noremap = true, silent = true, desc = 'Split horizontal' })
+map('n', '<leader>wv', '<cmd>vsplit<cr>', { noremap = true, silent = true, desc = 'Split vertical' })
+map('n', '<leader>wc', '<cmd>close<cr>', { noremap = true, silent = true, desc = 'Close window' })
+
+-- Quick actions
+map('n', '<leader>q', '<cmd>q<cr>', { noremap = true, silent = true, desc = 'Quit' })
+map('n', '<leader>Q', '<cmd>q!<cr>', { noremap = true, silent = true, desc = 'Quit without saving' })
+map('n', '<leader>x', '<cmd>x<cr>', { noremap = true, silent = true, desc = 'Save and quit' })
+
+-- Quick format (conform)
+map('n', '<leader>f', function()
+  local conform = require('conform')
+  if conform then
+    conform.format { async = true, lsp_fallback = true }
+  end
+end, { noremap = true, silent = true, desc = 'Format buffer (conform)' })
+
+-- Diagnostics navigation
+map('n', '[d', vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = 'Previous diagnostic' })
+map('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true, desc = 'Next diagnostic' })
+map('n', '<leader>de', vim.diagnostic.open_float, { noremap = true, silent = true, desc = 'Show diagnostic' })
+
 function load_extra_options()
   local function bind_extra_cmd(options)
     for optionCount = 1, #options do

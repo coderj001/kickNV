@@ -4,6 +4,25 @@ local telescope = require 'telescope'
 function M.setup()
   telescope.setup {
     defaults = {
+      file_ignore_patterns = {
+        '%.git/',
+        'node_modules/',
+        '%.venv/',
+        '%.cache/',
+        '%.local/',
+        'build/',
+        'dist/',
+        '%.lock',
+        '%.log',
+        '%.tmp',
+        '__pycache__/',
+        '%.pyc',
+        '%.class',
+        'target/',
+        '%.o',
+        '%.so',
+        '%.dylib',
+      },
       vimgrep_arguments = {
         'rg',
         '--color=never',
@@ -16,6 +35,11 @@ function M.setup()
         '--glob=!.git/',
         '--glob=!node_modules/',
         '--glob=!.venv/',
+        '--glob=!build/',
+        '--glob=!dist/',
+        '--glob=!*.lock',
+        '--glob=!__pycache__/',
+        '--glob=!target/',
       },
       prompt_prefix = ' ',
       selection_caret = ' ',

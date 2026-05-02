@@ -103,7 +103,7 @@ local function setup()
     sections = {
       lualine_a = {
         {
-          mode,
+          'mode',
           separator = { left = '' },
           right_padding = 2,
           color = { gui = 'bold' },

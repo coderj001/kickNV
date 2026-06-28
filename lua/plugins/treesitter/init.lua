@@ -4,37 +4,7 @@ return {
     name = "treesitter",
     event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
     dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        -- Ensure treesitter loads first - critical dependency
-        after = "nvim-treesitter",
-        -- Load lazily on buffer events to ensure treesitter is ready
-        event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-        -- Wrap the module require to handle initialization errors
-        init = function()
-          -- Preload the module with error handling
-          package.preload['nvim-treesitter-textobjects'] = function()
-            -- Only load if treesitter is available
-            local treesitter_ok = pcall(require, 'nvim-treesitter')
-            if not treesitter_ok then
-              return nil
-            end
-            -- Load textobjects module
-            local ok, textobjects = pcall(require, 'nvim-treesitter-textobjects')
-            if ok then
-              return textobjects
-            end
-            return nil
-          end
-        end,
-        config = function()
-          -- Initialize textobjects after treesitter is ready
-          local ok, textobjects = pcall(require, 'nvim-treesitter-textobjects')
-          if ok and textobjects and textobjects.init then
-            textobjects.init()
-          end
-        end,
-      },
+      "nvim-treesitter/nvim-treesitter-textobjects",
       -- {
       --   "lukas-reineke/indent-blankline.nvim",
       --   event = "BufWinEnter",

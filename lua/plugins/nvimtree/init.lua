@@ -8,12 +8,23 @@ return {
       'MunifTanjim/nui.nvim',
     },
     keys = {
-
       {
-        "<leader>n",
-        mode = { "n" },
-        "<CMD>NvimTreeFindFileToggle<CR>",
-        desc = "NvimTree Explorer"
+        '<leader>e',
+        mode = { 'n' },
+        '<CMD>NvimTreeFindFileToggle<CR>',
+        desc = 'NvimTree current file',
+      },
+      {
+        '<leader>E',
+        mode = { 'n' },
+        '<CMD>NvimTreeToggle<CR>',
+        desc = 'NvimTree working directory',
+      },
+      {
+        '<leader>n',
+        mode = { 'n' },
+        '<CMD>NvimTreeFindFileToggle<CR>',
+        desc = 'NvimTree Explorer',
       },
     },
     opts = {
@@ -83,13 +94,13 @@ return {
           'n',
           's',
           api.node.open.vertical_no_picker,
-          ops 'Open Horizontal'
+          ops 'Open vertical split'
         )
         vim.keymap.set(
           'n',
           'S',
           api.node.open.horizontal_no_picker,
-          ops 'Open Vertical'
+          ops 'Open horizontal split'
         )
       end
 

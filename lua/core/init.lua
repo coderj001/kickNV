@@ -30,8 +30,8 @@ M.plugin_groups = {
 
   -- Navigation and file management
   telescope = true, --- Telescope fuzzy finder and picker
-  oil = true, --- Oil.nvim file explorer (modern alternative to nvim-tree)
-  nvimtree = false, --- NvimTree file explorer (legacy, use oil instead)
+  oil = false, --- Oil.nvim file explorer
+  nvimtree = true, --- NvimTree file explorer
   flash = true, --- Flash.nvim jump navigation (alternative to mini.jump)
 
   -- Statusline
@@ -44,6 +44,9 @@ M.plugin_groups = {
   -- Code quality and diagnostics
   trouble = true, --- Trouble diagnostics viewer
   bqf = true, --- Better quickfix list
+
+  -- Debugging
+  dap = true, --- Debug Adapter Protocol for TypeScript/JavaScript/Node
 
   -- Utilities
   scissors = true, --- Scissors snippet engine
@@ -58,7 +61,7 @@ M.plugin_groups = {
     indentscope = true, --- Indent scope indicators
     notify = true, --- Notification system
     pick = false, --- Pick UI (alternative to telescope)
-    files = false, --- File explorer (use oil instead)
+    files = false, --- Mini.Files file explorer (disabled in favor of NvimTree)
     extra = true, --- Extra utilities
     ui = true, --- UI components (icons)
     move = true, --- Text movement enhancements

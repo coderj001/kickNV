@@ -49,6 +49,9 @@ local PLUGIN_MAPPINGS = {
   { key = 'trouble', import = 'plugins.trouble', desc = 'Trouble diagnostics viewer' },
   { key = 'bqf', import = 'plugins.bqf', desc = 'Better quickfix list' },
 
+  -- Debugging
+  { key = 'dap', import = 'plugins.dap', desc = 'DAP debugger for TypeScript and JavaScript' },
+
   -- Utilities
   { key = 'scissors', import = 'plugins.scissors', desc = 'Scissors snippet engine' },
   { key = 'cursor', import = 'plugins.cursor', desc = 'Cursor enhancements' },

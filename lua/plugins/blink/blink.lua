@@ -41,7 +41,6 @@ return {
         'path',
         'snippets',
         'buffer',
-        'ripgrep',
         'dictionary',
       },
       providers = {

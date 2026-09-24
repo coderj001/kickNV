@@ -2,15 +2,29 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "theHamsta/nvim-dap-virtual-text",
+      {
+        "theHamsta/nvim-dap-virtual-text",
+        opts = {
+          commented = true,
+        },
+      },
     },
     cmd = {
+      "DapClearBreakpoints",
       "DapContinue",
-      "DapToggleBreakpoint",
-      "DapStepOver",
+      "DapDisconnect",
+      "DapEval",
+      "DapNew",
+      "DapPause",
+      "DapRestartFrame",
+      "DapSetLogLevel",
+      "DapShowLog",
       "DapStepInto",
       "DapStepOut",
+      "DapStepOver",
       "DapTerminate",
+      "DapToggleBreakpoint",
+      "DapToggleRepl",
     },
     keys = {
       {
@@ -245,12 +259,5 @@ return {
         dapui.close()
       end
     end,
-  },
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    dependencies = { "mfussenegger/nvim-dap" },
-    opts = {
-      commented = true,
-    },
   },
 }

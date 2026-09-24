@@ -96,7 +96,7 @@ return {
         sync_install = false,
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = true,
+          additional_vim_regex_highlighting = false,
           disable = function(lang, buf)
             local max_filesize = 50 * 1024 -- 50 KB (reduced for better performance)
             ---@diagnostic disable-next-line: undefined-global

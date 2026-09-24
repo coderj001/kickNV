@@ -198,7 +198,7 @@ function M.setup()
     install = { colorscheme = {} },
 
     -- Plugin checker (runs in background)
-    checker = { enabled = true, notify = false },
+    checker = { enabled = true, notify = false, frequency = 86400 },
 
     -- Change detection (notify on plugin updates)
     change_detection = { notify = true },

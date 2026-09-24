@@ -2,10 +2,38 @@ return {
   {
     'nvim-tree/nvim-tree.lua',
     version = '*',
-    lazy = false,
+    cmd = {
+      'NvimTreeClipboard',
+      'NvimTreeClose',
+      'NvimTreeCollapse',
+      'NvimTreeCollapseKeepBuffers',
+      'NvimTreeFindFile',
+      'NvimTreeFindFileToggle',
+      'NvimTreeFocus',
+      'NvimTreeHiTest',
+      'NvimTreeOpen',
+      'NvimTreeRefresh',
+      'NvimTreeResize',
+      'NvimTreeToggle',
+    },
+    init = function()
+      vim.api.nvim_create_autocmd('VimEnter', {
+        once = true,
+        callback = function()
+          local path = vim.fn.argv(0)
+          if vim.fn.isdirectory(path) == 1 then
+            vim.cmd('NvimTreeOpen ' .. vim.fn.fnameescape(path))
+          end
+        end,
+      })
+    end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
+      {
+        'antosha417/nvim-lsp-file-operations',
+        config = true,
+      },
     },
     keys = {
       {
@@ -134,12 +162,5 @@ return {
       --   callback = open_tree_on_setup,
       -- })
     end,
-  },
-  {
-    'antosha417/nvim-lsp-file-operations',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    config = true,
   },
 }

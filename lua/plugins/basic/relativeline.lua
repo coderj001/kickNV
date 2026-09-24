@@ -1,5 +1,6 @@
 return {
   'cpea2506/relative-toggle.nvim',
+  event = 'VeryLazy',
   config = function()
     local status, relativetoggle = pcall(require, 'relative-toggle')
     if not status then

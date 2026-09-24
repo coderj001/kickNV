@@ -99,7 +99,7 @@ opt.hidden         = true  -- Enable background buffers
 opt.history        = 50    -- Remember N lines in history (reduced for performance)
 opt.lazyredraw     = false -- Faster scrolling
 opt.synmaxcol      = 200   -- Max column for syntax highlight (performance optimization)
-opt.updatetime     = 100   -- ms to wait for trigger an event (faster LSP response)
+opt.updatetime     = 250   -- ms to wait before CursorHold events
 
 -- Disable nvim intro
 opt.shortmess:append "sI"

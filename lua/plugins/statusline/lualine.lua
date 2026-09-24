@@ -150,6 +150,6 @@ end
 return {
   'nvim-lualine/lualine.nvim',
   name = 'lualine',
-  event = 'UIEnter',
+  event = 'VeryLazy',
   config = setup,
 }

@@ -58,6 +58,18 @@ return {
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
+    event = { 'BufReadPre', 'BufNewFile' },
+    cmd = {
+      'LspInfo',
+      'LspLog',
+      'LspStart',
+      'LspStop',
+      'LspRestart',
+      'LspZeroSetupServers',
+      'LspZeroViewConfigSource',
+      'LspZeroWorkspaceAdd',
+      'LspZeroWorkspaceList',
+    },
     dependencies = {
       { 'neovim/nvim-lspconfig' },
       { 'williamboman/mason.nvim' },
@@ -71,8 +83,6 @@ return {
         setup_keymaps({ buf = bufnr })
       end)
 
-      -- Initialize Mason and LSP servers
-      require('mason').setup({})
       require('mason-lspconfig').setup({
         ensure_installed = {
           "clangd",

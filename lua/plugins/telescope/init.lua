@@ -2,7 +2,6 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    event = { 'VimEnter' },
     cmd = 'Telescope',
     version = '0.1.x',
     dependencies = {

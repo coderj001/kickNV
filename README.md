@@ -35,7 +35,6 @@ The leader key is `<Space>`. This list covers custom mappings from enabled featu
 | Normal, Visual | `j` / `<Down>` | Move down by a display line, or a file line with a count |
 | Normal, Visual | `k` / `<Up>` | Move up by a display line, or a file line with a count |
 | Visual | `<` / `>` | Change indentation and keep the selection |
-| Normal | `<leader>f` | Format the current buffer |
 | Normal | `[d` / `]d` | Go to the previous / next diagnostic |
 | Normal | `<leader>de` | Show the current diagnostic |
 
@@ -169,10 +168,14 @@ These mappings apply when the completion menu or a snippet is active.
 | Command-line | `<C-s>` | Toggle Flash search |
 | Normal | `<C-h>` / `<C-j>` / `<C-k>` / `<C-l>` | Navigate between Neovim windows and tmux panes |
 | Normal | `<C-\>` | Navigate to the previous Neovim window or tmux pane |
+| Normal, Visual | `<leader>ap` | Send the current file position or selected range to Pi |
+| Visual | `<leader>as` | Send the selected text to Pi |
 | Normal | `<leader>hx` | Add the current file to Harpoon |
 | Normal | `<leader>hj` / `<leader>hk` | Go to the next / previous Harpoon mark |
 | Normal | `<leader>hm` | Search Harpoon marks with Telescope |
 | Normal | `<leader>se` | Edit a snippet |
 | Normal, Visual | `<leader>sa` | Add a snippet |
+
+[pi-send.nvim](https://github.com/SavingFrame/pi-send.nvim) needs Pi running in the same tmux session as Neovim. Save the file before sending a position. Sending selected text uses the current buffer.
 
 For Markdown rendering, open a Markdown file and run `:RenderMarkdown toggle`. This command has no custom keybinding.

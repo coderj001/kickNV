@@ -55,14 +55,6 @@ map('n', '<leader>q', '<cmd>q<cr>', { noremap = true, silent = true, desc = 'Qui
 map('n', '<leader>Q', '<cmd>q!<cr>', { noremap = true, silent = true, desc = 'Quit without saving' })
 map('n', '<leader>x', '<cmd>x<cr>', { noremap = true, silent = true, desc = 'Save and quit' })
 
--- Quick format (conform)
-map('n', '<leader>f', function()
-  local conform = require('conform')
-  if conform then
-    conform.format { async = true, lsp_fallback = true }
-  end
-end, { noremap = true, silent = true, desc = 'Format buffer (conform)' })
-
 -- Diagnostics navigation
 map('n', '[d', vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = 'Previous diagnostic' })
 map('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true, desc = 'Next diagnostic' })

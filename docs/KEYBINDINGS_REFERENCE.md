@@ -102,7 +102,6 @@
 - `<leader>q` - Quit
 - `<leader>Q` - Quit without saving
 - `<leader>x` - Save and quit
-- `<leader>f` - Format buffer
 
 ### Telescope Quick Access
 - `<leader>ff` - Find files

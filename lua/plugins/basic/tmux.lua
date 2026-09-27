@@ -28,4 +28,25 @@ return {
       { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
     },
   },
+  {
+    'SavingFrame/pi-send.nvim',
+    keys = {
+      {
+        '<leader>ap',
+        function()
+          require('pi_send').send { msg = '{position}' }
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Send position to pi',
+      },
+      {
+        '<leader>as',
+        function()
+          require('pi_send').send { msg = '{selection}' }
+        end,
+        mode = 'x',
+        desc = 'Send selection to pi',
+      },
+    },
+  },
 }

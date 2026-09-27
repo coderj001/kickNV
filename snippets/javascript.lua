@@ -99,21 +99,23 @@ local if_snippet = s(
     if_fmt_2,
   })
 ) --}}}
-local function_fmt = fmt( --{{{
-  [[
+local function get_function_fmt()
+  return fmt(
+    [[
 function {}({}) {{
   {}
 }}
     ]],
-  {
-    i(1, 'myFunc'),
-    c(2, { i(1, 'arg'), i(1, '') }),
-    i(3, '//TODO:'),
-  }
-)
+    {
+      i(1, 'myFunc'),
+      c(2, { i(1, 'arg'), i(1, '') }),
+      i(3, '//TODO:'),
+    }
+  )
+end
 
-local function_snippet = s({ trig = 'f[un]?', regTrig = true, hidden = true }, function_fmt)
-local function_snippet_func = s({ trig = 'func' }, vim.deepcopy(function_fmt)) --}}}
+local function_snippet = s({ trig = 'f[un]?', regTrig = true, hidden = true }, get_function_fmt())
+local function_snippet_func = s({ trig = 'func' }, get_function_fmt()) --}}}
 
 local short_hand_if_fmt = fmt( --{{{
   [[

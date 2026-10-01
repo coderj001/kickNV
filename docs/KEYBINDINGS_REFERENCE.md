@@ -10,7 +10,7 @@
 - `<C-Down/Up>` - Resize window height
 - `<C-Left/Right>` - Resize window width
 - `<leader><CR>` - Clear search highlight
-- `q` - Close quickfix window
+- `q` (in a quickfix or location list) - Close the list window. In an edit buffer, `q` records a macro.
 
 ### File Operations
 - `<leader>w` - Save file

@@ -1,0 +1,21 @@
+require('core.keymaps')
+
+assert(vim.fn.maparg('q', 'n') == '', 'q must be free for macros')
+vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'abc' })
+vim.api.nvim_feedkeys('qaxq@a', 'xt', false)
+assert(vim.fn.getreg('a') == 'x', 'macro did not record')
+assert(vim.api.nvim_get_current_line() == 'c', 'macro did not play')
+
+local buffer = vim.api.nvim_get_current_buf()
+vim.fn.setqflist({ { bufnr = buffer, lnum = 1, text = 'test' } })
+vim.cmd('copen')
+local quickfix = vim.api.nvim_get_current_win()
+vim.api.nvim_feedkeys('q', 'xt', false)
+assert(not vim.api.nvim_win_is_valid(quickfix), 'q did not close quickfix')
+
+vim.fn.setloclist(0, { { bufnr = buffer, lnum = 1, text = 'test' } })
+vim.cmd('lopen')
+local location = vim.api.nvim_get_current_win()
+vim.api.nvim_feedkeys('q', 'xt', false)
+assert(not vim.api.nvim_win_is_valid(location), 'q did not close location list')
+print('Macro recording, playback, and quickfix close work')
